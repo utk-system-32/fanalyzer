@@ -10,7 +10,10 @@ const Register: NextPage = () => {
         <meta name="description" content="Sign up for Fanalyzer." />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <form className="flex min-h-[500px] w-full max-w-[600px] flex-col rounded-md bg-white p-5 shadow-lg">
+      <form
+        className="flex min-h-[500px] w-full max-w-[600px] flex-col rounded-md bg-white p-5 shadow-lg"
+        method="POST"
+      >
         <Link href="/" className="text-[#ff8200]">
           Go back
         </Link>
