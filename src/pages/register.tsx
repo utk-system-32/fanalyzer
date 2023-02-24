@@ -17,7 +17,7 @@ const Register: NextPage = () => {
         <Link href="/" className="text-[#ff8200]">
           Go back
         </Link>
-        <h1 className="text-bold text-center text-3xl">
+        <h1 className="text-center text-3xl font-bold">
           Register for Fanalyzer
         </h1>
         <label className="mt-5" htmlFor="username">
