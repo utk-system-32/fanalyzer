@@ -8,13 +8,12 @@ const Header: FunctionComponent = () => {
   return (
     <section
       className={`fixed z-50 flex w-full justify-center ${
-        scrolledDown ? "bg-white/[0.7] backdrop-blur" : ""
+        scrolledDown ? "bg-[#7d244f]/[0.7] backdrop-blur" : ""
       }`}
     >
       <nav
-        className={`flex w-full max-w-[1280px] flex-wrap justify-between self-center py-7 ${
-          scrolledDown ? "text-black" : "text-white"
-        } duration-100 ease-in-out`}
+        className={`flex w-full max-w-[1280px] flex-wrap justify-between self-center py-7 text-white
+         duration-100 ease-in-out`}
       >
         <Link href="/" className="flex items-center text-3xl font-bold">
           Fanalyzer

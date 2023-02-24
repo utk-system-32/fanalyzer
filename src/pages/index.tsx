@@ -1,9 +1,6 @@
 import { type NextPage } from "next";
 import Head from "next/head";
-import { signIn, signOut, useSession } from "next-auth/react";
 import Header from "../components/Header";
-
-import { api } from "../utils/api";
 import Animate from "../components/animate";
 import InitialView from "../components/InitialView";
 
@@ -19,31 +16,31 @@ const Home: NextPage = () => {
         <Header />
         <InitialView />
         <Animate>
-          <div className="container flex flex-wrap items-center justify-center py-16 px-20">
-            <div className="flex-col md:mr-10 md:w-1/2">
+          <div className="container flex min-h-screen w-full max-w-[1280px] flex-wrap items-center self-center py-5">
+            <div className="w-1/2 flex-col">
               <h1 className="py-1 text-2xl font-bold md:text-4xl">
                 Data Visualizations made{" "}
-                <span className="text-[#FF8200]">easy</span>
+                <span className="text-[#FF8200]">easy.</span>
               </h1>
-              <p className="pb-1 md:text-xl">
+              <p className="pb-1 text-xl">
                 Fanalyzer allows you to input your own sports data, create
                 visualizations with our visualizations tool, and share them with
                 other people.
               </p>
             </div>
-            <div className="h-40 w-40 flex-col bg-gray-400 md:h-80 md:w-80" />
+            <div className="h-40 w-40 flex-col bg-gray-400 md:ml-auto md:h-80 md:w-80" />
           </div>
         </Animate>
 
         <Animate>
-          <div className="container flex flex-wrap-reverse items-center justify-center py-16 px-20">
-            <div className="h-40 w-40 flex-col bg-gray-400 md:h-80 md:w-80" />
-            <div className="flex-col md:ml-10 md:w-1/2 ">
-              <h1 className="py-1 text-2xl font-bold md:text-4xl">
+          <div className="container flex min-h-screen w-full max-w-[1280px] flex-wrap-reverse items-center justify-center self-center">
+            <div className="h-40 w-40 flex-col bg-gray-400 md:mr-auto md:h-80 md:w-80" />
+            <div className="w-1/2 flex-col md:ml-10 ">
+              <h1 className="py-1  text-3xl font-bold">
                 <span className="text-[#FF8200]">Interactive</span>{" "}
                 visualizations for your sports data
               </h1>
-              <p className="pb-1 md:text-2xl">
+              <p className="pb-1 text-xl">
                 Use our visualization tools to manipulate your data and graphs
                 to create insightful visualizations to share.
               </p>
@@ -52,25 +49,25 @@ const Home: NextPage = () => {
         </Animate>
 
         <Animate>
-          <div className="container flex items-center justify-center text-center">
-            <div className="flex-col">
-              <div className="text-md flex py-10 font-bold md:text-4xl">
-                Visualization Types<br></br>
-              </div>
-              <div className="flex flex-wrap">
-                <div className="mr-1 flex-col md:mr-10 md:text-2xl">
+          <div className="container flex min-h-screen w-full max-w-[1280px] items-center justify-center self-center text-center">
+            <div className="flex flex-col">
+              <h2 className="flex self-center py-10 text-center text-3xl font-bold">
+                Visualization Types
+              </h2>
+              <div className="grid grid-cols-4 gap-10">
+                <div className="flex flex-col items-center text-2xl">
                   <div className="h-10 w-10 flex-col bg-gray-400 md:h-20 md:w-20" />
-                  V1
+                  <span>V1</span>
                 </div>
-                <div className="mr-1 flex-col md:mr-10 md:text-2xl">
+                <div className="flex flex-col items-center text-2xl">
                   <div className="h-10 w-10 flex-col bg-gray-400 md:h-20 md:w-20" />
                   V2
                 </div>
-                <div className="mr-1 flex-col md:mr-10 md:text-2xl">
+                <div className="flex flex-col items-center text-2xl">
                   <div className="h-10 w-10 flex-col bg-gray-400 md:h-20 md:w-20" />
                   V3
                 </div>
-                <div className="mr-1 flex-col md:mr-10 md:text-2xl">
+                <div className="flex flex-col items-center text-2xl">
                   <div className="h-10 w-10 flex-col bg-gray-400 md:h-20 md:w-20" />
                   V4
                 </div>
@@ -80,25 +77,25 @@ const Home: NextPage = () => {
         </Animate>
 
         <Animate>
-          <div className="container flex items-center justify-center text-center">
-            <div className="flex-col">
-              <h1 className="text-md py-10 font-bold md:text-4xl">
+          <div className="container flex min-h-screen w-full max-w-[1280px] items-center justify-center self-center text-center">
+            <div className="flex flex-col">
+              <h1 className="text-md py-10 text-3xl font-bold">
                 Supported Data Formats<br></br>
               </h1>
-              <div className="flex flex-wrap">
-                <div className="mr-1 mb-10 flex-col md:mr-10 md:text-2xl">
+              <div className="grid grid-cols-4 gap-10">
+                <div className="flex flex-col items-center text-2xl">
                   <div className="h-10 w-10 flex-col bg-gray-400 md:h-20 md:w-20" />
                   CSV
                 </div>
-                <div className="mr-1 flex-col md:mr-10 md:text-2xl">
+                <div className="flex flex-col items-center text-2xl">
                   <div className="h-10 w-10 flex-col bg-gray-400 md:h-20 md:w-20" />
                   XLSX
                 </div>
-                <div className="mr-1 flex-col md:mr-10 md:text-2xl">
+                <div className="flex flex-col items-center text-2xl">
                   <div className="h-10 w-10 flex-col bg-gray-400 md:h-20 md:w-20" />
                   JSON
                 </div>
-                <div className="mr-1 flex-col md:mr-10 md:text-2xl">
+                <div className="flex flex-col items-center text-2xl">
                   <div className="h-10 w-10 flex-col bg-gray-400 md:h-20 md:w-20" />
                   XML
                 </div>
@@ -112,27 +109,3 @@ const Home: NextPage = () => {
 };
 
 export default Home;
-
-const AuthShowcase: React.FC = () => {
-  const { data: sessionData } = useSession();
-
-  const { data: secretMessage } = api.example.getSecretMessage.useQuery(
-    undefined, // no input
-    { enabled: sessionData?.user !== undefined }
-  );
-
-  return (
-    <div className="flex flex-col items-center justify-center gap-4">
-      <p className="text-center text-2xl text-white">
-        {sessionData && <span>Logged in as {sessionData.user?.name}</span>}
-        {secretMessage && <span> - {secretMessage}</span>}
-      </p>
-      <button
-        className="rounded-full bg-white/10 px-10 py-3 font-semibold text-white no-underline transition hover:bg-white/20"
-        onClick={sessionData ? () => void signOut() : () => void signIn()}
-      >
-        {sessionData ? "Sign out" : "Sign in"}
-      </button>
-    </div>
-  );
-};
