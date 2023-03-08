@@ -33,7 +33,7 @@ const Header: FunctionComponent = () => {
             <Link href="/about" className="mx-3 rounded-md p-1">
               About
             </Link>
-            <Link href="/contact" className="mx-3 rounded-md p-1">
+            <Link href="mailto:bliuag@vols.utk.edu" className="mx-3 rounded-md p-1">
               Contact
             </Link>
             <Link href="/documentation" className="mx-3 rounded-md p-1">

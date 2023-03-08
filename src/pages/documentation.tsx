@@ -6,7 +6,7 @@ const Documentation: NextPage = () => {
       pageTitle="Documentation for Fanalyzer | Fanalyzer"
       metaDescription="Learn about how to use Fanalyzer."
     >
-      Test
+      Documentation for how to user Fanalayzer will go here. 
     </Layout>
   );
 };

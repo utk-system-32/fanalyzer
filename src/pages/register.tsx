@@ -53,6 +53,7 @@ const Register: NextPage = () => {
         >
           Register
         </button>
+        <div className="mt-5">Already have an account? <a className="underline" href="/login">Login here</a></div>
       </form>
     </main>
   );
