@@ -2,6 +2,7 @@ import Link from "next/link";
 import { type FunctionComponent } from "react";
 import useHasScrolledDown from "../../utils/useHasScrolledDown";
 import { useRouter } from "next/router";
+import { signIn } from "next-auth/react";
 
 const Header: FunctionComponent = () => {
   const scrolledDown = useHasScrolledDown();
@@ -39,12 +40,12 @@ const Header: FunctionComponent = () => {
             <Link href="/documentation" className="mx-3 rounded-md p-1">
               Documentation
             </Link>
-            <Link
-              href="/register"
+            <button
+              onClick={ () => signIn()}
               className="mx-3 rounded-md bg-[#ff8200] p-2 font-semibold text-white"
             >
               Sign Up
-            </Link>
+            </button>
           </div>
         </nav>
       </section>

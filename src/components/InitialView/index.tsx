@@ -1,6 +1,8 @@
 import Link from "next/link";
 import { type FunctionComponent } from "react";
 import Image from "next/image";
+import { signIn } from "next-auth/react";
+
 const InitialView: FunctionComponent = () => {
   return (
     <div className="flex min-h-screen w-full flex-col items-center justify-center bg-gradient-to-br from-[#0B546B] via-[#7D244F] to-[#FF8200] text-white">
@@ -14,12 +16,12 @@ const InitialView: FunctionComponent = () => {
           <p className="max-w-[350px] py-2 md:py-10 md:text-xl">
             Fanalyzer puts easy, interactive visualizations at your fingertips.
           </p>
-          <Link
-            href="/register"
+          <button
+            onClick={() => signIn()}
             className="rounded-md bg-[#FF8200] py-2 px-6 shadow-sm md:py-4 md:px-12 md:text-2xl"
           >
             Sign Up
-          </Link>
+          </button>
         </div>
         <Image
           src="init_view.svg"
