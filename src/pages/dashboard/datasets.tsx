@@ -1,56 +1,34 @@
 import { type NextPage } from "next";
-import Layout from "../../components/Layout"
-import Link from "next/link"
+import Layout from "../../components/Layout";
+import DashboardSidebar from "../../components/DashboardSidebar";
 
 const Dashboard: NextPage = () => {
-    return(
+  return (
     <Layout
-        pageTitle = "My Datasets"
-    > 
-    <aside id="sidebar" className="fixed top-[100px] left-0 z-40 w-50 h-screen transition-transform -translate-x-full sm:translate-x-0">
-      <div className="h-full px-3 py-4 overflow-y-auto border-2 bg-white">
-        <ul className="space-y-2">
-          <li>
-            <a href="/dashboard" className="flex items-center p-2 text-base font-normal text-black">
-              <svg className="w-6 h-6 bg-gray-400"></svg>
-              <span className="ml-3">Creations</span>
-            </a>
-          </li>
-          <li>
-            <a href="/dashboard/posts" className="flex items-center p-2 text-base font-normal text-black">
-              <svg className="w-6 h-6 bg-gray-400"></svg>
-              <span className="ml-3">Posts</span>
-            </a>
-          </li>
-         <li>
-            <a href="/dashboard/datasets" className="flex items-center p-2 text-base font-normal text-[#7d244f]">
-              <svg className="w-6 h-6 bg-[#7d244f]"></svg>
-              <span className="ml-3">Datasets</span>
-            </a>
-         </li>
-         <li>
-            <a href="/documentation" className="flex items-center p-2 text-base font-normal text-black">
-              <svg className="w-6 h-6 bg-gray-400"></svg>
-              <span className="ml-3">Documentation</span>
-            </a>
-         </li>
-        </ul>
+      pageTitle="My Datasets"
+      metaDescription="Collection of Datasets that the user has uploaded"
+    >
+      <DashboardSidebar />
+
+      <div className="left-[50px] p-4">
+        <p className="left-[50px] text-2xl font-bold">My Datasets</p>
       </div>
-    </aside>
 
-    <div className="left-[50px] p-4">
-      <p className="left-[50px] font-bold text-2xl">My Datasets</p>
-    </div>
-
-    <form>
-      <div>
-        <input type="search" id="search" className="w-[600px] p-4 text-sm text-black border-2 rounded-lg bg-white caret-black" placeholder="Search for posts..."></input>
-      </div>
-    </form>
-
+      <form>
+        <div>
+          <input
+            type="search"
+            id="search"
+            className="w-[600px] rounded-lg border-2 bg-white p-4 text-sm text-black caret-black"
+            placeholder="Search for datasets..."
+          />
+          <button className="mx-3 rounded-md bg-[#ff8200] p-4 font-semibold text-white duration-300 ease-in-out hover:brightness-75">
+            Add New Dataset
+          </button>
+        </div>
+      </form>
     </Layout>
-
-    );
-}
+  );
+};
 
 export default Dashboard;
