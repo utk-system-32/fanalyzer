@@ -12,7 +12,6 @@ const Dashboard: NextPage = () => {
       <div className="left-[50px] p-4">
         <p className="left-[50px] text-2xl font-bold">My Creations</p>
       </div>
-
       <form>
         <div>
           <input
