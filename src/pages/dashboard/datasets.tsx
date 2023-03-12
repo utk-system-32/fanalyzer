@@ -2,14 +2,39 @@ import { type NextPage } from "next";
 import Layout from "../../components/Layout";
 import DashboardSidebar from "../../components/DashboardSidebar";
 import PopUpForm from "src/components/PopUpWindow";
-import { type SyntheticEvent, useState } from "react";
+import { type SyntheticEvent, useState, FormEvent } from "react";
+import { api } from "../../utils/api";
 
 const Dashboard: NextPage = () => {
   const [displayAddDataset, setDisplayAddDataset] = useState<boolean>(false);
   const handleDisplayAddDataset = () =>
     setDisplayAddDataset(!displayAddDataset);
-  const handleSubmit = (e: SyntheticEvent) => {
-    console.log(e);
+  const handleSubmit = (e: FormEvent) => {
+    e.preventDefault();
+    if (e.currentTarget instanceof HTMLFormElement) {
+      const formElements = Array.from(e.currentTarget.elements);
+      const formInputs = formElements.filter(
+        (element) => element.nodeName != "BUTTON"
+      );
+
+      const data: {
+        datasetName?: string;
+        datasetFileUpload?: Blob | File;
+        [key: string]: string | Blob | File | undefined | null;
+      } = {};
+
+      formInputs.forEach((input) => {
+        if (input instanceof HTMLInputElement) {
+          data[input.id] =
+            input.type == "file" ? input.files && input.files[0] : input.value;
+        }
+      });
+      const formdata = new FormData(e.currentTarget);
+      const res = fetch("/api/dataset/test", {
+        method: "POST",
+        body: formdata,
+      }).then((res) => console.log(res.json()));
+    }
   };
   return (
     <Layout
@@ -24,7 +49,7 @@ const Dashboard: NextPage = () => {
         <PopUpForm
           submitButtonText="Upload Dataset"
           closeWindowHandler={handleDisplayAddDataset}
-          sumbitHandler={handleSubmit}
+          submitHandler={handleSubmit}
         >
           <h2 className="my-2 text-center text-2xl font-semibold text-black">
             Upload a new dataset
