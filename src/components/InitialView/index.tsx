@@ -9,7 +9,9 @@ const InitialView: FunctionComponent = () => {
           <h1 className="text-lxl font-bold md:text-4xl">
             Sports Visualizations
             <br />
-            for Everyone.
+            for {" "}
+            <span className="text-[#FF8200]">your </span>
+            team.
           </h1>
           <p className="max-w-[350px] py-2 md:py-10 md:text-xl">
             Fanalyzer puts easy, interactive visualizations at your fingertips.

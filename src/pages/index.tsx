@@ -20,9 +20,9 @@ const Home: NextPage = () => {
               <span className="text-[#FF8200]">easy.</span>
             </h1>
             <p className="pb-1 text-xl">
-              Fanalyzer allows you to input your own sports data, create
-              visualizations with our visualizations tool, and share them with
-              other people.
+              Fanalyzer allows coaches to input team or individual player data, create
+              visualizations, and share them with
+              their team.
             </p>
           </div>
           <Image
@@ -50,8 +50,7 @@ const Home: NextPage = () => {
               for your sports data
             </h1>
             <p className="pb-1 text-xl">
-              Use our visualization tools to manipulate your data and graphs to
-              create insightful visualizations to share.
+              Our visualization tools will help you efficiently share data that is visually pleasing and insightful.
             </p>
           </div>
         </div>
