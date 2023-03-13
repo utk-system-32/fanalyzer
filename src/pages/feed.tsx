@@ -4,7 +4,7 @@ import Layout_Dashboard from "../components/Layout_Dashboard";
 const Feed: NextPage = () => {
   return (
     <Layout_Dashboard
-      pageTitle="Fanalyzer | Feed"
+      pageTitle="Fanalyzer | Home"
       metaDescription="Find your competitive edge."
     >
 
