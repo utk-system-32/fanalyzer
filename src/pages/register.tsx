@@ -2,11 +2,35 @@ import { type GetServerSideProps, type NextPage } from "next";
 import Head from "next/head";
 import Link from "next/link";
 import { getProviders, signIn, signOut, useSession } from "next-auth/react";
+import { FormEventHandler, useState } from "react"
+import { useRouter } from "next/router";
 
 import { api } from "../utils/api";
 import { AppProps } from "next/app";
 
 const Register: NextPage = ({ providers }: { providers: AppProps}) => {
+
+  const [userInfo, setUserInfo] = useState({email: "", password: ""});
+  const router = useRouter();
+  const handleSubmit:FormEventHandler<HTMLFormElement> = async (e) => {
+    // validate userinfo
+    e.preventDefault()
+
+    const res = await signIn('credentials', {
+      email: userInfo.email,
+      password: userInfo.password,
+      callbackUrl: `${window.location.origin}/dashboard`,
+    });
+
+    console.log(res);
+    /*
+    if (res.ok) {
+      // May need to change this to another system
+          // Redirect the user to the landing page if they are not signed in
+      router.replace("/dashboard");
+    }
+    */
+  }
   return (
     <main className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-br from-[#7d244f] to-[#ff8200]">
       <Head>
@@ -17,7 +41,7 @@ const Register: NextPage = ({ providers }: { providers: AppProps}) => {
       <div className="flex min-h-[500px] w-full max-w-[600px] flex-col rounded-md bg-white p-5 shadow-lg">
         <form
           className="flex flex-col"
-          method="POST"
+          onSubmit={handleSubmit}
         >
           <Link href="/" className="text-[#ff8200]">
             Go back
@@ -38,6 +62,10 @@ const Register: NextPage = ({ providers }: { providers: AppProps}) => {
             Email
           </label>
           <input
+            value={userInfo.email}
+            onChange={({ target }) =>
+              setUserInfo({ ...userInfo, email: target.value})
+            }
             type="email"
             className="mt-2 rounded-md border p-2"
             name="email"
@@ -47,6 +75,10 @@ const Register: NextPage = ({ providers }: { providers: AppProps}) => {
             Password
           </label>
           <input
+            value={userInfo.password}
+            onChange={({ target }) =>
+              setUserInfo({ ...userInfo, password: target.value})
+            }
             type="password"
             className="mt-2 rounded-md border p-2"
             name="username"

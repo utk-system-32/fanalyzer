@@ -1,8 +1,34 @@
 import { type NextPage } from "next";
 import Head from "next/head";
 import Link from "next/link";
+import { getProviders, signIn, signOut, useSession } from "next-auth/react";
+import { FormEventHandler, useState } from "react"
+import { useRouter } from "next/router";
+import { getSession } from "next-auth/client";
 
 const Login: NextPage = () => {
+  const [userInfo, setUserInfo] = useState({email: "", password: ""});
+  const router = useRouter();
+  const handleSubmit:FormEventHandler<HTMLFormElement> = async (e) => {
+    // validate userinfo
+    e.preventDefault()
+
+    const res = await signIn('credentials', {
+      email: userInfo.email,
+      password: userInfo.password,
+      redirect: false
+    });
+
+    console.log(res)
+    //signIn('credentials');
+    
+    if (res.ok) {
+      const session = await getSession();
+      // May need to change this to another system
+      // Redirect the user to the landing page if they are not signed in
+      router.replace("/dashboard");
+    }
+  }
   return (
     <main className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-br from-[#7d244f] to-[#ff8200]">
       <Head>
@@ -12,7 +38,7 @@ const Login: NextPage = () => {
       </Head>
       <form
         className="flex min-h-[500px] w-full max-w-[600px] flex-col rounded-md bg-white p-5 shadow-lg"
-        method="POST"
+        onSubmit={handleSubmit}
       >
         <Link href="/" className="text-[#ff8200]">
           Go back
@@ -22,6 +48,10 @@ const Login: NextPage = () => {
           Email
         </label>
         <input
+          value={userInfo.email}
+          onChange={({ target }) =>
+            setUserInfo({ ...userInfo, email: target.value})
+          }
           type="email"
           className="mt-2 rounded-md border p-2"
           name="email"
@@ -31,6 +61,10 @@ const Login: NextPage = () => {
           Password
         </label>
         <input
+          value={userInfo.password}
+          onChange={({ target }) =>
+            setUserInfo({ ...userInfo, password: target.value})
+          }
           type="password"
           className="mt-2 rounded-md border p-2"
           name="username"

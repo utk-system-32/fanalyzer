@@ -3,8 +3,25 @@ import Layout from "../../components/Layout"
 import Link from "next/link"
 import { signIn, signOut, useSession } from "next-auth/react";
 import { api } from "../../utils/api";
+import { useRouter } from "next/router";
+import { useEffect } from "react";
 
 const Dashboard: NextPage = () => {
+
+  const { data: sessionData } = useSession();
+  const router = useRouter();
+  console.log(sessionData)
+
+  // May need to change this to another system
+  /*
+  useEffect(() => {
+    if (!sessionData) {
+      // Redirect the user to the landing page if they are not signed in
+      router.replace("/");
+    }
+  })
+  */
+
   return(
   <Layout
     pageTitle = "My Creations"

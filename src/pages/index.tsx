@@ -4,8 +4,21 @@ import Animate from "../components/Animate";
 import InitialView from "../components/InitialView";
 import Layout from "../components/Layout";
 import Image from "next/image";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/router";
+import { useEffect } from "react";
 
 const Home: NextPage = () => {
+  const { data: sessionData } = useSession();
+  const router = useRouter();
+
+  useEffect(() => {
+      if (sessionData) {
+        // Redirect the user to the dashboard page if they are already signed in
+        router.replace("/dashboard");
+      }
+  })
+
   return (
     <Layout
       pageTitle="Sports Visualizations Made Easy | Fanalyzer"
