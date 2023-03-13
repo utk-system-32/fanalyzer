@@ -15,16 +15,11 @@ const Dashboard: NextPage = () => {
       const fd = new FormData(e.currentTarget);
       console.log("Fd: ", ...fd);
 
-      const res = axios.post("/api/dataset/test", fd, {
+      const res = axios.post("/api/dataset/upload", fd, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
       });
-      //   const res = fetch("/api/dataset/test", {
-      //     method: "POST",
-      //     body: formdata,
-      //   }).then((res) => console.log(res.json()));
-      //   console.log(res);
     }
   };
   return (
