@@ -29,7 +29,7 @@ const Header_Dashboard: FunctionComponent = () => {
             Fanalyzer
           </Link>
           <div className="ml-auto flex items-center text-xl">
-            <Link href="/" className="mx-3 rounded-md">
+            <Link href="/dashboard" className="mx-3 rounded-md">
               Dashboard
             </Link>
             <Link href="/about" className="mx-3 rounded-md p-1">
@@ -42,7 +42,7 @@ const Header_Dashboard: FunctionComponent = () => {
               Profile
             </Link>
             <Link
-              href="/register"
+              href="/tool"
               className="mx-3 rounded-md bg-[#ff8200] p-2 font-semibold text-white"
             >
               Create Post
