@@ -1,10 +1,10 @@
 import { type NextPage } from "next";
-import Layout from "../../components/Layout"
+import Layout_Dashboard from "../../components/Layout_Dashboard"
 import Link from "next/link"
 
 const Dashboard: NextPage = () => {
     return(
-    <Layout
+    <Layout_Dashboard
         pageTitle = "My Posts"
     > 
     <aside id="sidebar" class="fixed top-[100px] left-0 z-40 w-50 h-screen transition-transform -translate-x-full sm:translate-x-0">
@@ -48,7 +48,7 @@ const Dashboard: NextPage = () => {
       </div>
     </form>
 
-    </Layout>
+    </Layout_Dashboard>
 
     );
 }

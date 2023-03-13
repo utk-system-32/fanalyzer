@@ -4,6 +4,7 @@ import DashboardSidebar from "../../components/DashboardSidebar";
 import PopUpForm from "src/components/PopUpWindow";
 import { useState, type FormEvent } from "react";
 import axios from "axios";
+import Layout_Dashboard from "src/components/Layout_Dashboard";
 
 const Dashboard: NextPage = () => {
   const [displayAddDataset, setDisplayAddDataset] = useState<boolean>(false);
@@ -23,7 +24,7 @@ const Dashboard: NextPage = () => {
     }
   };
   return (
-    <Layout
+    <Layout_Dashboard
       pageTitle="My Datasets"
       metaDescription="Collection of Datasets that the user has uploaded"
     >
@@ -82,7 +83,7 @@ const Dashboard: NextPage = () => {
           </button>
         </div>
       </form>
-    </Layout>
+    </Layout_Dashboard>
   );
 };
 

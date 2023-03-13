@@ -1,10 +1,11 @@
 import { type NextPage } from "next";
 import Layout from "src/components/Layout";
 import DashboardSidebar from "src/components/DashboardSidebar";
+import Layout_Dashboard from "src/components/Layout_Dashboard";
 
 const Dashboard: NextPage = () => {
   return (
-    <Layout
+    <Layout_Dashboard
       pageTitle="My Creations"
       metaDescription="A collection of creations for the user."
     >
@@ -22,7 +23,7 @@ const Dashboard: NextPage = () => {
           ></input>
         </div>
       </form>
-    </Layout>
+    </Layout_Dashboard>
   );
 };
 
