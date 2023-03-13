@@ -3,6 +3,8 @@ import Layout from "../../components/Layout"
 import Link from "next/link"
 import { signIn, signOut, useSession } from "next-auth/react";
 import { api } from "../../utils/api";
+import DashboardSidebar from "src/components/DashboardSidebar";
+import Layout_Dashboard from "src/components/Layout_Dashboard";
 
 const Dashboard: NextPage = () => {
   return (
