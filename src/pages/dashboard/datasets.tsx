@@ -2,8 +2,8 @@ import { type NextPage } from "next";
 import Layout from "../../components/Layout";
 import DashboardSidebar from "../../components/DashboardSidebar";
 import PopUpForm from "src/components/PopUpWindow";
-import { type SyntheticEvent, useState, FormEvent } from "react";
-import { api } from "../../utils/api";
+import { useState, type FormEvent } from "react";
+import axios from "axios";
 
 const Dashboard: NextPage = () => {
   const [displayAddDataset, setDisplayAddDataset] = useState<boolean>(false);
@@ -12,28 +12,19 @@ const Dashboard: NextPage = () => {
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
     if (e.currentTarget instanceof HTMLFormElement) {
-      const formElements = Array.from(e.currentTarget.elements);
-      const formInputs = formElements.filter(
-        (element) => element.nodeName != "BUTTON"
-      );
+      const fd = new FormData(e.currentTarget);
+      console.log("Fd: ", ...fd);
 
-      const data: {
-        datasetName?: string;
-        datasetFileUpload?: Blob | File;
-        [key: string]: string | Blob | File | undefined | null;
-      } = {};
-
-      formInputs.forEach((input) => {
-        if (input instanceof HTMLInputElement) {
-          data[input.id] =
-            input.type == "file" ? input.files && input.files[0] : input.value;
-        }
+      const res = axios.post("/api/dataset/test", fd, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
       });
-      const formdata = new FormData(e.currentTarget);
-      const res = fetch("/api/dataset/test", {
-        method: "POST",
-        body: formdata,
-      }).then((res) => console.log(res.json()));
+      //   const res = fetch("/api/dataset/test", {
+      //     method: "POST",
+      //     body: formdata,
+      //   }).then((res) => console.log(res.json()));
+      //   console.log(res);
     }
   };
   return (
@@ -57,7 +48,7 @@ const Dashboard: NextPage = () => {
           <label htmlFor="datasetName">Dataset Name</label>
           <input
             type="text"
-            id="datasetName"
+            name="datasetName"
             className="mt-2 rounded-lg border-2 bg-white p-3 text-sm text-black caret-black"
             placeholder="2023 Season Game Stats, Overall Player Stats, etc."
             required
@@ -68,7 +59,7 @@ const Dashboard: NextPage = () => {
           <label htmlFor="datasetFileUpload">Dataset File</label>
           <input
             type="file"
-            id="datasetFileUpload"
+            name="datasetFileUpload"
             className="rounded-lg border-2 bg-white p-3 text-sm text-black caret-black"
             placeholder="Search for datasets..."
             required

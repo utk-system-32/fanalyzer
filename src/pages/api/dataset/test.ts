@@ -1,6 +1,13 @@
 import { type NextApiRequest, type NextApiResponse } from "next";
 import { appRouter } from "../../../server/api/root";
 import { createTRPCContext } from "../../../server/api/trpc";
+import formidable from "formidable";
+
+export const config = {
+  api: {
+    bodyParser: false,
+  },
+};
 
 const datasetTestHandler = async (
   req: NextApiRequest,
@@ -11,8 +18,11 @@ const datasetTestHandler = async (
   const caller = appRouter.createCaller(ctx);
 
   try {
-    console.log("In the API ROUTE!");
-    console.log("request body: ", req.body);
+    const form = new formidable.IncomingForm();
+    form.parse(req, (err, fields, files) => {
+      console.log("Fields: ", fields);
+      console.log("Files:", files);
+    });
     res.status(200).json({ message: "got the data." });
   } catch (cause) {
     // Another error occured
