@@ -1,12 +1,12 @@
 import { type NextPage } from "next";
-import Layout from "../components/Layout";
+import Layout_Dashboard from "../components/Layout_Dashboard";
 import Head from "next/head";
 import { title } from "process";
 import Image from "next/image";
 
 const Tool: NextPage = () => {
   return (
-    <Layout
+    <Layout_Dashboard
       pageTitle="Graphing Tool"
       metaDescription="Out-graph the competition."
     >
@@ -50,7 +50,7 @@ const Tool: NextPage = () => {
           </button>
         </div>
       </div>
-    </Layout>
+    </Layout_Dashboard>
   );
 };
 
