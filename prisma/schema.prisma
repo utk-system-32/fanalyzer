@@ -20,6 +20,16 @@ model Example {
     updatedAt DateTime @updatedAt
 }
 
+model Post {
+  id        String   @id @default(cuid()) @map("_id")
+  title     String
+  content   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  authorId  String
+  author    User     @relation(fields: [authorId], references: [id])
+}
+
 // Necessary for Next auth
 model Account {
     id                String  @id @default(cuid()) @map("_id")
@@ -55,4 +65,5 @@ model User {
     image         String?
     accounts      Account[]
     sessions      Session[]
+    posts         Post[]
 }

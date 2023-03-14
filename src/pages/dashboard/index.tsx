@@ -2,7 +2,7 @@ import { type NextPage } from "next";
 import Layout from "../../components/Layout"
 import Link from "next/link"
 import { signIn, signOut, useSession } from "next-auth/react";
-import { api } from "../../utils/api";
+import { api } from "../../utils/api"
 import DashboardSidebar from "src/components/DashboardSidebar";
 import Layout_Dashboard from "src/components/Layout_Dashboard";
 
@@ -53,6 +53,12 @@ const AuthShowcase: React.FC = () => {
         onClick={sessionData ? () => void signOut() : () => void signIn()}
       >
         {sessionData ? "Sign out" : "Sign in"}
+      </button>
+      <button
+        className="rounded-full bg-white/10 px-10 py-3 font-semibold no-underline transition hover:bg-white/20"
+        onClick={ () => createpost}
+        >
+          Create Post
       </button>
     </div>
   );
