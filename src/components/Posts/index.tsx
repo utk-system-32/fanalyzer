@@ -10,7 +10,7 @@ function Posts() {
       {postQuery.data?.map((post) => {
         return (
           <article key={post.id}>
-            <p>{post.title}</p>
+            <p className="font-bold">{post.title}</p>
             <p>{post.content}</p>
           </article>
         )

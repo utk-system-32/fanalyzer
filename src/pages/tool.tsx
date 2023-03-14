@@ -3,6 +3,7 @@ import Layout_Dashboard from "../components/Layout_Dashboard";
 import Head from "next/head";
 import { title } from "process";
 import Image from "next/image";
+import CreatePost from "../components/CreatePost"
 
 const Tool: NextPage = () => {
   return (
@@ -49,6 +50,7 @@ const Tool: NextPage = () => {
             Create Scatterplot
           </button>
         </div>
+        <CreatePost/>
       </div>
     </Layout_Dashboard>
   );
