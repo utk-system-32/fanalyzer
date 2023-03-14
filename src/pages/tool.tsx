@@ -1,16 +1,31 @@
 import { type NextPage } from "next";
 import Dropdown from "src/components/Dropdown";
 import Link from "next/link";
-import { type SyntheticEvent, useRef } from "react";
+import { type SyntheticEvent, useRef, useState } from "react";
+import DatasetOutliner from "src/components/DatasetOutliner";
+import axios from "axios";
 
 const Tool: NextPage = () => {
   const inputFile = useRef<HTMLInputElement | null>(null);
+  const [file, setFile] = useState<File | undefined>(undefined);
+  const handleChange = (e: SyntheticEvent) => {
+    e.preventDefault();
+    if (e.currentTarget instanceof HTMLInputElement) {
+      if (e.currentTarget.files) {
+        setFile(e.currentTarget.files[0]);
+      }
+    }
+    const fd = new FormData();
+    if (file != undefined) fd.append("file", file);
+    const res = axios.post("/api/dataset/load", fd, {
+      headers: { "Content-Type": "multipart/form-data" },
+    });
+  };
   const openDataset = (e: SyntheticEvent) => {
-    e.preventDefault()
-    if(inputFile.current) {
+    e.preventDefault();
+    if (inputFile.current) {
       inputFile.current.click();
     }
-
   };
   return (
     <>
@@ -30,7 +45,14 @@ const Tool: NextPage = () => {
             </Link>
           </nav>
         </div>
-        <input type='file' id='file' ref={inputFile} style={{ display: 'none' }} />
+        <DatasetOutliner file={file} />
+        <input
+          type="file"
+          id="file"
+          onChange={handleChange}
+          ref={inputFile}
+          style={{ display: "none" }}
+        />
       </main>
     </>
   );
