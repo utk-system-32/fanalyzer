@@ -4,6 +4,7 @@ import Animate from "../components/Animate";
 import InitialView from "../components/InitialView";
 import Layout from "../components/Layout";
 import Image from "next/image";
+
 const Home: NextPage = () => {
   return (
     <Layout

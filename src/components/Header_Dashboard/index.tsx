@@ -29,8 +29,8 @@ const Header_Dashboard: FunctionComponent = () => {
             Fanalyzer
           </Link>
           <div className="ml-auto flex items-center text-xl">
-            <Link href="/dashboard" className="mx-3 rounded-md">
-              Dashboard
+            <Link href="/feed" className="mx-3 rounded-md">
+              Home
             </Link>
             <Link href="/about" className="mx-3 rounded-md p-1">
               Explore
@@ -38,8 +38,8 @@ const Header_Dashboard: FunctionComponent = () => {
             <Link href="mailto:bliuag@vols.utk.edu" className="mx-3 rounded-md p-1">
               Contact
             </Link>
-            <Link href="/documentation" className="mx-3 rounded-md p-1">
-              Profile
+            <Link href="/dashboard" className="mx-3 rounded-md p-1">
+              Dashboard
             </Link>
             <Link
               href="/tool"
