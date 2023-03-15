@@ -1,8 +1,8 @@
 import { type NextPage } from "next";
-import Layout from "../../components/Layout"
-import Link from "next/link"
+import Layout from "../../components/Layout";
+import Link from "next/link";
 import { signIn, signOut, useSession } from "next-auth/react";
-import { api } from "../../utils/api"
+import { api } from "../../utils/api";
 import DashboardSidebar from "src/components/DashboardSidebar";
 import Layout_Dashboard from "src/components/Layout_Dashboard";
 
@@ -17,7 +17,7 @@ const Dashboard: NextPage = () => {
         <p className="left-[50px] text-2xl font-bold">My Creations</p>
       </div>
 
-    <AuthShowcase/>
+      <AuthShowcase />
       <form>
         <div>
           <input
@@ -39,7 +39,7 @@ const AuthShowcase: React.FC = () => {
 
   const { data: secretMessage } = api.example.getSecretMessage.useQuery(
     undefined, // no input
-    { enabled: sessionData?.user !== undefined },
+    { enabled: sessionData?.user !== undefined }
   );
 
   return (

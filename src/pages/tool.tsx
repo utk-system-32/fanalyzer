@@ -1,58 +1,74 @@
 import { type NextPage } from "next";
-import Layout_Dashboard from "../components/Layout_Dashboard";
-import Head from "next/head";
-import { title } from "process";
-import Image from "next/image";
-import CreatePost from "../components/CreatePost"
+import Dropdown from "src/components/Dropdown";
+import Link from "next/link";
+import { type SyntheticEvent, useRef, useState, useEffect } from "react";
+import DatasetOutliner from "src/components/DatasetOutliner";
+import axios from "axios";
+import CreatePost from "src/components/CreatePost";
 
 const Tool: NextPage = () => {
+  const inputFile = useRef<HTMLInputElement | null>(null);
+  const [file, setFile] = useState<File | undefined>(undefined);
+  const [data, setData] = useState(null);
+  const handleChange = (e: SyntheticEvent) => {
+    e.preventDefault();
+    if (e.currentTarget instanceof HTMLInputElement) {
+      if (e.currentTarget.files) {
+        setFile(e.currentTarget.files[0]);
+      }
+    }
+  };
+  const openDataset = (e: SyntheticEvent) => {
+    e.preventDefault();
+    if (inputFile.current) {
+      inputFile.current.click();
+    }
+  };
+
+  useEffect(() => {
+    if (file != undefined) {
+      const fd = new FormData();
+      fd.append("file", file);
+      axios
+        .post("/api/dataset/load", fd, {
+          headers: { "Content-Type": "multipart/form-data" },
+        })
+        .then((res) => console.log("response: ", res))
+        .catch((error) => console.error(error));
+    }
+  }, [file]);
   return (
-    <Layout_Dashboard
-      pageTitle="Graphing Tool"
-      metaDescription="Out-graph the competition."
-    >
-      <div className="container flex min-h-[400] w-full max-w-[1280px] flex-wrap items-center self-center py-5">
-        <div className="container flex items-center self-center">
-          <button
-            type = "submit"
-            className = "text-bold mt-auto mb-1 w-full rounded-md bg-[#ff8200] p-5 text-lg text-white shadow-md duration-300 ease-in-out hover:-translate-y-1 hover:bg-[#ff8200]/[0.9]"
-          >
-            Upload File
-          </button>
-          <h1 className="text-center text-sm">
-            Input Columns
-          </h1>
-          <input
-            type = "text"
-            className="mt-2 rounded-md border p-2 w-75"
-            placeholder="X-axis column name"
-          >
-          </input>
-          <input
-            type = "text"
-            className="mt-2 rounded-md border p-2 w-75"
-            placeholder="Y-axis column name"
-          >
-          </input>
+    <>
+      <main className="flex w-full flex-col">
+        <div className="flex w-full flex-col border-b">
+          <nav className="flex w-full max-w-[1280px] flex-row self-center  [&>div]:mx-3">
+            <Dropdown dropdownButtonText="File">
+              <button>New Visualization</button>
+              <button onClick={openDataset}>Open Dataset</button>
+            </Dropdown>
+            <Dropdown dropdownButtonText="Edit">
+              <button>Undo</button>
+              <button>Redo</button>
+            </Dropdown>
+            <Link href="/dashboard" className="ml-auto">
+              Return to Dashboard
+            </Link>
+          </nav>
         </div>
-        <div className="container flex w-full max-w-[1280px] items-center self-center py-2">
-          <Image
-            src="home_page1.svg"
-            alt="Data visualization"
-            width={200}
-            height={200}
-            className=" flex h-[100px]  w-[100px] md:ml-auto pl-1 items-center self-center"
-          />
-          <button
-            type = "submit"
-            className = "text-bold mt-auto mb-1 self-center w-100 rounded-md bg-[#ff8200] p-5 text-lg text-white shadow-md duration-300 ease-in-out hover:-translate-y-1 hover:bg-[#ff8200]/[0.9]" 
-          >
-            Create Scatterplot
-          </button>
+        <DatasetOutliner file={file} />
+        <input
+          type="file"
+          id="file"
+          onChange={handleChange}
+          ref={inputFile}
+          accept=".xls,.xlsx,.csv, text/csv,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel"
+          style={{ display: "none" }}
+        />
+        <div className="w-full max-w-[1280px] self-center">
+          <CreatePost />
         </div>
-        <CreatePost/>
-      </div>
-    </Layout_Dashboard>
+      </main>
+    </>
   );
 };
 
