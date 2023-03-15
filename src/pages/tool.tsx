@@ -1,18 +1,10 @@
 import { type NextPage } from "next";
-<<<<<<< HEAD
 import Dropdown from "src/components/Dropdown";
 import Link from "next/link";
 import { type SyntheticEvent, useRef, useState, useEffect } from "react";
 import DatasetOutliner from "src/components/DatasetOutliner";
 import axios from "axios";
 import CreatePost from "src/components/CreatePost";
-=======
-import Layout_Dashboard from "../components/Layout_Dashboard";
-import Head from "next/head";
-import { title } from "process";
-import Image from "next/image";
-import CreatePost from "../components/CreatePost"
->>>>>>> 37be4fa1b1a971fc184d553f3f3c7c43e4c9c33c
 
 const Tool: NextPage = () => {
   const inputFile = useRef<HTMLInputElement | null>(null);
@@ -72,7 +64,9 @@ const Tool: NextPage = () => {
           accept=".xls,.xlsx,.csv, text/csv,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel"
           style={{ display: "none" }}
         />
-        <CreatePost/>
+        <div className="w-full max-w-[1280px] self-center">
+          <CreatePost />
+        </div>
       </main>
     </>
   );
