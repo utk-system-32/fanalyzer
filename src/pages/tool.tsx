@@ -1,13 +1,14 @@
 import { type NextPage } from "next";
 import Dropdown from "src/components/Dropdown";
 import Link from "next/link";
-import { type SyntheticEvent, useRef, useState } from "react";
+import { type SyntheticEvent, useRef, useState, useEffect } from "react";
 import DatasetOutliner from "src/components/DatasetOutliner";
 import axios from "axios";
 
 const Tool: NextPage = () => {
   const inputFile = useRef<HTMLInputElement | null>(null);
   const [file, setFile] = useState<File | undefined>(undefined);
+  const [data, setData] = useState(null);
   const handleChange = (e: SyntheticEvent) => {
     e.preventDefault();
     if (e.currentTarget instanceof HTMLInputElement) {
@@ -15,11 +16,6 @@ const Tool: NextPage = () => {
         setFile(e.currentTarget.files[0]);
       }
     }
-    const fd = new FormData();
-    if (file != undefined) fd.append("file", file);
-    const res = axios.post("/api/dataset/load", fd, {
-      headers: { "Content-Type": "multipart/form-data" },
-    });
   };
   const openDataset = (e: SyntheticEvent) => {
     e.preventDefault();
@@ -27,6 +23,19 @@ const Tool: NextPage = () => {
       inputFile.current.click();
     }
   };
+
+  useEffect(() => {
+    if (file != undefined) {
+      const fd = new FormData();
+      fd.append("file", file);
+      axios
+        .post("/api/dataset/load", fd, {
+          headers: { "Content-Type": "multipart/form-data" },
+        })
+        .then((res) => console.log("response: ", res))
+        .catch((error) => console.error(error));
+    }
+  }, [file]);
   return (
     <>
       <main className="flex w-full flex-col">
@@ -51,6 +60,7 @@ const Tool: NextPage = () => {
           id="file"
           onChange={handleChange}
           ref={inputFile}
+          accept=".xls,.xlsx,.csv, text/csv,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel"
           style={{ display: "none" }}
         />
       </main>
