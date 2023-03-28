@@ -4,14 +4,13 @@ import Link from "next/link";
 import { type SyntheticEvent, useRef, useState, useEffect } from "react";
 import DatasetOutliner from "src/components/DatasetOutliner";
 import axios from "axios";
-import CreatePost from "src/components/CreatePost";
-import { Canvas, useFrame } from "@react-three/fiber";
-import { BoxGeometry } from "three";
+import { Canvas } from "@react-three/fiber";
+import type CSVRow from "src/types/csv-row";
 
 const Tool: NextPage = () => {
   const inputFile = useRef<HTMLInputElement | null>(null);
   const [file, setFile] = useState<File | undefined>(undefined);
-  const [data, setData] = useState(null);
+  const [data, setData] = useState<CSVRow[] | null>(null);
   const handleChange = (e: SyntheticEvent) => {
     e.preventDefault();
     if (e.currentTarget instanceof HTMLInputElement) {
@@ -70,17 +69,18 @@ const Tool: NextPage = () => {
         .post("/api/dataset/load", fd, {
           headers: { "Content-Type": "multipart/form-data" },
         })
-        .then((res) => console.log("response: ", setData(res.data)))
+        .then((res) =>
+          //TODO: Error handling here. Check response status before setting data.
+          setData(JSON.parse(res.data.data))
+        )
         .catch((error) => console.error(error));
     }
   }, [file]);
-
-  console.log(data);
   return (
     <>
-      <main className="flex w-full flex-col">
-        <div className="flex w-full flex-col border-b">
-          <nav className="flex w-full max-w-[1280px] flex-row self-center  [&>div]:mx-3">
+      <main className="relative flex h-screen w-full flex-col">
+        <div className="fixed z-50 flex w-full flex-col border-b bg-white">
+          <nav className="flex w-full max-w-[1280px] flex-row  self-center bg-white [&>div]:mx-3">
             <Dropdown dropdownButtonText="File">
               <button>New Visualization</button>
               <button onClick={openDataset}>Open Dataset</button>
@@ -94,7 +94,7 @@ const Tool: NextPage = () => {
             </Link>
           </nav>
         </div>
-        <DatasetOutliner file={file} />
+        <div className="h-[25px] w-full"></div>
         <input
           type="file"
           id="file"
@@ -103,24 +103,14 @@ const Tool: NextPage = () => {
           accept=".xls,.xlsx,.csv, text/csv,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel"
           style={{ display: "none" }}
         />
-        <div className="w-full max-w-[1280px] self-center">
-          <CreatePost />
-        </div>
-        <div>
-          <Canvas className="bg-black">
-            <ambientLight intensity={0.1} />
-            <directionalLight color="red" position={[0, 0, 5]} />
-            {data &&
-              data.rows &&
-              data.rows.map((coords) => {
-                return (
-                  <mesh key={coords[0]} position={[...coords, 0.0]}>
-                    <boxGeometry />
-                    <meshStandardMaterial />
-                  </mesh>
-                );
-              })}
-          </Canvas>
+        <div className="flex h-full">
+          <DatasetOutliner data={data} />
+          <div className="h-full w-full">
+            <Canvas className="bg-gray-100">
+              <ambientLight intensity={0.1} />
+              <directionalLight color="red" position={[0, 0, 5]} />
+            </Canvas>
+          </div>
         </div>
       </main>
     </>

@@ -1,17 +1,20 @@
 import { useEffect, type FunctionComponent } from "react";
+import type CSVRow from "src/types/csv-row";
 interface Props {
-  file?: File | null;
+  data?: CSVRow[] | null;
 }
 
-const DatasetOutliner: FunctionComponent<Props> = ({ file }) => {
+const DatasetOutliner: FunctionComponent<Props> = ({ data }) => {
   //Ideas: Make an API call to read the file and then return the JSON...
   //Try to load it client side?
   useEffect(() => {
-    console.log(file);
-  }, [file]);
+    console.log(data);
+  }, [data]);
   return (
-    <section>
-      <h1>Testing!</h1>
+    <section className="bg-white-400 h-full min-w-[300px] border-r ">
+      {data && (
+        <h1 className="pt-1 text-center text-xl font-semibold">Headers</h1>
+      )}
     </section>
   );
 };
