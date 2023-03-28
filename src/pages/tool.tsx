@@ -80,7 +80,7 @@ const Tool: NextPage = () => {
     <>
       <main className="relative flex h-screen w-full flex-col">
         <div className="fixed z-50 flex w-full flex-col border-b bg-white">
-          <nav className="flex w-full max-w-[1280px] flex-row  self-center bg-white [&>div]:mx-3">
+          <nav className="flex w-full flex-row self-center  bg-white px-3 [&>div]:mx-3 [&>div:nth-child(1)]:ml-0">
             <Dropdown dropdownButtonText="File">
               <button>New Visualization</button>
               <button onClick={openDataset}>Open Dataset</button>
