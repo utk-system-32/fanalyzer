@@ -41,7 +41,7 @@ const DatasetOutliner: FunctionComponent<Props> = ({ data }) => {
         Please select the column that will represent the x coordinates of the X
         axis.
       </p>
-      <select className="w-full border bg-white p-2 text-sm">
+      <select className="mb-5 w-full border bg-white p-2 text-sm">
         <option value="">Please select a column.</option>
         <ColumnSelectOptions data={data} />
       </select>
