@@ -34,4 +34,20 @@ export const postRouter = createTRPCRouter({
       }
     });
   }),
+
+  getFollowingPosts: publicProcedure.input(z.string()).query(({ ctx, input }) => {
+    return ctx.prisma.post.findMany({
+      where: {
+        author: {
+          followers: {
+            some: {
+              follower: {
+                id: ctx.session?.user?.id
+              }
+            }
+          }
+        }
+      }
+    });
+  }),
 });

@@ -1,7 +1,7 @@
 import { type NextPage } from "next";
 import Layout_Dashboard from "../components/Layout_Dashboard"
 import Link from "next/link"
-import MyPosts from "../components/AllPosts"
+import Posts from "../components/Posts"
 
 const Feed: NextPage = () => {
     return(
@@ -44,7 +44,7 @@ const Feed: NextPage = () => {
       <p className="left-[50px] font-bold text-2xl">My Feed</p>
     </div>
 
-    <MyPosts/>
+    <Posts mode="following"/>
 
     </Layout_Dashboard>
 

@@ -1,7 +1,7 @@
 import { type NextPage } from "next";
 import Layout_Dashboard from "../../components/Layout_Dashboard"
 import Link from "next/link"
-import MyPosts from "../../components/MyPosts"
+import Posts from "../../components/Posts"
 
 const Dashboard: NextPage = () => {
     return(
@@ -50,7 +50,7 @@ const Dashboard: NextPage = () => {
       </div>
     </form>
 
-    <MyPosts/>
+    <Posts mode="my"/>
 
     </Layout_Dashboard>
 

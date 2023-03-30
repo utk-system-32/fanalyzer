@@ -7,15 +7,7 @@ export const userRouter = createTRPCRouter({
     return ctx.prisma.user.findMany();
   }),
 
-  getUserById: publicProcedure.input(z.string()).query(({ ctx, input }) => {
-    return ctx.prisma.user.findMany({
-      where: {
-        id: input,
-      }
-    });
-  }),
-
-  getIdByUsername: publicProcedure.input(z.string()).query(({ ctx, input }) => {
+  getUserByUsername: publicProcedure.input(z.string()).query(({ ctx, input }) => {
     return ctx.prisma.user.findUnique({
       where: {
         username: input,
@@ -23,7 +15,7 @@ export const userRouter = createTRPCRouter({
     });
   }),
 
-  getUserByUsername: publicProcedure
+  getUserByUsernameMut: publicProcedure
   .input(z.string())
   .mutation(({ ctx, input }) => {
    return ctx.prisma.user.findMany({
@@ -32,4 +24,29 @@ export const userRouter = createTRPCRouter({
      } 
    })
  }),
+
+ getUserFollowers: publicProcedure.input(z.string()).query(({ ctx, input }) => {
+  return ctx.prisma.user.count({
+    where: {
+      following: {
+        some: {
+          followingId: input
+        }
+      }
+    }
+  });
+}),
+
+ getUserFollowing: publicProcedure.input(z.string()).query(({ ctx, input }) => {
+  return ctx.prisma.user.count({
+    where: {
+      followers: {
+        some: {
+          followerId: input
+        }
+      }
+    }
+  });
+}),
+ 
 });
