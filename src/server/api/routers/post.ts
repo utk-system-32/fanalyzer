@@ -15,11 +15,23 @@ export const postRouter = createTRPCRouter({
     })
   }),
 
-  getByUser: publicProcedure.input(z.string()).query(({ ctx, input }) => {
+  getAllPosts: publicProcedure.input(z.string()).query(({ ctx, input }) => {
+    return ctx.prisma.post.findMany();
+  }),
+
+  getMyPosts: publicProcedure.input(z.string()).query(({ ctx, input }) => {
     return ctx.prisma.post.findMany({
       where: {
         authorId: ctx.session?.user?.id,
       }
     });
-  })
+  }),
+
+  getUserPosts: publicProcedure.input(z.string()).query(({ ctx, input }) => {
+    return ctx.prisma.post.findMany({
+      where: {
+        authorId: input,
+      }
+    });
+  }),
 });
