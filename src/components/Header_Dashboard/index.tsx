@@ -29,17 +29,14 @@ const Header_Dashboard: FunctionComponent = () => {
             Fanalyzer
           </Link>
           <div className="ml-auto flex items-center text-xl">
-            <Link href="/feed" className="mx-3 rounded-md">
-              Home
+            <Link href="/dashboard" className="mx-3 rounded-md">
+              Dashboard
             </Link>
-            <Link href="/about" className="mx-3 rounded-md p-1">
+            <Link href="/explore" className="mx-3 rounded-md p-1">
               Explore
             </Link>
-            <Link href="mailto:bliuag@vols.utk.edu" className="mx-3 rounded-md p-1">
-              Contact
-            </Link>
-            <Link href="/dashboard" className="mx-3 rounded-md p-1">
-              Dashboard
+            <Link href="/feed" className="mx-3 rounded-md p-1">
+              Feed
             </Link>
             <Link
               href="/tool"
