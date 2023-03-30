@@ -2,7 +2,9 @@ import { type NextApiRequest, type NextApiResponse } from "next";
 import { appRouter } from "../../../server/api/root";
 import { createTRPCContext } from "../../../server/api/trpc";
 import { IncomingForm, File } from "formidable";
-import { Workbook } from "exceljs";
+import csv from "csv-parser";
+import { createReadStream } from "fs";
+import type CSVRow from "src/types/csv-row";
 
 export const config = {
   api: {
@@ -23,7 +25,6 @@ const datasetTestHandler = async (
     form.parse(req, (err, fields, files) => {
       if (files) {
         const file = files["file"];
-        const workbook = new Workbook();
         //Check the file extension and MIME Type
         //csv files can have text/csv and application/vnd.mx-excel as their MIME types.
         if (file instanceof File && !(file instanceof Array)) {
@@ -35,22 +36,16 @@ const datasetTestHandler = async (
           ) {
             console.log("File is CSV.");
             //TODO: Make interface for this.
-            let data = { columns: [], rows: [] };
-            workbook.csv
-              .readFile(file.filepath)
-              .then((worksheet) => {
-                worksheet.eachRow((row, rowNumber) => {
-                  console.log(row.values);
-                  if (rowNumber == 1) {
-                    data["columns"] = row.values.slice(1);
-                  } else {
-                    data["rows"].push(row.values.slice(1));
-                  }
-                });
-                //Send CSV data back to the frontend.
-                res.status(200).json(data);
-              })
-              .catch((error) => console.error(error));
+            const results: CSVRow[] = [];
+            //Read the file
+            createReadStream(file.filepath)
+              .pipe(csv())
+              .on("data", (data: CSVRow) => results.push(data))
+              .on("end", () => {
+                console.log("Successfully read file.");
+                console.log(results);
+                res.status(200).json({ data: JSON.stringify(results) });
+              });
             return;
           }
         }
