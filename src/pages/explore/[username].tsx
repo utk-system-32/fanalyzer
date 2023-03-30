@@ -1,8 +1,8 @@
 import { type NextPage } from "next";
 import { useRouter } from 'next/router'
 import Layout_Dashboard from "../../components/Layout_Dashboard"
-import Link from "next/link"
-import Posts from "../../components/Posts"
+import UserPosts from "../../components/UserPosts"
+import Profile from "../../components/Profile"
 
 const UserPage: NextPage = () => {
     const router = useRouter()
@@ -13,7 +13,8 @@ const UserPage: NextPage = () => {
         metaDescription="A collection of posts by the user and their followers"
     > 
 
-    <Posts userId={username}/>
+    <Profile userId={username}/>
+    <UserPosts userId={username}/>
 
     </Layout_Dashboard>
 

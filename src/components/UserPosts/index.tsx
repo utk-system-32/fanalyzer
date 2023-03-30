@@ -1,7 +1,10 @@
 import { api } from '../../utils/api'
 
-function MyPosts() {
-    const postQuery = api.post.getMyPosts.useQuery("");
+function UserPosts(username) {
+    if (!username || username.userId === '') return (null);
+    const usernameQuery = api.user.getUserByUsername.useQuery(username.userId);
+    let userId = usernameQuery.data?.id;
+    const postQuery = api.post.getUserPosts.useQuery(userId);
     
     if (postQuery.isLoading) {
       return <p>Loading...</p>
@@ -20,4 +23,4 @@ function MyPosts() {
   )
 }
 
-export default MyPosts;
+export default UserPosts;

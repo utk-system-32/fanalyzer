@@ -1,7 +1,7 @@
 import { type NextPage } from "next";
 import Layout_Dashboard from "../../components/Layout_Dashboard"
 import UserSearch from "../../components/UserSearch"
-import AllPosts from "../../components/AllPosts"
+import Posts from "../../components/Posts"
 
 const Feed: NextPage = () => {
     return(
@@ -14,7 +14,7 @@ const Feed: NextPage = () => {
       <p className="left-[50px] font-bold text-2xl">Explore</p>
     </div>
     <UserSearch/>
-    <AllPosts/>
+    <Posts mode="all"/>
     </Layout_Dashboard>
 
     );

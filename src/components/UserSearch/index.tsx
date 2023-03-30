@@ -8,7 +8,7 @@ const SearchBar: FunctionComponent = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [searchResults, setSearchResults] = useState([]);
 
-  const res = api.user.getUserByUsername.useMutation();
+  const res = api.user.getUserByUsernameMut.useMutation();
 
   const handleSearch = async (e) => {
     e.preventDefault();

@@ -3,21 +3,31 @@ import { createTRPCRouter, publicProcedure, protectedProcedure } from "../trpc";
 
 export const followRouter = createTRPCRouter({
   followUser: publicProcedure
-   .input(z.object({ user: z.string() }))
+   .input(z.string())
    .mutation(({ ctx, input }) => {
     return ctx.prisma.follows.create({
       data: {
-        follower: { connect: { id: ctx.session?.user?.id } },
-        following: { connect: { id: input.user } },
+        follower: { 
+          connect: { 
+            id: ctx.session?.user?.id 
+          } 
+        },
+        following: { 
+          connect: { 
+            id: input
+          } 
+        },
       }
     })
   }),
 
-  getByUser: publicProcedure.input(z.string()).query(({ ctx, input }) => {
-    return ctx.prisma.post.findMany({
+  userIsFollowing: publicProcedure.input(z.string()).query(({ ctx, input }) => {
+    return ctx.prisma.follows.findMany({
       where: {
-        authorId: ctx.session?.user?.id,
+        followerId: ctx.session?.user?.id,
+        followingId: input
       }
     });
-  })
+  }),
+
 });
