@@ -13,6 +13,7 @@ const Dropdown: FunctionComponent<Props> = ({
   children,
 }) => {
   const handleClick = (e: SyntheticEvent) => {
+    e.preventDefault();
     setDisplay(!display);
   };
   const [display, setDisplay] = useState(false);

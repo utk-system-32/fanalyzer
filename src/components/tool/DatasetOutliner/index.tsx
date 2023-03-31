@@ -31,6 +31,9 @@ const DatasetOutliner: FunctionComponent<Props> = ({ data }) => {
       </p>
       <select className="mb-5 w-full border bg-white p-2 text-sm">
         <option value="">Please select a visualization preset.</option>
+        <option value="scatter">Scatter</option>
+        <option value="bar">Bar</option>
+        <option value="pie">Pie</option>
       </select>
       <hr />
       <h1 className="mt-5 text-center text-2xl font-semibold">

@@ -21,9 +21,8 @@ const Home: NextPage = () => {
               <span className="text-[#FF8200]">easy.</span>
             </h1>
             <p className="pb-1 text-xl">
-              Fanalyzer allows coaches to input team or individual player data, create
-              visualizations, and share them with
-              their team.
+              Fanalyzer allows coaches to input team or individual player data,
+              create visualizations, and share them with their team.
             </p>
           </div>
           <Image
@@ -51,7 +50,8 @@ const Home: NextPage = () => {
               for your sports data
             </h1>
             <p className="pb-1 text-xl">
-              Our visualization tools will help you efficiently share data that is visually pleasing and insightful.
+              Our visualization tools will help you efficiently share data that
+              is visually pleasing and insightful.
             </p>
           </div>
         </div>
@@ -65,39 +65,43 @@ const Home: NextPage = () => {
             </h2>
             <div className="grid grid-cols-4 gap-10">
               <div className="flex flex-col items-center text-2xl">
-                <Image 
-                  src = "/scatter.png" 
-                  alt = "scatter plot icon"
-                  width = {200}
-                  height = {200}
-                  className="h-10 w-10 flex-col md:h-20 md:w-20" />
+                <Image
+                  src="/scatter.png"
+                  alt="scatter plot icon"
+                  width={200}
+                  height={200}
+                  className="h-10 w-10 flex-col md:h-20 md:w-20"
+                />
                 <span>Scatterplot</span>
               </div>
               <div className="flex flex-col items-center text-2xl">
                 <Image
-                  src = "/bar.png"
-                  alt = "bar graph icon"
-                  width = {200}
-                  height = {200}
-                  className="h-10 w-10 flex-col md:h-20 md:w-20" />
+                  src="/bar.png"
+                  alt="bar graph icon"
+                  width={200}
+                  height={200}
+                  className="h-10 w-10 flex-col md:h-20 md:w-20"
+                />
                 Bar Graph
               </div>
               <div className="flex flex-col items-center text-2xl">
                 <Image
-                  src = "/pie.png"
-                  alt = "pie chart icon"
-                  width = {200}
-                  height = {200}
-                  className="h-10 w-10 flex-col md:h-20 md:w-20" />
+                  src="/pie.png"
+                  alt="pie chart icon"
+                  width={200}
+                  height={200}
+                  className="h-10 w-10 flex-col md:h-20 md:w-20"
+                />
                 Pie Chart
               </div>
               <div className="flex flex-col items-center text-2xl">
-                <Image 
-                  src = "/heat.png"
-                  alt = "heat map icon"
-                  width = {200}
-                  height = {200}
-                  className="h-10 w-10 flex-col md:h-20 md:w-20" />
+                <Image
+                  src="/heat.png"
+                  alt="heat map icon"
+                  width={200}
+                  height={200}
+                  className="h-10 w-10 flex-col md:h-20 md:w-20"
+                />
                 Heatmap
               </div>
             </div>
@@ -114,35 +118,39 @@ const Home: NextPage = () => {
             <div className="grid grid-cols-4 gap-10">
               <div className="flex flex-col items-center text-2xl">
                 <Image
-                  src= "/csv_icon.png"
-                  alt = "csv icon"
-                  width = {200}
-                  height = {200}
-                  className="h-10 w-10 flex-col md:h-20 md:w-20" />
+                  src="/csv_icon.png"
+                  alt="csv icon"
+                  width={200}
+                  height={200}
+                  className="h-10 w-10 flex-col md:h-20 md:w-20"
+                />
               </div>
               <div className="flex flex-col items-center text-2xl">
                 <Image
-                  src = "/xlsx_icon.png"
-                  alt = "xlsx icon"
-                  width = {200}
-                  height = {200}
-                  className="h-10 w-10 flex-col md:h-20 md:w-20" />
+                  src="/xlsx_icon.png"
+                  alt="xlsx icon"
+                  width={200}
+                  height={200}
+                  className="h-10 w-10 flex-col md:h-20 md:w-20"
+                />
               </div>
               <div className="flex flex-col items-center text-2xl">
-                <Image 
-                  src = "/json_icon.png"
-                  alt = "json icon"
-                  width = {200}
-                  height = {200}
-                  className="h-10 w-10 flex-col md:h-20 md:w-20" />
+                <Image
+                  src="/json_icon.png"
+                  alt="json icon"
+                  width={200}
+                  height={200}
+                  className="h-10 w-10 flex-col md:h-20 md:w-20"
+                />
               </div>
               <div className="flex flex-col items-center text-2xl">
-                <Image 
-                  src = "/xml_icon.png"
-                  alt = "xml icon"
-                  width = {200}
-                  height = {200}
-                  className="h-10 w-10 flex-col md:h-20 md:w-20" />
+                <Image
+                  src="/xml_icon.png"
+                  alt="xml icon"
+                  width={200}
+                  height={200}
+                  className="h-10 w-10 flex-col md:h-20 md:w-20"
+                />
               </div>
             </div>
           </div>
