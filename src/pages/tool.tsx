@@ -13,7 +13,9 @@ const Tool: NextPage = () => {
   const inputFile = useRef<HTMLInputElement | null>(null);
   const [file, setFile] = useState<File | undefined>(undefined);
   const [data, setData] = useState<CSVRow[] | null>(null);
-  const [visualizationState, setVisualizationState] = useState<IToolOptions>();
+  const [visualizationState, setVisualizationState] = useState<IToolOptions>(
+    {}
+  );
   //Changing the uploaded dataset file
   const handleChange = (e: SyntheticEvent) => {
     e.preventDefault();
@@ -26,7 +28,10 @@ const Tool: NextPage = () => {
 
   const handleVisualizationStateChange = (e: SyntheticEvent) => {
     e.persist();
-    if (e.currentTarget instanceof HTMLInputElement) {
+    if (
+      e.currentTarget instanceof HTMLInputElement ||
+      e.currentTarget instanceof HTMLSelectElement
+    ) {
       const target = e.currentTarget;
       setVisualizationState((visualizationState) => ({
         ...visualizationState,
@@ -58,6 +63,7 @@ const Tool: NextPage = () => {
         .catch((error) => console.error(error));
     }
   }, [file]);
+  console.log(visualizationState);
   return (
     <>
       <main className="relative flex h-screen w-full flex-col">
@@ -69,7 +75,11 @@ const Tool: NextPage = () => {
           handleVisualizationState={handleVisualizationStateChange}
         />
         <div className="flex h-full">
-          <DatasetOutliner data={data} />
+          <DatasetOutliner
+            data={data}
+            visualizationState={visualizationState}
+            handleVisualizationState={handleVisualizationStateChange}
+          />
           <div className="h-full w-full">
             <Canvas className="bg-gray-100">
               <ambientLight intensity={0.1} />

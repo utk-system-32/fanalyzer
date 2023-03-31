@@ -1,7 +1,10 @@
-import { useEffect, type FunctionComponent } from "react";
+import { useEffect, type FunctionComponent, type SyntheticEvent } from "react";
+import type IToolOptions from "src/types/tool-options";
 import type CSVRow from "src/types/csv-row";
 interface Props {
   data?: CSVRow[] | null;
+  visualizationState?: IToolOptions;
+  handleVisualizationState(e: SyntheticEvent): void;
 }
 
 const ColumnSelectOptions: FunctionComponent<Props> = ({ data }) => {
@@ -18,7 +21,11 @@ const ColumnSelectOptions: FunctionComponent<Props> = ({ data }) => {
   );
 };
 
-const DatasetOutliner: FunctionComponent<Props> = ({ data }) => {
+const DatasetOutliner: FunctionComponent<Props> = ({
+  data,
+  visualizationState,
+  handleVisualizationState,
+}) => {
   useEffect(() => {
     console.log(data);
   }, [data]);
@@ -29,8 +36,13 @@ const DatasetOutliner: FunctionComponent<Props> = ({ data }) => {
       <p className="mb-2 text-sm font-light text-gray-500">
         Please select the visualization preset that you would like to use.
       </p>
-      <select className="mb-5 w-full border bg-white p-2 text-sm">
-        <option value="">Please select a visualization preset.</option>
+      <select
+        name="visualizationType"
+        value={visualizationState && visualizationState.visualizationType}
+        onChange={handleVisualizationState}
+        className="mb-5 w-full border bg-white p-2 text-sm"
+      >
+        <option value="">Please select a visualization type.</option>
         <option value="scatter">Scatter</option>
         <option value="bar">Bar</option>
         <option value="pie">Pie</option>
