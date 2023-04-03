@@ -6,8 +6,11 @@ interface Props {
   visualizationState?: IToolOptions;
   handleVisualizationState(e: SyntheticEvent): void;
 }
+interface CSOProps {
+  data?: CSVRow[] | null;
+}
 
-const ColumnSelectOptions: FunctionComponent<Props> = ({ data }) => {
+const ColumnSelectOptions: FunctionComponent<CSOProps> = ({ data }) => {
   return (
     <>
       {data &&
@@ -56,7 +59,16 @@ const DatasetOutliner: FunctionComponent<Props> = ({
         Please select the column that will represent the x coordinates of the X
         axis.
       </p>
-      <select className="mb-5 w-full border bg-white p-2 text-sm">
+      <select
+        name="preferredXColumn"
+        id="scatterPlotOptions"
+        value={
+          visualizationState &&
+          visualizationState.scatterPlotOptions?.preferredXColumn
+        }
+        onChange={handleVisualizationState}
+        className="mb-5 w-full border bg-white p-2 text-sm"
+      >
         <option value="">Please select a column.</option>
         <ColumnSelectOptions data={data} />
       </select>
@@ -65,25 +77,50 @@ const DatasetOutliner: FunctionComponent<Props> = ({
         Please select the column that will represent the labels of each point on
         the x-axis.
       </p>
-      <select className="mb-5 w-full border bg-white p-2 text-sm">
+      <select
+        className="mb-5 w-full border bg-white p-2 text-sm"
+        name="preferredXTickLabelsColumn"
+        value={
+          visualizationState &&
+          visualizationState.scatterPlotOptions?.preferredXTickLabelsColumn
+        }
+        onChange={handleVisualizationState}
+      >
         <option>Please select a column.</option>
         <ColumnSelectOptions data={data} />
       </select>
       <h1 className="text-lg  font-semibold">Y Column</h1>
       <p className="mb-2 text-sm font-light text-gray-500">
         Please select the column that will represent the y coordinates on the
-        x-axis.
+        y-axis.
       </p>
-      <select className="mb-5 w-full border bg-white p-2 text-sm">
+      <select
+        className="mb-5 w-full border bg-white p-2 text-sm"
+        name="preferredYColumn"
+        id="scatterPlotOptions"
+        value={
+          visualizationState &&
+          visualizationState.scatterPlotOptions?.preferredYColumn
+        }
+        onChange={handleVisualizationState}
+      >
         <option>Please select a column.</option>
         <ColumnSelectOptions data={data} />
       </select>
       <h1 className="text-lg font-semibold">Y Column Labels</h1>
       <p className="mb-2 text-sm font-light text-gray-500">
         Please select the column that will represent the labels of each point on
-        the Y axis.
+        the y-axis.
       </p>
-      <select className="mb-5 w-full border bg-white p-2 text-sm">
+      <select
+        className="mb-5 w-full border bg-white p-2 text-sm"
+        name="preferredYTickLabelsColumn"
+        value={
+          visualizationState &&
+          visualizationState.scatterPlotOptions?.preferredYTickLabelsColumn
+        }
+        onChange={handleVisualizationState}
+      >
         <option>Please select a column.</option>
         <ColumnSelectOptions data={data} />
       </select>

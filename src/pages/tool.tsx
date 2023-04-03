@@ -33,6 +33,15 @@ const Tool: NextPage = () => {
       e.currentTarget instanceof HTMLSelectElement
     ) {
       const target = e.currentTarget;
+      if (target.id) {
+        setVisualizationState((visualizationState) => ({
+          ...visualizationState,
+          [target.id]: {
+            ...visualizationState[target.id],
+            [target.name]: target.value,
+          },
+        }));
+      }
       setVisualizationState((visualizationState) => ({
         ...visualizationState,
         [target.name]: target.value,
@@ -63,7 +72,6 @@ const Tool: NextPage = () => {
         .catch((error) => console.error(error));
     }
   }, [file]);
-  console.log(visualizationState);
   return (
     <>
       <main className="relative flex h-screen w-full flex-col">
@@ -84,9 +92,13 @@ const Tool: NextPage = () => {
             <Canvas className="bg-gray-100">
               <ambientLight intensity={0.1} />
               <CameraControls />
-              {visualizationState?.visualizationType == "scatter" && (
-                <ScatterPlot xData={[]} yData={[]} />
-              )}
+              {visualizationState &&
+                visualizationState.visualizationType == "scatter" && (
+                  <ScatterPlot
+                    data={data}
+                    visualizationState={visualizationState}
+                  />
+                )}
             </Canvas>
           </div>
         </div>
