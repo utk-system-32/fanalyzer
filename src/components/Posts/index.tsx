@@ -5,7 +5,7 @@ function Posts(mode) {
     const date: Date = new Date();
     let dateString = ""
     //const postQuery = api.post.getByUser.useQuery("test");
-    
+
     const postQuery = 
       (mode.mode === "all") ?  api.post.getAllPosts.useQuery("") 
     : (mode.mode === "following") ? api.post.getFollowingPosts.useQuery("")
@@ -19,13 +19,17 @@ function Posts(mode) {
       {postQuery.data?.map((post) => {
         const date = post.createdAt
         dateString = date.toString();
-
+        //const nameString = api.user.getUserByID.useQuery(post.authorId)
+        const nameString = "John Doe"
+        const emptyString = " "
+        
         return (
           <article key={post.id}>
-            <p>{post.user?.name}</p>
+            <p>{nameString}</p>
             <p className="font-bold">{post.title}</p>
             <p>{post.content}</p>
             <p>{dateString}</p>
+            <p>{emptyString}</p>
           </article>
         )
       })}
