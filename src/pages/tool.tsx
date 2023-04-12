@@ -27,7 +27,6 @@ const Tool: NextPage = () => {
     }
   };
 
-
   useEffect(() => {
     if (file != undefined) {
       const fd = new FormData();
@@ -73,7 +72,7 @@ const Tool: NextPage = () => {
         <div className="flex h-full">
           <DatasetOutliner data={data} />
           <div className="h-full w-full">
-            {data && <D3Scatter data={data}/>}
+            {data && <D3Scatter data={data} />}
           </div>
         </div>
       </main>
