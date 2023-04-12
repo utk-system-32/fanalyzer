@@ -19,9 +19,6 @@ const ColumnSelectOptions: FunctionComponent<Props> = ({ data }) => {
 };
 
 const DatasetOutliner: FunctionComponent<Props> = ({ data }) => {
-  useEffect(() => {
-    console.log(data);
-  }, [data]);
   return (
     <section className="bg-white-400 h-full min-w-[300px] border-r px-3">
       <h1 className="text-center text-2xl font-semibold">Visualizations</h1>
