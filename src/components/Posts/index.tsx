@@ -1,5 +1,5 @@
 import { api } from '../../utils/api'
-
+import Image from "next/image";
 
 function Posts(mode) {
     // get all/following/my posts depending on mode
@@ -21,9 +21,9 @@ function Posts(mode) {
         const date = post.createdAt
 
         dateString = date.toString();
-        //const nameString = api.user.getUserByID.useQuery(post.authorId)
+        ///const nameString = api.user.getUserByID.useQuery(post.authorId)
         const nameString = "John Doe"
-        const numLikes = 5
+        const numLikes = post.likes
 
         const tempString = numLikes.toString()
         const likeString = tempString + " likes"
@@ -48,7 +48,7 @@ function Posts(mode) {
         // profile pic at the top left of the username
         return (
           <article key={post.id}>
-            <div className="h-full w-80 overflow-y-auto border-2 border-[#ff8200] bg-[#ededed] px-4 py-1">
+            <div className="h-full w-96 overflow-y-auto border-2 border-[#ff8200] bg-[#ededed] px-5 py-1">
               <p className="font-semibold">{nameString}</p>
               <p className="text-3xl">{post.title}</p>
               <p>{post.content}</p>
