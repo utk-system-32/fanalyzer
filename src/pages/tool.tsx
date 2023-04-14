@@ -4,14 +4,17 @@ import Link from "next/link";
 import { type SyntheticEvent, useRef, useState, useEffect } from "react";
 import DatasetOutliner from "src/components/DatasetOutliner";
 import axios from "axios";
-import { Canvas } from "@react-three/fiber";
 import type CSVRow from "src/types/csv-row";
 import D3Scatter from "src/components/D3Scatter";
+import IToolOptions from "src/utils/tool-options";
 
 const Tool: NextPage = () => {
   const inputFile = useRef<HTMLInputElement | null>(null);
   const [file, setFile] = useState<File | undefined>(undefined);
   const [data, setData] = useState<CSVRow[] | null>(null);
+  const [visualizationState, setVisualizationState] = useState<IToolOptions>(
+    {}
+  );
   const handleChange = (e: SyntheticEvent) => {
     e.preventDefault();
     if (e.currentTarget instanceof HTMLInputElement) {
@@ -20,6 +23,31 @@ const Tool: NextPage = () => {
       }
     }
   };
+
+  const handleVisualizationStateChange = (e: SyntheticEvent) => {
+    e.persist();
+    if (
+      e.currentTarget instanceof HTMLInputElement ||
+      e.currentTarget instanceof HTMLSelectElement
+    ) {
+      const target = e.currentTarget;
+      if (target.id) {
+        setVisualizationState((visualizationState) => ({
+          ...visualizationState,
+          [target.id]: {
+            ...visualizationState[target.id],
+            [target.name]: target.value,
+          },
+        }));
+      }
+      setVisualizationState((visualizationState) => ({
+        ...visualizationState,
+        [target.name]: target.value,
+      }));
+    }
+  };
+
+
   const openDataset = (e: SyntheticEvent) => {
     e.preventDefault();
     if (inputFile.current) {
@@ -70,9 +98,9 @@ const Tool: NextPage = () => {
           style={{ display: "none" }}
         />
         <div className="flex h-full">
-          <DatasetOutliner data={data} />
+          <DatasetOutliner data={data} visualizationState={visualizationState} handleVisualizationState={handleVisualizationStateChange} />
           <div className="h-full w-full">
-            {data && <D3Scatter data={data} />}
+            {data && visualizationState && visualizationState.visualizationType == "scatter" && <D3Scatter data={data} />}
           </div>
         </div>
       </main>
