@@ -8,6 +8,7 @@ import type CSVRow from "src/types/csv-row";
 import D3Scatter from "src/components/D3Scatter";
 import IToolOptions from "src/utils/tool-options";
 
+
 const Tool: NextPage = () => {
   const inputFile = useRef<HTMLInputElement | null>(null);
   const [file, setFile] = useState<File | undefined>(undefined);
