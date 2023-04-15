@@ -33,6 +33,19 @@ export const userRouter = createTRPCRouter({
    })
  }),
 
+ updateUsername: publicProcedure
+ .input(z.string())
+ .mutation(({ ctx, input }) => {
+  return ctx.prisma.user.update({
+    where: {
+     id: ctx.session?.user?.id
+    },
+    data: {
+      username: input,
+    }
+  })
+}),
+
  getUserFollowers: publicProcedure.input(z.string()).query(({ ctx, input }) => {
   return ctx.prisma.user.count({
     where: {

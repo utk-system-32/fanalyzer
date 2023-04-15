@@ -21,6 +21,17 @@ export const followRouter = createTRPCRouter({
     })
   }),
 
+  unfollowUser: publicProcedure
+  .input(z.string())
+  .mutation(({ ctx, input }) => {
+   return ctx.prisma.follows.deleteMany({
+    where: {
+      followerId: ctx.session?.user?.id,
+      followingId: input
+    },
+ }) 
+}),
+
   userIsFollowing: publicProcedure.input(z.string()).query(({ ctx, input }) => {
     return ctx.prisma.follows.findMany({
       where: {
