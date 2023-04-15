@@ -99,8 +99,8 @@ const Tool: NextPage = () => {
         />
         <div className="flex h-full">
           <DatasetOutliner data={data} visualizationState={visualizationState} handleVisualizationState={handleVisualizationStateChange} />
-          <div className="h-full w-full">
-            {data && visualizationState && visualizationState.visualizationType == "scatter" && <D3Scatter data={data} />}
+          <div className="flex flex-col justify-center items-center w-full ml-5">
+            {data && visualizationState && visualizationState.visualizationType == "scatter" && <D3Scatter data={data} visualizationState={visualizationState}/>}
           </div>
         </div>
       </main>

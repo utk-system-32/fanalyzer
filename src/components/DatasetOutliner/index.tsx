@@ -41,14 +41,26 @@ const DatasetOutliner: FunctionComponent<Props> = ({ data, visualizationState, h
         <option value="bar">Bar Graph</option>
         <option value="histogram">Histogram</option>
       </select>
+      <h1 className="text-lg font-semibold">Visualization Title</h1>
+      <p className="mb-2 text-sm font-light text-gray-500">
+        Please enter the title of the visualization.
+      </p>
+      <input
+        name="visualizationTitle"
+        type="text"
+        value={visualizationState &&
+          visualizationState.visualizationTitle}
+        onChange={handleVisualizationState}
+        className="mb-5 w-full border bg-white p-2 text-sm" 
+        placeholder="Visualization Title"
+      />
       <hr />
       <h1 className="mt-5 text-center text-2xl font-semibold">
         Column Configuration
       </h1>
       <h1 className="text-lg font-semibold">X Column</h1>
       <p className="mb-2 text-sm font-light text-gray-500">
-        Please select the column that will represent the x coordinates of the X
-        axis.
+        Please select the column that will represent the x-coordinates of the x-axis.
       </p>
       <select
         name="preferredXColumn"
@@ -59,20 +71,20 @@ const DatasetOutliner: FunctionComponent<Props> = ({ data, visualizationState, h
         <option value="">Please select a column.</option>
         <ColumnSelectOptions data={data} />
       </select>
-      <h1 className="text-lg font-semibold">X Column Labels</h1>
+      <h1 className="text-lg font-semibold">X-Axis Label</h1>
       <p className="mb-2 text-sm font-light text-gray-500">
-        Please select the column that will represent the labels of each point on
-        the x-axis.
+        Please enter the label of the x-axis.
       </p>
-      <select
-        name="preferredXTickLabelsColumn"
+      <input
+        name="xAxisLabel"
+        type="text"
         value={visualizationState &&
-          visualizationState.scatterPlotOptions?.preferredXTickLabelsColumn}
+          visualizationState.scatterPlotOptions?.xAxisLabel}
+        id="scatterPlotOptions"
         onChange={handleVisualizationState}
-        className="mb-5 w-full border bg-white p-2 text-sm">
-        <option>Please select a column.</option>
-        <ColumnSelectOptions data={data} />
-      </select>
+        className="mb-5 w-full border bg-white p-2 text-sm" 
+        placeholder="X Axis Label"
+      />
       <h1 className="text-lg  font-semibold">Y Column</h1>
       <p className="mb-2 text-sm font-light text-gray-500">
         Please select the column that will represent the y coordinates on the
@@ -81,24 +93,26 @@ const DatasetOutliner: FunctionComponent<Props> = ({ data, visualizationState, h
       <select 
         name="preferredYColumn"
         value={visualizationState?.scatterPlotOptions?.preferredYColumn}
+        id="scatterPlotOptions"
         onChange={handleVisualizationState}
         className="mb-5 w-full border bg-white p-2 text-sm">
         <option>Please select a column.</option>
         <ColumnSelectOptions data={data} />
       </select>
-      <h1 className="text-lg font-semibold">Y Column Labels</h1>
+      <h1 className="text-lg font-semibold">Y-Axis Label</h1>
       <p className="mb-2 text-sm font-light text-gray-500">
-        Please select the column that will represent the labels of each point on
-        the Y axis.
+        Please enter a label for the the y-axis.
       </p>
-      <select 
-        name="preferredYTickLabelsColumn"
-        value={visualizationState && visualizationState.scatterPlotOptions?.preferredYTickLabelsColumn}
+      <input
+        name="yAxisLabel"
+        type="text"
+        value={visualizationState &&
+          visualizationState.scatterPlotOptions?.yAxisLabel}
+        id="scatterPlotOptions"
         onChange={handleVisualizationState}
-        className="mb-5 w-full border bg-white p-2 text-sm">
-        <option>Please select a column.</option>
-        <ColumnSelectOptions data={data} />
-      </select>
+        className="mb-5 w-full border bg-white p-2 text-sm" 
+        placeholder="Y Axis Label"
+      />
       <hr />
     </section>
   );

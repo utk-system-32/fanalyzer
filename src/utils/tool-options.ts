@@ -4,8 +4,6 @@ export default interface IToolOptions {
   scatterPlotOptions?: {
     preferredXColumn?: string;
     preferredYColumn?: string;
-    preferredXTickLabelsColumn?: string;
-    preferredYTickLabelsColumn?: string;
     xAxisLabel?: string;
     yAxisLabel?: string;
   };
