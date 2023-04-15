@@ -28,7 +28,7 @@ const D3Scatter: FunctionComponent<Props> = ({ data }) => {
     const xAxis = d3.axisBottom(xScale);
     const yAxis = d3.axisLeft(yScale);
     svg.append("g").attr("transform", `translate(0, ${450})`).call(xAxis);
-
+    
     svg.append("g").attr("transform", "translate(50, 0)").call(yAxis);
     //Add data points
     svg

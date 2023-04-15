@@ -4,9 +4,9 @@ import Link from "next/link";
 import { type SyntheticEvent, useRef, useState, useEffect } from "react";
 import DatasetOutliner from "src/components/DatasetOutliner";
 import axios from "axios";
-import { Canvas } from "@react-three/fiber";
 import type CSVRow from "src/types/csv-row";
 import D3Scatter from "src/components/D3Scatter";
+import D3Bar from "src/components/D3Bar"
 
 const Tool: NextPage = () => {
   const inputFile = useRef<HTMLInputElement | null>(null);
@@ -72,7 +72,7 @@ const Tool: NextPage = () => {
         <div className="flex h-full">
           <DatasetOutliner data={data} />
           <div className="h-full w-full">
-            {data && <D3Scatter data={data} />}
+            {data && <D3Bar data={data} />}
           </div>
         </div>
       </main>
