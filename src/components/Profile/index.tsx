@@ -1,6 +1,7 @@
 import { api } from '../../utils/api'
 import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
+import { useState } from "react"
 
 function Profile(username) {
   // wait for username to return
@@ -9,6 +10,7 @@ function Profile(username) {
 
   const { data: sessionData } = useSession();
 
+  const [hovered, setHovered] = useState(false);
   // get userId from username
   const userQuery = api.user.getUserByUsername.useQuery(username.userId);
   let userId = userQuery.data?.id;
@@ -32,12 +34,19 @@ function Profile(username) {
 
   // handle user follow
   const followMutation = api.follow.followUser.useMutation();
+  
+  // handle user unfollow
+  const unfollowMutation = api.follow.unfollowUser.useMutation();
 
   const handleFollow = () => {
     followMutation.mutate(userId);
     router.reload()
   }
 
+  const handleUnfollow = () => {
+    unfollowMutation.mutate(userId);
+    router.reload()
+  }
   // display loading while fetching API calls
   if (userQuery.isLoading || postQuery.isLoading || followerQuery.isLoading || followingQuery.isLoading) return (<div>Loading...</div>)
   return (
@@ -46,8 +55,13 @@ function Profile(username) {
         <div className="left-[50px] font-bold text-2xl p-4">{userQuery.data?.username}'s Feed</div>
         {/* Different follow button based on if user is following the user's page or not */
         isFollowingQuery.data.at(0)? 
-        <button className="text-bold mt-auto mb-1 w-100 rounded-md bg-[#58595B] p-2 text-lg text-white shadow-md duration-300 ease-in-out">
-        Following
+        <button 
+        onClick={handleUnfollow}
+        className="text-bold mt-auto mb-1 w-100 rounded-md bg-[#58595B] p-2 text-lg text-white shadow-md duration-300 ease-in-out hover:-translate-y-1 hover:bg-[#58595B]/[0.9]"
+        onMouseEnter={() => setHovered(true)}
+        onMouseLeave={() => setHovered(false)}
+        >
+        {hovered ? "Unfollow" : "Following"}
         </button>
         : <button 
         onClick={handleFollow}

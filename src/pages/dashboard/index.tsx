@@ -5,6 +5,7 @@ import { signIn, signOut, useSession } from "next-auth/react";
 import { api } from "../../utils/api";
 import DashboardSidebar from "src/components/DashboardSidebar";
 import Layout_Dashboard from "src/components/Layout_Dashboard";
+import UsernamePopUp from "src/components/UsernamePopUp";
 
 const Dashboard: NextPage = () => {
   return (
@@ -12,6 +13,7 @@ const Dashboard: NextPage = () => {
       pageTitle="My Creations"
       metaDescription="A collection of creations for the user."
     >
+      <UsernamePopUp/>
       <DashboardSidebar />
       <div className="left-[50px] p-4">
         <p className="left-[50px] text-2xl font-bold">My Creations</p>
@@ -37,16 +39,10 @@ export default Dashboard;
 const AuthShowcase: React.FC = () => {
   const { data: sessionData } = useSession();
 
-  const { data: secretMessage } = api.example.getSecretMessage.useQuery(
-    undefined, // no input
-    { enabled: sessionData?.user !== undefined }
-  );
-
   return (
     <div className="flex flex-col items-center justify-center gap-4">
       <p className="text-center text-2xl">
         {sessionData && <span>Logged in as {sessionData.user?.name}</span>}
-        {secretMessage && <span> - {secretMessage}</span>}
       </p>
       <button
         className="rounded-full bg-white/10 px-10 py-3 font-semibold no-underline transition hover:bg-white/20"
