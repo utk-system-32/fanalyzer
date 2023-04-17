@@ -1,7 +1,8 @@
+import { FunctionComponent } from 'react';
 import { api } from '../../utils/api'
 import Image from "next/image";
 
-function Posts(mode) {
+const Posts: FunctionComponent = (mode) => { 
     // get all/following/my posts depending on mode
     const date: Date = new Date();
     let dateString = ""
@@ -22,10 +23,9 @@ function Posts(mode) {
 
         dateString = date.toString();
         ///const nameString = api.user.getUserByID.useQuery(post.authorId)
-        const nameString = "John Doe"
+        const nameString = post.authorUsername;
         const numLikes = post.likes
-
-        const tempString = numLikes.toString()
+        const tempString = numLikes?.toString()
         const likeString = tempString + " likes"
 
         // store todays datetime to compare
