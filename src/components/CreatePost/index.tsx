@@ -1,14 +1,20 @@
 import { api } from '../../utils/api'
 import { FunctionComponent, useState } from 'react';
 import { useRouter } from "next/router";
+import { useSession } from "next-auth/react";
 
 interface Post {
+  username: string;
   title: string;
   content: string;
 }
 
 const CreatePost: FunctionComponent = () => {
+  const { data: sessionData } = useSession();
+  const res = api.user.getUserByID.useQuery(sessionData?.user?.id);
+
   const [post, setPost] = useState<Post>({
+    username: res.data?.username,
     title: '',
     content: ''
   });
