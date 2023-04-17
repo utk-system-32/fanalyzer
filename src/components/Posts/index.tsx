@@ -54,7 +54,7 @@ const Posts: FunctionComponent = (mode) => {
               <p>{post.content}</p>
               <p className="text-right text-xs">{dateString}</p>
               <div className="flex space-x-[585px]">
-                <div className="flex rounded border-2 border-[#000] px-1">
+                <div className="flex rounded border-[1px] border-[#000] px-1">
                   <Image
                     src="/like_icon.png"
                     width={100}
