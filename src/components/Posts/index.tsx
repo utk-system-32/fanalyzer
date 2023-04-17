@@ -48,12 +48,23 @@ const Posts: FunctionComponent = (mode) => {
         // profile pic at the top left of the username
         return (
           <article key={post.id}>
-            <div className="h-full w-96 overflow-y-auto border-2 border-[#ff8200] bg-[#ededed] px-5 py-1">
+            <div className="h-full w-[720px] overflow-y-auto rounded border-hidden border-2 hover:border-solid hover:border-[#ff8200] px-5 py-1">
               <p className="font-semibold">{nameString}</p>
               <p className="text-3xl">{post.title}</p>
               <p>{post.content}</p>
               <p className="text-right text-xs">{dateString}</p>
-              <p className= "text-right text-xs text-[#ff8200] font-bold">{likeString}</p>
+              <div className="flex space-x-[585px]">
+                <div className="flex rounded border-2 border-[#000] px-1">
+                  <Image
+                    src="/like_icon.png"
+                    width={100}
+                    height={100}
+                    className="ml-auto h-[16px]  w-[16px]"
+                  />
+                  <p className="text-xs">{"Like"}</p>
+                </div>
+                <p className= "text-right text-xs text-[#ff8200] font-bold">{likeString}</p>
+              </div>
             </div>
           </article>
         )
