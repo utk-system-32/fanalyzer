@@ -69,6 +69,7 @@ model User {
     accounts      Account[]
     sessions      Session[]
     posts         Post[]
+    visualizations Visualization[]
     followers     Follows[] @relation("following")
     following     Follows[] @relation("follower")
 }
@@ -80,4 +81,12 @@ model Follows {
   following   User @relation("following", fields: [followingId], references: [id])
   followingId String
   @@unique([followerId, followingId])
+}
+
+model Visualization {
+    id String @id @default(cuid()) @map("_id")
+    author    User     @relation(fields: [authorId], references: [id])
+    authorId String 
+    name String
+    data String
 }
