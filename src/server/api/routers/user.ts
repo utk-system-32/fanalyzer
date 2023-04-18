@@ -33,6 +33,28 @@ export const userRouter = createTRPCRouter({
    })
  }),
 
+ getSearchUsers: publicProcedure.input(z.string()).query(({ ctx, input }) => {
+  return ctx.prisma.user.findMany({
+    where: {
+      username: {
+        contains: input
+       }
+    }
+  });
+}),
+
+ userSearch: publicProcedure
+ .input(z.string())
+ .mutation(({ ctx, input }) => {
+  return ctx.prisma.user.findMany({
+    where: {
+     username: {
+      contains: input
+     }
+    } 
+  })
+}),
+
  updateUsername: publicProcedure
  .input(z.string())
  .mutation(({ ctx, input }) => {

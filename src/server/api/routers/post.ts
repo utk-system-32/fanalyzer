@@ -52,4 +52,44 @@ export const postRouter = createTRPCRouter({
       }
     });
   }),
+
+  getSearchPosts: publicProcedure.input(z.string()).query(({ ctx, input }) => {
+    return ctx.prisma.post.findMany({
+      where: {
+        OR: [
+          {
+            title: {
+              contains: input
+            }
+          },
+          {
+            content: {
+              contains: input
+            }
+          }
+        ]
+      }
+    });
+  }),
+
+  postSearch: publicProcedure
+  .input(z.string())
+  .mutation(({ ctx, input }) => {
+   return ctx.prisma.post.findMany({
+     where: {
+       OR: [
+         {
+           title: {
+             contains: input
+           }
+         },
+         {
+           content: {
+             contains: input
+           }
+         }
+       ]
+     }
+   })
+ }),
 });
