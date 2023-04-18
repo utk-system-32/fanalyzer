@@ -73,7 +73,7 @@ const Posts: FunctionComponent = (mode) => {
               <p>{post.content}</p>
               <p className="text-right text-xs">{dateString}</p>
               <div className="flex space-x-[584px]">
-                <div className="flex rounded border-[1px] border-[#000] px-1">
+                <button className="flex cursor-pointer rounded border-[1px] border-[#000] hover:border-[#ff8200] hover:border-[1px] px-1">
                   <Image
                     src="/like_icon.png"
                     width={100}
@@ -81,7 +81,7 @@ const Posts: FunctionComponent = (mode) => {
                     className="ml-auto h-[16px]  w-[16px]"
                   />
                   <p className="text-xs">{"Like"}</p>
-                </div>
+                </button>
                 <p className= "text-right text-xs text-[#ff8200] font-bold">{likeString}</p>
               </div>
               <div className="h-0 my-4"></div>
