@@ -8,7 +8,7 @@ interface Props {
 }
 interface CSOProps {
   data?: CSVRow[] | null;
-};
+}
 
 const ColumnSelectOptions: FunctionComponent<CSOProps> = ({ data }) => {
   return (
@@ -24,7 +24,11 @@ const ColumnSelectOptions: FunctionComponent<CSOProps> = ({ data }) => {
   );
 };
 
-const DatasetOutliner: FunctionComponent<Props> = ({ data, visualizationState, handleVisualizationState }) => {
+const DatasetOutliner: FunctionComponent<Props> = ({
+  data,
+  visualizationState,
+  handleVisualizationState,
+}) => {
   return (
     <section className="bg-white-400 h-full min-w-[300px] border-r px-3">
       <h1 className="text-center text-2xl font-semibold">Visualizations</h1>
@@ -32,10 +36,12 @@ const DatasetOutliner: FunctionComponent<Props> = ({ data, visualizationState, h
       <p className="mb-2 text-sm font-light text-gray-500">
         Please select the visualization preset that you would like to use.
       </p>
-      <select name="visualizationType"
+      <select
+        name="visualizationType"
         value={visualizationState && visualizationState.visualizationType}
         onChange={handleVisualizationState}
-        className="mb-5 w-full border bg-white p-2 text-sm">
+        className="mb-5 w-full border bg-white p-2 text-sm"
+      >
         <option value="">Please select a visualization preset.</option>
         <option value="scatter">Scatter Plot</option>
         <option value="bar">Bar Graph</option>
@@ -48,11 +54,36 @@ const DatasetOutliner: FunctionComponent<Props> = ({ data, visualizationState, h
       <input
         name="visualizationTitle"
         type="text"
-        value={visualizationState &&
-          visualizationState.visualizationTitle}
+        value={visualizationState && visualizationState.visualizationTitle}
         onChange={handleVisualizationState}
-        className="mb-5 w-full border bg-white p-2 text-sm" 
+        className="mb-5 w-full border bg-white p-2 text-sm"
         placeholder="Visualization Title"
+      />
+      <h1 className="text-lg font-semibold">Visualization Width</h1>
+      <p className="mb-2 text-sm font-light text-gray-500">
+        Please enter the width of the visualization.
+      </p>
+      <input
+        name="visualizationWidth"
+        type="number"
+        min="1"
+        value={visualizationState && visualizationState.visualizationWidth}
+        onChange={handleVisualizationState}
+        className="mb-5 w-full border bg-white p-2 text-sm"
+        placeholder="500"
+      />
+      <h1 className="text-lg font-semibold">Visualization Height</h1>
+      <p className="mb-2 text-sm font-light text-gray-500">
+        Please enter the width of the visualization.
+      </p>
+      <input
+        name="visualizationHeight"
+        type="number"
+        min="1"
+        value={visualizationState && visualizationState.visualizationHeight}
+        onChange={handleVisualizationState}
+        className="mb-5 w-full border bg-white p-2 text-sm"
+        placeholder="500"
       />
       <hr />
       <h1 className="mt-5 text-center text-2xl font-semibold">
@@ -60,14 +91,19 @@ const DatasetOutliner: FunctionComponent<Props> = ({ data, visualizationState, h
       </h1>
       <h1 className="text-lg font-semibold">X Column</h1>
       <p className="mb-2 text-sm font-light text-gray-500">
-        Please select the column that will represent the x-coordinates of the x-axis.
+        Please select the column that will represent the x-coordinates of the
+        x-axis.
       </p>
       <select
         name="preferredXColumn"
         id="scatterPlotOptions"
-        value={visualizationState && visualizationState.scatterPlotOptions?.preferredXColumn}
+        value={
+          visualizationState &&
+          visualizationState.scatterPlotOptions?.preferredXColumn
+        }
         onChange={handleVisualizationState}
-        className="mb-5 w-full border bg-white p-2 text-sm">
+        className="mb-5 w-full border bg-white p-2 text-sm"
+      >
         <option value="">Please select a column.</option>
         <ColumnSelectOptions data={data} />
       </select>
@@ -78,11 +114,13 @@ const DatasetOutliner: FunctionComponent<Props> = ({ data, visualizationState, h
       <input
         name="xAxisLabel"
         type="text"
-        value={visualizationState &&
-          visualizationState.scatterPlotOptions?.xAxisLabel}
+        value={
+          visualizationState &&
+          visualizationState.scatterPlotOptions?.xAxisLabel
+        }
         id="scatterPlotOptions"
         onChange={handleVisualizationState}
-        className="mb-5 w-full border bg-white p-2 text-sm" 
+        className="mb-5 w-full border bg-white p-2 text-sm"
         placeholder="X Axis Label"
       />
       <h1 className="text-lg  font-semibold">Y Column</h1>
@@ -90,12 +128,13 @@ const DatasetOutliner: FunctionComponent<Props> = ({ data, visualizationState, h
         Please select the column that will represent the y coordinates on the
         y-axis.
       </p>
-      <select 
+      <select
         name="preferredYColumn"
         value={visualizationState?.scatterPlotOptions?.preferredYColumn}
         id="scatterPlotOptions"
         onChange={handleVisualizationState}
-        className="mb-5 w-full border bg-white p-2 text-sm">
+        className="mb-5 w-full border bg-white p-2 text-sm"
+      >
         <option>Please select a column.</option>
         <ColumnSelectOptions data={data} />
       </select>
@@ -106,11 +145,13 @@ const DatasetOutliner: FunctionComponent<Props> = ({ data, visualizationState, h
       <input
         name="yAxisLabel"
         type="text"
-        value={visualizationState &&
-          visualizationState.scatterPlotOptions?.yAxisLabel}
+        value={
+          visualizationState &&
+          visualizationState.scatterPlotOptions?.yAxisLabel
+        }
         id="scatterPlotOptions"
         onChange={handleVisualizationState}
-        className="mb-5 w-full border bg-white p-2 text-sm" 
+        className="mb-5 w-full border bg-white p-2 text-sm"
         placeholder="Y Axis Label"
       />
       <hr />

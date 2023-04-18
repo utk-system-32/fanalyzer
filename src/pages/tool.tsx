@@ -6,9 +6,8 @@ import DatasetOutliner from "src/components/DatasetOutliner";
 import axios from "axios";
 import type CSVRow from "src/types/csv-row";
 import D3Scatter from "src/components/D3Scatter";
-import D3Bar from "src/components/D3Bar"
+import D3Bar from "src/components/D3Bar";
 import IToolOptions from "src/utils/tool-options";
-
 
 const Tool: NextPage = () => {
   const inputFile = useRef<HTMLInputElement | null>(null);
@@ -48,7 +47,6 @@ const Tool: NextPage = () => {
       }));
     }
   };
-
 
   const openDataset = (e: SyntheticEvent) => {
     e.preventDefault();
@@ -100,9 +98,20 @@ const Tool: NextPage = () => {
           style={{ display: "none" }}
         />
         <div className="flex h-full">
-          <DatasetOutliner data={data} visualizationState={visualizationState} handleVisualizationState={handleVisualizationStateChange} />
-          <div className="flex flex-col justify-center items-center w-full ml-5">
-            {data && visualizationState && visualizationState.visualizationType == "scatter" && <D3Scatter data={data} visualizationState={visualizationState}/>}
+          <DatasetOutliner
+            data={data}
+            visualizationState={visualizationState}
+            handleVisualizationState={handleVisualizationStateChange}
+          />
+          <div className="ml-5 flex w-full flex-col items-center justify-center">
+            {data &&
+              visualizationState &&
+              visualizationState.visualizationType == "scatter" && (
+                <D3Scatter
+                  data={data}
+                  visualizationState={visualizationState}
+                />
+              )}
           </div>
         </div>
       </main>
