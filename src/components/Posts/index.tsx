@@ -45,40 +45,25 @@ const Posts: FunctionComponent = (mode) => {
   return (
     <div>
       {postQuery.data?.map((post) => {
+        // handle datetime
         const date = post.createdAt
-
-        //dateString = date.toString();
         const dateString = getTimeDifference(date)
 
-        //const nameString = api.user.getUserByID.useQuery(post.authorId)
+        // handle username and number of likes
         const nameString = post.authorUsername;
-        const numLikes = post.likes
+        //const LikeArray = post.likes
+        //const numLikes = LikeArray.length
+        const numLikes = 0
         const tempString = numLikes?.toString()
         const likeString = tempString + " likes"
 
-        // store todays datetime to compare
-        //const today = new Date();
-        //today.setHours(0, 0, 0, 0);
-
-        // check for timezone of post, remove it 
-        // and adjust based on timezone the user is in currently
-        //const dateWithoutTimezone = new Date(date.getTime() - (date.getTimezoneOffset() * 60 * 1000));
-        //dateString = dateWithoutTimezone.toISOString().replace(/\.\d{3}Z$/, "");
-
-        // if the date of post is not today
-        //if (date < today) {
-          // Date is not today, so remove the time so it only prints the date
-          //const dateWithoutTime = new Date(date.getFullYear(), date.getMonth(), date.getDate());
-          //dateString = dateWithoutTime.toDateString();
-        //}
-        
         // visualization should go in between post title and content
         // profile pic at the top left of the username
         return (
           <article key={post.id}>
-            <div className="h-full w-[720px] overflow-y-auto rounded border-hidden border-2 hover:border-solid hover:border-[#ff8200] px-5 py-1">
-              <p className="font-semibold">{nameString}</p>
-              <p className="text-3xl text-left">{post.title}</p>
+            <div className="h-full w-[720px] overflow-y-auto border-2 rounded hover:border-2 hover:border-solid hover:border-[#ff8200] px-5 py-1">
+              <p className="font-semibold text-xl">{nameString}</p>
+              <p className="underline text-3xl text-center">{post.title}</p>
               <Image
                 src="/scatter-plot-example-1.png"
                 width={293}
@@ -99,7 +84,9 @@ const Posts: FunctionComponent = (mode) => {
                 </div>
                 <p className= "text-right text-xs text-[#ff8200] font-bold">{likeString}</p>
               </div>
+              <div className="h-0 my-4"></div>
             </div>
+            <div className="h-0 my-6"></div>
           </article>
         )
       })}
