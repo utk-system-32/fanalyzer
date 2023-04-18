@@ -3,6 +3,7 @@ export default interface IToolOptions {
   visualizationWidth?: number;
   visualizationHeight?: number;
   visualizationTitle?: string;
+  visualization: string;
   scatterPlotOptions?: {
     preferredXColumn?: string;
     preferredYColumn?: string;

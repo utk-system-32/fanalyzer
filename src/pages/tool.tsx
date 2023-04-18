@@ -1,13 +1,14 @@
 import { type NextPage } from "next";
 import Dropdown from "src/components/Dropdown";
 import Link from "next/link";
-import { type SyntheticEvent, useRef, useState, useEffect } from "react";
+import React, { type SyntheticEvent, useRef, useState, useEffect } from "react";
 import DatasetOutliner from "src/components/DatasetOutliner";
 import axios from "axios";
 import type CSVRow from "src/types/csv-row";
 import D3Scatter from "src/components/D3Scatter";
 import D3Bar from "src/components/D3Bar";
 import IToolOptions from "src/utils/tool-options";
+import { api } from "../utils/api";
 
 const Tool: NextPage = () => {
   const inputFile = useRef<HTMLInputElement | null>(null);
@@ -16,6 +17,8 @@ const Tool: NextPage = () => {
   const [visualizationState, setVisualizationState] = useState<IToolOptions>(
     {}
   );
+  const createVisualizationMutation =
+    api.visualization.createVisualization.useMutation();
   const handleChange = (e: SyntheticEvent) => {
     e.preventDefault();
     if (e.currentTarget instanceof HTMLInputElement) {
@@ -70,6 +73,22 @@ const Tool: NextPage = () => {
         .catch((error) => console.error(error));
     }
   }, [file]);
+  const handleCreateVisualization = (e: React.SyntheticEvent) => {
+    e.preventDefault();
+    //FIXME: This needs to check if a visualization actually exists and has a title.
+    if (
+      visualizationState &&
+      visualizationState.visualizationTitle &&
+      visualizationState.visualization
+    ) {
+      createVisualizationMutation.mutate({
+        title: visualizationState.visualizationTitle,
+        data: visualizationState.visualization,
+      });
+    } else {
+      alert("missing required parameters");
+    }
+  };
   return (
     <>
       <main className="relative flex h-screen w-full flex-col">
@@ -83,6 +102,9 @@ const Tool: NextPage = () => {
               <button>Undo</button>
               <button>Redo</button>
             </Dropdown>
+            <button onClick={handleCreateVisualization}>
+              Create Visualization STYLE ME PLS
+            </button>
             <Link href="/dashboard" className="ml-auto">
               Return to Dashboard
             </Link>
@@ -110,6 +132,7 @@ const Tool: NextPage = () => {
                 <D3Scatter
                   data={data}
                   visualizationState={visualizationState}
+                  setVisualizationState={setVisualizationState}
                 />
               )}
           </div>

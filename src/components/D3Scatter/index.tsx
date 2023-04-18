@@ -1,16 +1,24 @@
 import * as d3 from "d3";
-import { type FunctionComponent, useRef, useLayoutEffect } from "react";
+import React, { type FunctionComponent, useRef, useLayoutEffect } from "react";
 import type CSVRow from "src/types/csv-row";
 import IToolOptions from "src/utils/tool-options";
 interface Props {
   data: CSVRow[] | null;
   visualizationState: IToolOptions;
+  setVisualizationState: React.Dispatch<React.SetStateAction<IToolOptions>>;
 }
-const D3Scatter: FunctionComponent<Props> = ({ data, visualizationState }) => {
+const D3Scatter: FunctionComponent<Props> = ({
+  data,
+  visualizationState,
+  setVisualizationState,
+}) => {
   const scatterRef = useRef(null);
   const svgRef = useRef(false);
 
-  const createScatterPlotSVG = (visualizationState: IToolOptions) => {
+  const createScatterPlotSVG = (
+    visualizationState: IToolOptions,
+    setVisualizationState: React.Dispatch<React.SetStateAction<IToolOptions>>
+  ) => {
     const svg = d3.select(scatterRef.current);
     //Create an svg of some size.
     const xScale = d3
@@ -150,12 +158,26 @@ const D3Scatter: FunctionComponent<Props> = ({ data, visualizationState }) => {
         .attr("transform", "rotate(-90)")
         .text(visualizationState.scatterPlotOptions.yAxisLabel);
     }
+    //Add the SVG to the visualization state
+    return svg;
   };
 
   useLayoutEffect(() => {
     d3.select(scatterRef.current).selectAll("*").remove();
-    createScatterPlotSVG(visualizationState);
-  }, [data, visualizationState]);
+    let svg = createScatterPlotSVG(visualizationState, setVisualizationState);
+
+    const svgString = new XMLSerializer().serializeToString(svg.node());
+    setVisualizationState((visualizationState) => ({
+      ...visualizationState,
+      ["visualization"]: svgString,
+    }));
+  }, [
+    data,
+    visualizationState.scatterPlotOptions,
+    visualizationState.visualizationTitle,
+    visualizationState.visualizationHeight,
+    visualizationState.visualizationWidth,
+  ]);
   return (
     <svg
       width={visualizationState && visualizationState.visualizationWidth}
