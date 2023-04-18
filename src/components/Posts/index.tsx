@@ -36,7 +36,8 @@ const Posts: FunctionComponent = (mode) => {
     const postQuery = 
       (mode.mode === "all") ?  api.post.getAllPosts.useQuery("") 
     : (mode.mode === "following") ? api.post.getFollowingPosts.useQuery("")
-    : api.post.getMyPosts.useQuery("");
+    : (mode.mode === "my") ? api.post.getMyPosts.useQuery("")
+    : api.post.getSearchPosts.useQuery(mode.mode)
 
     if (postQuery.isLoading) {
       return <p>Loading...</p>
