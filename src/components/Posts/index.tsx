@@ -73,7 +73,7 @@ const Posts: FunctionComponent = (mode) => {
               <p>{post.content}</p>
               <p className="text-right text-xs">{dateString}</p>
               <div className="flex space-x-[584px]">
-                <button className="flex cursor-pointer rounded border-[1px] border-[#000] hover:border-[#ff8200] hover:border-[1px] px-1">
+                <button className="flex cursor-pointer rounded border-[1px] border-[#000] px-1">
                   <Image
                     src="/like_icon.png"
                     width={100}
