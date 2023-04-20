@@ -92,8 +92,8 @@ const Tool: NextPage = () => {
   return (
     <>
       <main className="relative flex h-screen w-full flex-col">
-        <div className="fixed z-50 flex w-full flex-col border-b bg-white">
-          <nav className="flex w-full flex-row self-center  bg-white px-3 [&>div]:mx-3 [&>div:nth-child(1)]:ml-0">
+        <div className="z-50 flex w-full flex-col border-b bg-white">
+          <nav className="flex w-full flex-row items-center self-center  bg-white px-3 [&>div]:mx-3 [&>div:nth-child(1)]:ml-0">
             <Dropdown dropdownButtonText="File">
               <button>New Visualization</button>
               <button onClick={openDataset}>Open Dataset</button>
@@ -102,15 +102,17 @@ const Tool: NextPage = () => {
               <button>Undo</button>
               <button>Redo</button>
             </Dropdown>
-            <button onClick={handleCreateVisualization}>
+            <button
+              className="my-2 ml-auto rounded bg-[#ff8200] p-2 font-semibold text-white"
+              onClick={handleCreateVisualization}
+            >
               Create Visualization STYLE ME PLS
             </button>
-            <Link href="/dashboard" className="ml-auto">
+            <Link href="/dashboard" className="ml-5">
               Return to Dashboard
             </Link>
           </nav>
         </div>
-        <div className="h-[25px] w-full"></div>
         <input
           type="file"
           id="file"
@@ -119,7 +121,7 @@ const Tool: NextPage = () => {
           accept=".xls,.xlsx,.csv, text/csv,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel"
           style={{ display: "none" }}
         />
-        <div className="flex h-full">
+        <div className="flex h-full bg-gray-100">
           <DatasetOutliner
             data={data}
             visualizationState={visualizationState}

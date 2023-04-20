@@ -13,13 +13,16 @@ const D3Scatter: FunctionComponent<Props> = ({
   setVisualizationState,
 }) => {
   const scatterRef = useRef(null);
-  const svgRef = useRef(false);
+  const legendRef = useRef(null);
 
   const createScatterPlotSVG = (
     visualizationState: IToolOptions,
     setVisualizationState: React.Dispatch<React.SetStateAction<IToolOptions>>
   ) => {
     const svg = d3.select(scatterRef.current);
+    //Add background color
+    svg.style("background-color", "white");
+
     //Create an svg of some size.
     const xScale = d3
       .scaleLinear()
@@ -165,6 +168,7 @@ const D3Scatter: FunctionComponent<Props> = ({
   useLayoutEffect(() => {
     d3.select(scatterRef.current).selectAll("*").remove();
     let svg = createScatterPlotSVG(visualizationState, setVisualizationState);
+    d3.select(legendRef.current).selectAll("*").remove();
 
     const svgString = new XMLSerializer().serializeToString(svg.node());
     setVisualizationState((visualizationState) => ({
@@ -179,11 +183,13 @@ const D3Scatter: FunctionComponent<Props> = ({
     visualizationState.visualizationWidth,
   ]);
   return (
-    <svg
-      width={visualizationState && visualizationState.visualizationWidth}
-      height={visualizationState && visualizationState.visualizationHeight}
-      ref={scatterRef}
-    ></svg>
+    <div className="relative">
+      <svg
+        width={visualizationState && visualizationState.visualizationWidth}
+        height={visualizationState && visualizationState.visualizationHeight}
+        ref={scatterRef}
+      ></svg>
+    </div>
   );
 };
 
