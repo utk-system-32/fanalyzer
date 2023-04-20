@@ -13,7 +13,7 @@ const D3Scatter: FunctionComponent<Props> = ({
   setVisualizationState,
 }) => {
   const scatterRef = useRef(null);
-  const legendRef = useRef(null);
+  const divRef = useRef(null);
 
   const createScatterPlotSVG = (
     visualizationState: IToolOptions,
@@ -102,7 +102,18 @@ const D3Scatter: FunctionComponent<Props> = ({
           )
         )
         .attr("r", 5)
-        .attr("fill", "steelblue");
+        .attr("fill", "steelblue")
+        .on("click", function (event, d) {
+          // Get the mouse position
+          const [x, y] = d3.pointer(event, svg.node());
+
+          // Show the div
+          d3.select(divRef.current)
+            .style("display", "block")
+            .style("left", x + "px")
+            .style("top", y + "px");
+            .button
+        });
     }
     //Scatter plot title
     if (visualizationState && visualizationState.visualizationTitle) {
@@ -168,7 +179,7 @@ const D3Scatter: FunctionComponent<Props> = ({
   useLayoutEffect(() => {
     d3.select(scatterRef.current).selectAll("*").remove();
     let svg = createScatterPlotSVG(visualizationState, setVisualizationState);
-    d3.select(legendRef.current).selectAll("*").remove();
+    d3.select(divRef.current).selectAll("*").remove();
 
     const svgString = new XMLSerializer().serializeToString(svg.node());
     setVisualizationState((visualizationState) => ({
@@ -189,6 +200,9 @@ const D3Scatter: FunctionComponent<Props> = ({
         height={visualizationState && visualizationState.visualizationHeight}
         ref={scatterRef}
       ></svg>
+      <div className="absolute hidden border bg-white p-2" ref={divRef}>
+        Test
+      </div>
     </div>
   );
 };
