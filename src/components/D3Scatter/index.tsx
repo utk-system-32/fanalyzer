@@ -16,6 +16,8 @@ const D3Scatter: FunctionComponent<Props> = ({
   const divRef = useRef(null);
 
   const createScatterPlotSVG = (
+    scatterRef: React.MutableRefObject<null>,
+    divRef: React.MutableRefObject<null>,
     visualizationState: IToolOptions,
     setVisualizationState: React.Dispatch<React.SetStateAction<IToolOptions>>
   ) => {
@@ -23,56 +25,6 @@ const D3Scatter: FunctionComponent<Props> = ({
     //Add background color
     svg.style("background-color", "white");
 
-    //Create an svg of some size.
-    const xScale = d3
-      .scaleLinear()
-      .domain([
-        0,
-        d3.max(
-          data,
-          (d) =>
-            d[
-              visualizationState &&
-                visualizationState.scatterPlotOptions?.preferredXColumn
-            ]
-        ),
-      ])
-      .range([
-        50,
-        visualizationState && visualizationState.visualizationWidth - 50,
-      ]);
-
-    const yScale = d3
-      .scaleLinear()
-      .domain([
-        0,
-        d3.max(
-          data,
-          (d) =>
-            d[
-              visualizationState &&
-                visualizationState.scatterPlotOptions?.preferredYColumn
-            ]
-        ),
-      ])
-      .range([
-        visualizationState && visualizationState.visualizationHeight - 50,
-        50,
-      ]);
-
-    const xAxis = d3.axisBottom(xScale);
-    const yAxis = d3.axisLeft(yScale);
-    svg
-      .append("g")
-      .attr(
-        "transform",
-        `translate(0, ${
-          visualizationState && visualizationState.visualizationWidth - 50
-        })`
-      )
-      .call(xAxis);
-
-    svg.append("g").attr("transform", "translate(50, 0)").call(yAxis);
     //Add data points
     if (
       visualizationState &&
@@ -80,6 +32,56 @@ const D3Scatter: FunctionComponent<Props> = ({
       visualizationState.scatterPlotOptions.preferredYColumn &&
       visualizationState.scatterPlotOptions.preferredXColumn
     ) {
+      //Create an svg of some size.
+      const xScale = d3
+        .scaleLinear()
+        .domain([
+          0,
+          d3.max(
+            data,
+            (d) =>
+              d[
+                visualizationState &&
+                  visualizationState.scatterPlotOptions?.preferredXColumn
+              ]
+          ),
+        ])
+        .range([
+          50,
+          visualizationState && visualizationState.visualizationWidth - 50,
+        ]);
+
+      const yScale = d3
+        .scaleLinear()
+        .domain([
+          0,
+          d3.max(
+            data,
+            (d) =>
+              d[
+                visualizationState &&
+                  visualizationState.scatterPlotOptions?.preferredYColumn
+              ]
+          ),
+        ])
+        .range([
+          visualizationState && visualizationState.visualizationHeight - 50,
+          50,
+        ]);
+
+      const xAxis = d3.axisBottom(xScale);
+      const yAxis = d3.axisLeft(yScale);
+      svg
+        .append("g")
+        .attr(
+          "transform",
+          `translate(0, ${
+            visualizationState && visualizationState.visualizationWidth - 50
+          })`
+        )
+        .call(xAxis);
+
+      svg.append("g").attr("transform", "translate(50, 0)").call(yAxis);
       svg
         .selectAll("circle")
         .data(data)
@@ -102,7 +104,11 @@ const D3Scatter: FunctionComponent<Props> = ({
           )
         )
         .attr("r", 5)
-        .attr("fill", "steelblue")
+        .attr(
+          "fill",
+          visualizationState &&
+            visualizationState.scatterPlotOptions.dataPointColor
+        )
         .on("click", function (event, d) {
           // Get the mouse position
           const [x, y] = d3.pointer(event, svg.node());
@@ -112,11 +118,14 @@ const D3Scatter: FunctionComponent<Props> = ({
             .style("display", "block")
             .style("left", x + "px")
             .style("top", y + "px");
-            .button
         });
     }
     //Scatter plot title
-    if (visualizationState && visualizationState.visualizationTitle) {
+    if (
+      visualizationState &&
+      visualizationState.visualizationTitle &&
+      visualizationState.visualizationWidth
+    ) {
       svg
         .append("text")
         .attr(
@@ -129,10 +138,7 @@ const D3Scatter: FunctionComponent<Props> = ({
     } else {
       svg
         .append("text")
-        .attr(
-          "x",
-          visualizationState && visualizationState.visualizationWidth / 2
-        )
+        .attr("x", visualizationState && 500 / 2)
         .attr("y", 30)
         .attr("text-anchor", "middle")
         .text("Plot Title");
@@ -178,7 +184,12 @@ const D3Scatter: FunctionComponent<Props> = ({
 
   useLayoutEffect(() => {
     d3.select(scatterRef.current).selectAll("*").remove();
-    let svg = createScatterPlotSVG(visualizationState, setVisualizationState);
+    let svg = createScatterPlotSVG(
+      scatterRef,
+      divRef,
+      visualizationState,
+      setVisualizationState
+    );
     d3.select(divRef.current).selectAll("*").remove();
 
     const svgString = new XMLSerializer().serializeToString(svg.node());
@@ -196,12 +207,21 @@ const D3Scatter: FunctionComponent<Props> = ({
   return (
     <div className="relative">
       <svg
-        width={visualizationState && visualizationState.visualizationWidth}
-        height={visualizationState && visualizationState.visualizationHeight}
+        width={
+          visualizationState && visualizationState.visualizationWidth
+            ? visualizationState.visualizationWidth
+            : 500
+        }
+        height={
+          visualizationState && visualizationState.visualizationHeight
+            ? visualizationState.visualizationHeight
+            : 500
+        }
         ref={scatterRef}
       ></svg>
       <div className="absolute hidden border bg-white p-2" ref={divRef}>
         Test
+        <button>Close</button>
       </div>
     </div>
   );

@@ -1,9 +1,17 @@
-import { SyntheticEvent, useEffect, type FunctionComponent } from "react";
+import {
+  SyntheticEvent,
+  useState,
+  useEffect,
+  type FunctionComponent,
+} from "react";
+import type React from "react";
 import type CSVRow from "src/types/csv-row";
 import IToolOptions from "src/utils/tool-options";
+import { HexColorPicker } from "react-colorful";
 interface Props {
   data?: CSVRow[] | null;
   visualizationState?: IToolOptions;
+  setVisualizationState: React.Dispatch<React.SetStateAction<IToolOptions>>;
   handleVisualizationState(e: SyntheticEvent): void;
 }
 interface CSOProps {
@@ -27,8 +35,19 @@ const ColumnSelectOptions: FunctionComponent<CSOProps> = ({ data }) => {
 const DatasetOutliner: FunctionComponent<Props> = ({
   data,
   visualizationState,
+  setVisualizationState,
   handleVisualizationState,
 }) => {
+  const [color, setColor] = useState("#ff8200");
+  useEffect(() => {
+    setVisualizationState((visualizationState: IToolOptions) => ({
+      ...visualizationState,
+      ["scatterPlotOptions"]: {
+        ...visualizationState["scatterPlotOptions"],
+        dataPointColor: color,
+      },
+    }));
+  }, [color]);
   return (
     <section className="h-full min-w-[300px] overflow-y-scroll border-r bg-white px-3">
       <h1 className="text-center text-2xl font-semibold">Visualizations</h1>
@@ -156,6 +175,15 @@ const DatasetOutliner: FunctionComponent<Props> = ({
               onChange={handleVisualizationState}
               className="mb-5 w-full border bg-white p-2 text-sm"
               placeholder="Y Axis Label"
+            />
+            <h1 className="text-lg font-semibold">Data Point Color</h1>
+            <p className="mb-2 text-sm font-light text-gray-500">
+              Please select a color for the data point.
+            </p>
+            <HexColorPicker
+              className="my-5"
+              color={color}
+              onChange={setColor}
             />
           </>
         )}

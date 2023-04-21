@@ -9,5 +9,6 @@ export default interface IToolOptions {
     preferredYColumn?: string;
     xAxisLabel?: string;
     yAxisLabel?: string;
+    dataPointColor: string;
   };
 }

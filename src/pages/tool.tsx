@@ -106,7 +106,7 @@ const Tool: NextPage = () => {
               className="my-2 ml-auto rounded bg-[#ff8200] p-2 font-semibold text-white"
               onClick={handleCreateVisualization}
             >
-              Create Visualization STYLE ME PLS
+              Create Visualization
             </button>
             <Link href="/dashboard" className="ml-5">
               Return to Dashboard
@@ -124,6 +124,7 @@ const Tool: NextPage = () => {
         <div className="flex h-full bg-gray-100">
           <DatasetOutliner
             data={data}
+            setVisualizationState={setVisualizationState}
             visualizationState={visualizationState}
             handleVisualizationState={handleVisualizationStateChange}
           />
