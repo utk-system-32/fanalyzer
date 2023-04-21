@@ -135,6 +135,15 @@ const Tool: NextPage = () => {
                   setVisualizationState={setVisualizationState}
                 />
               )}
+            {data 
+              && visualizationState && 
+              visualizationState.visualizationType == "bar" && (
+              <D3Bar
+                data={data}
+                visualizationState={visualizationState}
+                setVisualizationState={setVisualizationState}
+              />
+            )}
           </div>
         </div>
       </main>
