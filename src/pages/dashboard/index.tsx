@@ -6,6 +6,7 @@ import { api } from "../../utils/api";
 import DashboardSidebar from "src/components/DashboardSidebar";
 import Layout_Dashboard from "src/components/Layout_Dashboard";
 import UsernamePopUp from "src/components/UsernamePopUp";
+import Visualizations from "src/components/Visualizations"
 
 const Dashboard: NextPage = () => {
   return (
@@ -30,6 +31,7 @@ const Dashboard: NextPage = () => {
           ></input>
         </div>
       </form>
+      <Visualizations/>
     </Layout_Dashboard>
   );
 };

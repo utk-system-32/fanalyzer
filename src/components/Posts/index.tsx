@@ -50,7 +50,6 @@ const Posts: FunctionComponent = (mode) => {
         const dateString = getTimeDifference(date)
 
         // handle username and number of likes
-        const nameString = post.authorUsername;
         //const LikeArray = post.likes
         //const numLikes = LikeArray.length
         const numLikes = 0
@@ -62,7 +61,13 @@ const Posts: FunctionComponent = (mode) => {
         return (
           <article key={post.id}>
             <div className="h-full w-[720px] overflow-y-auto border-2 rounded hover:border-2 hover:border-solid hover:border-[#ff8200] px-5 py-1">
-              <p className="font-semibold text-xl">{nameString}</p>
+              <Image
+                src={post.author.image}
+                width={50}
+                height={50}
+                className="h-[50px]  w-[50px]"
+              />
+              <p className="font-semibold text-xl">{post.author.username}</p>
               <p className="underline text-3xl text-center">{post.title}</p>
               <Image
                 src="/scatter-plot-example-1.png"
