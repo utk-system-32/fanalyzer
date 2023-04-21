@@ -14,9 +14,15 @@ const Tool: NextPage = () => {
   const inputFile = useRef<HTMLInputElement | null>(null);
   const [file, setFile] = useState<File | undefined>(undefined);
   const [data, setData] = useState<CSVRow[] | null>(null);
-  const [visualizationState, setVisualizationState] = useState<IToolOptions>(
-    {}
-  );
+  const [visualizationState, setVisualizationState] = useState<IToolOptions>({
+    visualizationWidth: 500,
+    visualizationHeight: 500,
+    visualizationTitle: "Visualization Title",
+    scatterPlotOptions: {
+      xAxisLabel: "X Axis",
+      yAxisLabel: "Y Axis",
+    },
+  });
   const createVisualizationMutation =
     api.visualization.createVisualization.useMutation();
   const handleChange = (e: SyntheticEvent) => {
