@@ -8,9 +8,17 @@ export const visualizationRouter = createTRPCRouter({
       return ctx.prisma.visualization.create({
         data: {
           authorId: ctx.session?.user?.id,
-          title: input.title,
+          name: input.title,
           data: input.data,
         },
+      });
+    }),
+
+    getUserVisualizations: publicProcedure.input(z.string()).query(({ ctx, input }) => {
+      return ctx.prisma.visualization.findMany({
+          where: {
+            authorId: ctx.session?.user?.id
+          }
       });
     }),
 });

@@ -23,6 +23,16 @@ export const userRouter = createTRPCRouter({
     });
   }),
 
+  getUserByIDMut: publicProcedure
+  .input(z.string())
+  .mutation(({ ctx, input }) => {
+   return ctx.prisma.user.findMany({
+     where: {
+      id: input
+     } 
+   })
+ }),
+
   getUserByUsernameMut: publicProcedure
   .input(z.string())
   .mutation(({ ctx, input }) => {
@@ -66,6 +76,21 @@ export const userRouter = createTRPCRouter({
       username: input,
     }
   })
+}),
+
+updateUser: publicProcedure
+.input(z.object({ username: z.string(), image: z.any()}))
+.mutation(({ ctx, input }) => {
+//const imageBuffer = Buffer.from(input.image.data);
+ return ctx.prisma.user.update({
+   where: {
+    id: ctx.session?.user?.id
+   },
+   data: {
+     username: input.username,
+     image: input.image
+   }
+ })
 }),
 
  getUserFollowers: publicProcedure.input(z.string()).query(({ ctx, input }) => {
