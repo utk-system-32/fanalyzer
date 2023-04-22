@@ -19,7 +19,7 @@ const DashboardSidebar: FC = () => {
           </li>
           <li>
             <Link
-              href="/dashboard/posts"
+              href="/dashboard/my-account"
               className="flex items-center p-2 text-base font-normal text-black"
             >
               <svg className="h-6 w-6 bg-gray-400"></svg>

@@ -19,7 +19,7 @@ const Dashboard: NextPage = () => {
             </a>
           </li>
           <li>
-            <a href="/dashboard/posts" className="flex items-center p-2 text-base font-normal text-[#7d244f]">
+            <a href="/dashboard/my-account" className="flex items-center p-2 text-base font-normal text-[#7d244f]">
               <svg className="w-6 h-6 bg-[#7d244f]"></svg>
               <span className="ml-3">Posts</span>
             </a>

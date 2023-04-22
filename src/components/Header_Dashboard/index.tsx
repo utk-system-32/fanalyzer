@@ -25,7 +25,7 @@ const Header_Dashboard: FunctionComponent = () => {
           }
          duration-100 ease-in-out`}
         >
-          <Link href="/" className={`flex items-center text-3xl font-bold`}>
+          <Link href="/dashboard" className={`flex items-center text-3xl font-bold`}>
             Fanalyzer
           </Link>
           <div className="ml-auto flex items-center text-xl">

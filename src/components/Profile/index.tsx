@@ -2,6 +2,7 @@ import { api } from '../../utils/api'
 import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
 import { useState } from "react"
+import Image from "next/image"
 
 function Profile(username) {
   // wait for username to return
@@ -52,7 +53,16 @@ function Profile(username) {
   return (
     <div className="flex flex-row mb-5">
       <div className="flex flex-col mr-4">
-        <div className="left-[50px] font-bold text-2xl p-4">{userQuery.data?.username}'s Feed</div>
+        <div className="flex flex-row mb-4">
+          <Image
+              src={userQuery.data?.image?.startsWith("https") ? userQuery.data?.image : `data:image/png;base64,${userQuery.data?.image}`}
+              width={75}
+              height={75}
+              className="h-[75px]  w-[75px]"
+              alt="Upload profile picture"
+          />
+          <div className="left-[50px] font-bold text-2xl p-4">{userQuery.data?.username}'s Feed</div>
+        </div>
         {/* Different follow button based on if user is following the user's page or not */
         isFollowingQuery.data.at(0)? 
         <button 
