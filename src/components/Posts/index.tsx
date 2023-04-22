@@ -62,10 +62,11 @@ const Posts: FunctionComponent = (mode) => {
           <article key={post.id}>
             <div className="h-full w-[720px] overflow-y-auto border-2 rounded hover:border-2 hover:border-solid hover:border-[#ff8200] px-5 py-1">
               <Image
-                src={post.author.image}
+                src={post.author.image.startsWith("https") ? post.author.image : `data:image/png;base64,${post.author.image}`}
                 width={50}
                 height={50}
                 className="h-[50px]  w-[50px]"
+                alt={`${post.author.username}'s profile picture`}
               />
               <p className="font-semibold text-xl">{post.author.username}</p>
               <p className="underline text-3xl text-center">{post.title}</p>
