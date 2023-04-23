@@ -22,6 +22,7 @@ model Example {
 
 model Post {
   id        String   @id @default(cuid()) @map("_id")
+  visualization String?
   title     String
   content   String
   createdAt DateTime @default(now())

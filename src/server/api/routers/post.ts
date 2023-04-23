@@ -4,14 +4,14 @@ import { createTRPCRouter, publicProcedure, protectedProcedure } from "../trpc";
 export const postRouter = createTRPCRouter({
 
   createPost: publicProcedure
-   .input(z.object({ username: z.string(), title: z.string(), content: z.string() }))
+   .input(z.object({ visualization: z.string(), title: z.string(), content: z.string() }))
    .mutation(({ ctx, input }) => {
     return ctx.prisma.post.create({
       data: {
         authorId: ctx.session?.user?.id,
+        visualization: input.visualization,
         title: input.title,
         content: input.content,
-        likes: 0
       }
     })
   }),

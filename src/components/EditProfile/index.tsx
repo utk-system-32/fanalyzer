@@ -56,7 +56,7 @@ const EditProfile: FunctionComponent = () => {
   return (
     <div className="flex flex-col justify-center">
       <h1 className="text-2xl mb-5">Edit Profile</h1>
-      <label htmlFor="file">
+      <label htmlFor="file" className="hover:cursor-pointer">
         <Image
           src={user.image?.startsWith("https") ? user.image : `data:image/png;base64,${user.image}`}
           width={100}
