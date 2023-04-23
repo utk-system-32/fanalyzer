@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
 import { useState } from "react"
 import Link from "next/link"
+import Image from "next/image"
 
 function MyAccount() {
   const router = useRouter();
@@ -29,7 +30,16 @@ function MyAccount() {
   return (
     <div className="flex flex-row mb-5">
       <div className="flex flex-col mr-4">
-        <div className="left-[50px] font-bold text-2xl p-4">{userQuery.data?.username}'s Feed</div>
+        <div className="flex flex-row mb-4">
+            <Image
+                src={userQuery.data?.image?.startsWith("https") ? userQuery.data?.image : `data:image/png;base64,${userQuery.data?.image}`}
+                width={75}
+                height={75}
+                className="h-[75px]  w-[75px]"
+                alt="Upload profile picture"
+            />
+            <div className="left-[50px] font-bold text-2xl p-4">{userQuery.data?.username}'s Feed</div>
+        </div>
         <Link
         href="/dashboard/my-account/edit"
         className="text-bold text-center mt-auto mb-1 w-100 rounded-md bg-[#58595B] p-2 text-lg text-white shadow-md duration-300 ease-in-out hover:-translate-y-1 hover:bg-[#58595B]/[0.9]"

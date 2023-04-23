@@ -71,7 +71,7 @@ const Posts: FunctionComponent = (mode) => {
               <p className="font-semibold text-xl">{post.author.username}</p>
               <p className="underline text-3xl text-center">{post.title}</p>
               <Image
-                src="/scatter-plot-example-1.png"
+                src={post.visualization ? `data:image/svg+xml;base64,${Buffer.from(post.visualization).toString('base64')}` : "/scatter-plot-example-1.png"}
                 width={293}
                 height={498}
                 className="h-[400px]  w-[650px]"

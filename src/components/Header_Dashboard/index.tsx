@@ -3,9 +3,12 @@ import { type FunctionComponent } from "react";
 import useHasScrolledDown from "../../utils/useHasScrolledDown";
 import { useRouter } from "next/router";
 
+interface Props {
+  handleCreatePostClick: () => void;
+}
 // Header for when your already logged into the site
 
-const Header_Dashboard: FunctionComponent = () => {
+const Header_Dashboard: FunctionComponent<Props> = ({ handleCreatePostClick }) => {
   const scrolledDown = useHasScrolledDown();
   const router = useRouter();
   return (
@@ -42,8 +45,14 @@ const Header_Dashboard: FunctionComponent = () => {
               href="/tool"
               className="mx-3 rounded-md bg-[#ff8200] p-2 font-semibold text-white"
             >
-              Create Post
+              Create Visualization
             </Link>
+            <button
+              className="mx-3 rounded-md bg-[#ff8200] p-2 font-semibold text-white"
+              onClick={handleCreatePostClick}
+            >
+              Create Post
+            </button>
           </div>
         </nav>
       </section>
