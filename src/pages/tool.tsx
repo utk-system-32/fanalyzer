@@ -9,30 +9,34 @@ import D3Scatter from "src/components/D3Scatter";
 import D3Bar from "src/components/D3Bar";
 import type IToolOptions from "src/utils/tool-options";
 import { api } from "../utils/api";
+const DEFAULT_VISUALIZATION_VALUES = {
+  visualizationWidth: 500,
+  visualizationHeight: 500,
+  visualizationTitle: "Visualization Title",
+  scatterPlotOptions: {
+    xAxisLabel: "X Axis",
+    yAxisLabel: "Y Axis",
+    dataPointColor: "#ff8200",
+  },
+  barPlotOptions: {
+    xAxisLabel: "X Axis",
+    yAxisLabel: "Y Axis",
+    dataPointColor: "#ff8200",
+  },
+};
 
 const Tool: NextPage = () => {
   const inputFile = useRef<HTMLInputElement | null>(null);
   const [file, setFile] = useState<File | undefined>(undefined);
   const [data, setData] = useState<CSVRow[] | null>(null);
-  const [visualizationState, setVisualizationState] = useState<IToolOptions>({
-    visualizationWidth: 500,
-    visualizationHeight: 500,
-    visualizationTitle: "Visualization Title",
-    scatterPlotOptions: {
-      xAxisLabel: "X Axis",
-      yAxisLabel: "Y Axis",
-      dataPointColor: "#ff8200",
-    },
-    barPlotOptions: {
-      xAxisLabel: "X Axis",
-      yAxisLabel: "Y Axis",
-      dataPointColor: "#ff8200",
-    },
-  });
+  const [visualizationState, setVisualizationState] = useState<IToolOptions>(
+    DEFAULT_VISUALIZATION_VALUES
+  );
   const createVisualizationMutation =
     api.visualization.createVisualization.useMutation();
   const handleChange = (e: SyntheticEvent) => {
     e.preventDefault();
+    console.log("CALLING HANDLE CHANGE");
     if (e.currentTarget instanceof HTMLInputElement) {
       if (e.currentTarget.files) {
         setFile(e.currentTarget.files[0]);
@@ -72,6 +76,7 @@ const Tool: NextPage = () => {
 
   useEffect(() => {
     if (file != undefined) {
+      console.log("FILE IS NOT UNDEFINED");
       const fd = new FormData();
       fd.append("file", file);
       axios
@@ -106,14 +111,7 @@ const Tool: NextPage = () => {
       <main className="relative flex h-screen w-full flex-col">
         <div className="z-50 flex w-full flex-col border-b bg-white">
           <nav className="flex w-full flex-row items-center self-center  bg-white px-3 [&>div]:mx-3 [&>div:nth-child(1)]:ml-0">
-            <Dropdown dropdownButtonText="File">
-              <button>New Visualization</button>
-              <button onClick={openDataset}>Open Dataset</button>
-            </Dropdown>
-            <Dropdown dropdownButtonText="Edit">
-              <button>Undo</button>
-              <button>Redo</button>
-            </Dropdown>
+            <button onClick={openDataset}>Open Dataset</button>
             <button
               className="my-2 ml-auto rounded bg-[#ff8200] p-2 font-semibold text-white"
               onClick={handleCreateVisualization}
