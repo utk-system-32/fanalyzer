@@ -157,6 +157,7 @@ const Tool: NextPage = () => {
                   setVisualizationState={setVisualizationState}
                 />
               )}
+
           </div>
         </div>
       </main>

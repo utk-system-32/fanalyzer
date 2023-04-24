@@ -1,14 +1,18 @@
 import { type NextPage } from "next";
-import Layout_Dashboard from "../../components/Layout_Dashboard"
-import Link from "next/link"
-import Posts from "../../components/Posts"
+import { useRouter } from 'next/router'
+import { useSession } from "next-auth/react";
+import Layout_Dashboard from "../../../components/Layout_Dashboard"
+import MyAccount from "src/components/MyAccount";
+import Posts from "../../../components/Posts"
 
-const Dashboard: NextPage = () => {
+const UserPage: NextPage = () => {
+    const { data: sessionData } = useSession();
     return(
     <Layout_Dashboard
-        pageTitle = "My Posts"
-        metaDescription="A collection of posts by the user."
+        pageTitle = ""
+        metaDescription="A collection of posts by the user and their followers"
     > 
+
     <aside id="sidebar" className="fixed top-[100px] left-0 z-40 w-50 h-screen transition-transform -translate-x-full sm:translate-x-0">
       <div className="h-full px-3 py-4 overflow-y-auto border-2 bg-white">
         <ul className="space-y-2">
@@ -21,7 +25,7 @@ const Dashboard: NextPage = () => {
           <li>
             <a href="/dashboard/my-account" className="flex items-center p-2 text-base font-normal text-[#7d244f]">
               <svg className="w-6 h-6 bg-[#7d244f]"></svg>
-              <span className="ml-3">Posts</span>
+              <span className="ml-3">My Account</span>
             </a>
           </li>
          <li>
@@ -40,16 +44,7 @@ const Dashboard: NextPage = () => {
       </div>
     </aside>
 
-    <div className="left-[50px] p-4">
-      <p className="left-[50px] font-bold text-2xl">My Posts</p>
-    </div>
-
-    <form>
-      <div>
-        <input type="search" id="search" className="w-[600px] p-4 text-sm text-black border-2 rounded-lg bg-white caret-black" placeholder="Search for posts..."></input>
-      </div>
-    </form>
-
+    <MyAccount/>
     <Posts mode="my"/>
 
     </Layout_Dashboard>
@@ -57,4 +52,4 @@ const Dashboard: NextPage = () => {
     );
 }
 
-export default Dashboard;
+export default UserPage;
