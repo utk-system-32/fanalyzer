@@ -1,7 +1,7 @@
 import * as d3 from "d3";
 import React, { type FunctionComponent, useRef, useLayoutEffect } from "react";
 import type CSVRow from "src/types/csv-row";
-import IToolOptions from "src/utils/tool-options";
+import type IToolOptions from "src/utils/tool-options";
 interface Props {
   data: CSVRow[] | null;
   visualizationState: IToolOptions;
@@ -14,12 +14,11 @@ const D3Scatter: FunctionComponent<Props> = ({
 }) => {
   const scatterRef = useRef(null);
   const divRef = useRef(null);
-
   const createScatterPlotSVG = (
+    data: CSVRow[] | null,
     scatterRef: React.MutableRefObject<null>,
     divRef: React.MutableRefObject<null>,
-    visualizationState: IToolOptions,
-    setVisualizationState: React.Dispatch<React.SetStateAction<IToolOptions>>
+    visualizationState: IToolOptions
   ) => {
     const svg = d3.select(scatterRef.current);
     //Add background color
@@ -27,6 +26,7 @@ const D3Scatter: FunctionComponent<Props> = ({
 
     //Add data points
     if (
+      data &&
       visualizationState &&
       visualizationState.scatterPlotOptions &&
       visualizationState.scatterPlotOptions.preferredYColumn &&
@@ -91,7 +91,7 @@ const D3Scatter: FunctionComponent<Props> = ({
           xScale(
             d[
               visualizationState &&
-                visualizationState.scatterPlotOptions.preferredXColumn
+                visualizationState.scatterPlotOptions?.preferredXColumn
             ]
           )
         )
@@ -135,13 +135,6 @@ const D3Scatter: FunctionComponent<Props> = ({
         .attr("y", 30)
         .attr("text-anchor", "middle")
         .text(visualizationState.visualizationTitle);
-    } else {
-      svg
-        .append("text")
-        .attr("x", visualizationState && 500 / 2)
-        .attr("y", 30)
-        .attr("text-anchor", "middle")
-        .text("Plot Title");
     }
     // Add axes labels and a title to the plot
     if (
@@ -184,11 +177,11 @@ const D3Scatter: FunctionComponent<Props> = ({
 
   useLayoutEffect(() => {
     d3.select(scatterRef.current).selectAll("*").remove();
-    let svg = createScatterPlotSVG(
+    const svg = createScatterPlotSVG(
+      data,
       scatterRef,
       divRef,
-      visualizationState,
-      setVisualizationState
+      visualizationState
     );
     d3.select(divRef.current).selectAll("*").remove();
 

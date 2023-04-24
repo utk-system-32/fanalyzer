@@ -1,12 +1,12 @@
 import {
-  SyntheticEvent,
+  type SyntheticEvent,
   useState,
   useEffect,
   type FunctionComponent,
 } from "react";
-import type React from "react";
+import React from "react";
 import type CSVRow from "src/types/csv-row";
-import IToolOptions from "src/utils/tool-options";
+import type IToolOptions from "src/utils/tool-options";
 import { HexColorPicker } from "react-colorful";
 interface Props {
   data?: CSVRow[] | null;
@@ -40,14 +40,25 @@ const DatasetOutliner: FunctionComponent<Props> = ({
 }) => {
   const [color, setColor] = useState("#ff8200");
   useEffect(() => {
-    setVisualizationState((visualizationState: IToolOptions) => ({
-      ...visualizationState,
-      ["scatterPlotOptions"]: {
-        ...visualizationState["scatterPlotOptions"],
-        dataPointColor: color,
-      },
-    }));
-  }, [color]);
+    if (visualizationState?.visualizationType == "scatter") {
+      setVisualizationState((visualizationState: IToolOptions) => ({
+        ...visualizationState,
+        ["scatterPlotOptions"]: {
+          ...visualizationState["scatterPlotOptions"],
+          dataPointColor: color,
+        },
+      }));
+    }
+    if (visualizationState?.visualizationType == "bar") {
+      setVisualizationState((visualizationState: IToolOptions) => ({
+        ...visualizationState,
+        ["barPlotOptions"]: {
+          ...visualizationState["barPlotOptions"],
+          dataPointColor: color,
+        },
+      }));
+    }
+  }, [color, setVisualizationState]);
   return (
     <section className="h-full min-w-[300px] overflow-y-scroll border-r bg-white px-3">
       {data && (
@@ -210,6 +221,83 @@ const DatasetOutliner: FunctionComponent<Props> = ({
             />
           </>
         )}
+      {visualizationState && visualizationState.visualizationType == "bar" && (
+        <>
+          <h1 className="mt-5 text-center text-2xl font-semibold">
+            Bar Plot Configuration
+          </h1>
+          <h1 className="text-lg font-semibold">X Column</h1>
+          <p className="mb-2 text-sm font-light text-gray-500">
+            Please select the column that will represent the x-coordinates of
+            the x-axis.
+          </p>
+          <select
+            name="preferredXColumn"
+            id="barPlotOptions"
+            value={
+              visualizationState &&
+              visualizationState.barPlotOptions?.preferredXColumn
+            }
+            onChange={handleVisualizationState}
+            className="mb-5 w-full border bg-white p-2 text-sm"
+          >
+            <option value="">Please select a column.</option>
+            <ColumnSelectOptions data={data} />
+          </select>
+          <h1 className="text-lg font-semibold">X-Axis Label</h1>
+          <p className="mb-2 text-sm font-light text-gray-500">
+            Please enter the label of the x-axis.
+          </p>
+          <input
+            name="xAxisLabel"
+            type="text"
+            value={
+              visualizationState &&
+              visualizationState.barPlotOptions?.xAxisLabel
+            }
+            id="barPlotOptions"
+            onChange={handleVisualizationState}
+            className="mb-5 w-full border bg-white p-2 text-sm"
+            placeholder="X Axis Label"
+          />
+          <h1 className="text-lg  font-semibold">Y Column</h1>
+          <p className="mb-2 text-sm font-light text-gray-500">
+            Please select the column that will represent the y coordinates on
+            the y-axis.
+          </p>
+          <select
+            name="preferredYColumn"
+            value={visualizationState?.barPlotOptions?.preferredYColumn}
+            id="barPlotOptions"
+            onChange={handleVisualizationState}
+            className="mb-5 w-full border bg-white p-2 text-sm"
+          >
+            <option>Please select a column.</option>
+            <ColumnSelectOptions data={data} />
+          </select>
+          <h1 className="text-lg font-semibold">Y-Axis Label</h1>
+          <p className="mb-2 text-sm font-light text-gray-500">
+            Please enter a label for the the y-axis.
+          </p>
+          <input
+            name="yAxisLabel"
+            type="text"
+            value={
+              visualizationState &&
+              visualizationState.barPlotOptions?.yAxisLabel
+            }
+            id="barPlotOptions"
+            onChange={handleVisualizationState}
+            className="mb-5 w-full border bg-white p-2 text-sm"
+            placeholder="Y Axis Label"
+          />
+          <h1 className="text-lg font-semibold">Data Point Color</h1>
+          <p className="mb-2 text-sm font-light text-gray-500">
+            Please select a color for the data point.
+          </p>
+          <HexColorPicker className="my-5" color={color} onChange={setColor} />
+        </>
+      )}
       <hr />
     </section>
   );

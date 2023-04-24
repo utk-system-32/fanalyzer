@@ -1,3 +1,5 @@
+import { string } from "zod";
+
 export default interface IToolOptions {
   visualizationType?: string;
   visualizationWidth?: number;
@@ -5,6 +7,13 @@ export default interface IToolOptions {
   visualizationTitle?: string;
   visualization?: string;
   scatterPlotOptions?: {
+    preferredXColumn?: string;
+    preferredYColumn?: string;
+    xAxisLabel?: string;
+    yAxisLabel?: string;
+    dataPointColor?: string;
+  };
+  barPlotOptions?: {
     preferredXColumn?: string;
     preferredYColumn?: string;
     xAxisLabel?: string;
