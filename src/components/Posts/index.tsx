@@ -60,37 +60,39 @@ const Posts: FunctionComponent = (mode) => {
         // profile pic at the top left of the username
         return (
           <article key={post.id}>
-            <div className="h-full w-[720px] overflow-y-auto border-2 rounded hover:border-2 hover:border-solid hover:border-[#ff8200] px-5 py-1">
-              <div className='flex h-[40px] py-2'>
-                <Image
-                  src={post.author.image.startsWith("https") ? post.author.image : `data:image/png;base64,${post.author.image}`}
-                  width={30}
-                  height={30}
-                  className="h-[30px]  w-[30px] rounded-full"
-                  alt={`${post.author.username}'s profile picture`}
-                />
-                <p className="px-2 font-semibold text-xl">{post.author.username}</p>
+            <div className="h-full w-[720px] overflow-y-auto border-2 rounded-2xl hover:border-2 hover:border-solid hover:border-[#000000]">
+              <div className='bg-[#ff8200] rounded-t-xl w-full'>
+                <div className='flex h-[40px] py-2 px-2'>
+                  <Image
+                    src={post.author.image.startsWith("https") ? post.author.image : `data:image/png;base64,${post.author.image}`}
+                    width={30}
+                    height={30}
+                    className="h-[30px]  w-[30px] rounded-full"
+                    alt={`${post.author.username}'s profile picture`}
+                  />
+                  <p className="px-2 font-semibold text-xl text-[#fff]">{post.author.username}</p>
+                </div>
+                <p className="text-[#fff] text-3xl text-center">{post.title}</p>
               </div>
-              <p className="underline text-3xl text-center">{post.title}</p>
               <Image
                 src={post.visualization ? `data:image/svg+xml;base64,${Buffer.from(post.visualization).toString('base64')}` : "/scatter-plot-example-1.png"}
                 width={293}
                 height={498}
                 className="h-[400px]  w-[650px]"
               />
-              <p>{post.content}</p>
-              <p className="text-right text-xs">{dateString}</p>
-              <div className="flex space-x-[584px]">
-                <button className="flex cursor-pointer rounded border-[1px] border-[#000] px-1">
+              <p className='px-4'>{post.content}</p>
+              <p className="text-right text-xs px-4">{dateString}</p>
+              <div className="flex space-x-[574px] px-4">
+                <button className="flex cursor-pointer w-[58px] rounded border-[1px] border-[#000]">
                   <Image
                     src="/like_icon.png"
                     width={100}
                     height={100}
-                    className="ml-auto h-[16px]  w-[16px]"
+                    className="px-[1px] h-[24px]  w-[24px]"
                   />
-                  <p className="text-xs">{"Like"}</p>
+                  <p className="text">{"Like"}</p>
                 </button>
-                <p className= "text-right text-xs text-[#ff8200] font-bold">{likeString}</p>
+                <p className= "text-right text-[#ff8200] font-bold">{likeString}</p>
               </div>
               <div className="h-0 my-4"></div>
             </div>
