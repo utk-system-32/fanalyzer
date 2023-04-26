@@ -61,14 +61,16 @@ const Posts: FunctionComponent = (mode) => {
         return (
           <article key={post.id}>
             <div className="h-full w-[720px] overflow-y-auto border-2 rounded hover:border-2 hover:border-solid hover:border-[#ff8200] px-5 py-1">
-              <Image
-                src={post.author.image.startsWith("https") ? post.author.image : `data:image/png;base64,${post.author.image}`}
-                width={50}
-                height={50}
-                className="h-[50px]  w-[50px]"
-                alt={`${post.author.username}'s profile picture`}
-              />
-              <p className="font-semibold text-xl">{post.author.username}</p>
+              <div className='flex h-[40px] py-2'>
+                <Image
+                  src={post.author.image.startsWith("https") ? post.author.image : `data:image/png;base64,${post.author.image}`}
+                  width={30}
+                  height={30}
+                  className="h-[30px]  w-[30px] rounded-full"
+                  alt={`${post.author.username}'s profile picture`}
+                />
+                <p className="px-2 font-semibold text-xl">{post.author.username}</p>
+              </div>
               <p className="underline text-3xl text-center">{post.title}</p>
               <Image
                 src={post.visualization ? `data:image/svg+xml;base64,${Buffer.from(post.visualization).toString('base64')}` : "/scatter-plot-example-1.png"}
