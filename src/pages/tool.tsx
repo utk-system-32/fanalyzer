@@ -7,6 +7,7 @@ import axios from "axios";
 import type CSVRow from "src/types/csv-row";
 import D3Scatter from "src/components/D3Scatter";
 import D3Bar from "src/components/D3Bar";
+import D3Histogram from "src/components/D3Histogram";
 import IToolOptions from "src/utils/tool-options";
 import { api } from "../utils/api";
 
@@ -139,6 +140,15 @@ const Tool: NextPage = () => {
               && visualizationState && 
               visualizationState.visualizationType == "bar" && (
               <D3Bar
+                data={data}
+                visualizationState={visualizationState}
+                setVisualizationState={setVisualizationState}
+              />
+            )}
+            {data 
+              && visualizationState && 
+              visualizationState.visualizationType == "histogram" && (
+              <D3Histogram
                 data={data}
                 visualizationState={visualizationState}
                 setVisualizationState={setVisualizationState}
