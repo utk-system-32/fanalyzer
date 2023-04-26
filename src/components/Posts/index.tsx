@@ -72,7 +72,7 @@ const Posts: FunctionComponent = (mode) => {
                   />
                   <p className="px-2 font-semibold text-xl text-[#fff]">{post.author.username}</p>
                 </div>
-                <p className="text-[#fff] text-3xl text-center">{post.title}</p>
+                <p className="text-[#fff] text-3xl text-center py-1">{post.title}</p>
               </div>
               <Image
                 src={post.visualization ? `data:image/svg+xml;base64,${Buffer.from(post.visualization).toString('base64')}` : "/scatter-plot-example-1.png"}
