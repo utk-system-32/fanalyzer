@@ -108,9 +108,8 @@ const Posts: FunctionComponent = (mode) => {
               <div className='border-b border-[1px] my-4'></div>
               <p className="text-right text-xs px-4">{dateString}</p>
               <div className="flex space-x-[574px] px-4">
-                <button className="flex cursor-pointer w-[58px] rounded border-[1px] border-[#000]" onClick={() => handleLike(post)}>
-                  <Image src="/like_icon.png" width={100} height={100} className="px-[1px] h-[24px]  w-[24px]"/>
-                  <p className="text">{"Like"}</p>
+                <button className={ `flex cursor-pointer w-[50px] h-[50px] rounded border-[2px] ${post.likes.includes(userId)?"bg-[#3b3b3b] border-[#ff8200]": "bg-[#fff] border-[#000]"}`  } onClick={() => handleLike(post)}>
+                  <Image src={`${post.likes.includes(userId)? "/liked_icon.svg": "/like_icon.svg"}`} width={100} height={100} className="px-[1px] h-[50px]  w-[50px]"/>
                 </button>
                 <p className= "text-right text-[#ff8200] font-bold">{likeString}</p>
               </div>
