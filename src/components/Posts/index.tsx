@@ -1,6 +1,8 @@
-import { FunctionComponent } from 'react';
+import { FunctionComponent, useState } from 'react';
 import { api } from '../../utils/api'
 import Image from "next/image";
+import { useSession } from "next-auth/react";
+import { Post } from '@prisma/client';
 
 // this function calculates the difference between right now and
 // and the time of the post and returns a string
@@ -31,7 +33,10 @@ const Posts: FunctionComponent = (mode) => {
     // get all/following/my posts depending on mode
     const date: Date = new Date();
     let dateString = ""
-    //const postQuery = api.post.getByUser.useQuery("test");
+
+    const { data: sessionData } = useSession();
+    const userQuery = api.user.getUserByID.useQuery(sessionData?.user?.id);
+    let userId = sessionData?.user?.id;
 
     const postQuery = 
       (mode.mode === "all") ?  api.post.getAllPosts.useQuery("") 
@@ -39,9 +44,30 @@ const Posts: FunctionComponent = (mode) => {
     : (mode.mode === "my") ? api.post.getMyPosts.useQuery("")
     : api.post.getSearchPosts.useQuery(mode.mode)
 
+    const updatedPost = api.post.updatePost.useMutation();
+
+
+    const handleLike = async (post : Post) => {
+
+      const like={postId: post.id, userId: sessionData?.user?.id}
+      
+      const likes = post.likes
+
+      // Check if the user already liked the post
+      if (likes.includes(userId)) {
+        return;
+      }
+
+      updatedPost.mutate(like)
+
+      // Refetch data to update the UI
+      postQuery.refetch();
+    };
+
     if (postQuery.isLoading) {
       return <p>Loading...</p>
     }
+
   return (
     <div>
       {postQuery.data?.map((post) => {
@@ -50,9 +76,7 @@ const Posts: FunctionComponent = (mode) => {
         const dateString = getTimeDifference(date)
 
         // handle username and number of likes
-        //const LikeArray = post.likes
-        //const numLikes = LikeArray.length
-        const numLikes = 0
+        const numLikes = post.likes.length
         const tempString = numLikes?.toString()
         const likeString = tempString + " likes"
 
@@ -81,15 +105,11 @@ const Posts: FunctionComponent = (mode) => {
                 className="h-[400px]  w-[650px]"
               />
               <p className='px-4'>{post.content}</p>
+              <div className='border-b border-[1px] my-4'></div>
               <p className="text-right text-xs px-4">{dateString}</p>
               <div className="flex space-x-[574px] px-4">
-                <button className="flex cursor-pointer w-[58px] rounded border-[1px] border-[#000]">
-                  <Image
-                    src="/like_icon.png"
-                    width={100}
-                    height={100}
-                    className="px-[1px] h-[24px]  w-[24px]"
-                  />
+                <button className="flex cursor-pointer w-[58px] rounded border-[1px] border-[#000]" onClick={() => handleLike(post)}>
+                  <Image src="/like_icon.png" width={100} height={100} className="px-[1px] h-[24px]  w-[24px]"/>
                   <p className="text">{"Like"}</p>
                 </button>
                 <p className= "text-right text-[#ff8200] font-bold">{likeString}</p>

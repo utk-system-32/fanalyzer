@@ -16,6 +16,20 @@ export const postRouter = createTRPCRouter({
     })
   }),
 
+  
+  updatePost: publicProcedure.input(z.object({
+        postId: z.string(),
+        userId: z.string(),
+      })
+    )
+    .mutation(({ ctx, input }) => {
+      const { postId, userId } = input;
+      return ctx.prisma.post.update({
+        where: { id: postId },
+        data: {  likes: { push: userId } }
+      });
+  }),
+  
   getAllPosts: publicProcedure.input(z.string()).query(({ ctx, input }) => {
     return ctx.prisma.post.findMany({
       include: { 

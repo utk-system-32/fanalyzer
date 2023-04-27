@@ -29,6 +29,7 @@ model Post {
   updatedAt DateTime @updatedAt
   authorId  String
   author    User     @relation(fields: [authorId], references: [id])
+  likes     String[] @default([])
 }
 
 // Necessary for Next auth
