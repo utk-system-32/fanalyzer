@@ -37,9 +37,6 @@ const Header: FunctionComponent = () => {
             <Link href="mailto:bliuag@vols.utk.edu" className="mx-3 rounded-md p-1">
               Contact
             </Link>
-            <Link href="/documentation" className="mx-3 rounded-md p-1">
-              Documentation
-            </Link>
             <button
               onClick={ () => signIn()}
               className="mx-3 rounded-md bg-[#ff8200] p-2 font-semibold text-white"
