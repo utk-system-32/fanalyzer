@@ -24,31 +24,93 @@ const makeHistogram = (
     
     const svg = d3.select(histogramRef.current);
 
+  if (
+    data &&
+    visualizationState &&
+    visualizationState.scatterPlotOptions &&
+    visualizationState.scatterPlotOptions.preferredYColumn &&
+    visualizationState.scatterPlotOptions.preferredXColumn
+  ) {
     // Set up scales
     const xScale = d3
-        .scaleLinear()
-        .domain(0, data.map((d) => d[visualizationState &&
-            visualizationState.scatterPlotOptions?.preferredXColumn]))
-        .range([50, visualizationState && visualizationState.visualizationWidth - 50])
-        .padding(0.1);
+    .scaleLinear()
+    .domain([
+      0,
+      d3.max(
+        data,
+        (d) =>
+          d[
+            visualizationState &&
+              visualizationState.scatterPlotOptions?.preferredXColumn
+          ]
+      ),
+    ])
+    .range([
+      50,
+      visualizationState && visualizationState.visualizationWidth - 50,
+    ]);
+
+    //Sets up "bins" for x-axis
+    const bin = d3.bin()
+      .domain(xScale.domain())
+      .value((d) =>
+      d[
+        visualizationState &&
+          visualizationState.scatterPlotOptions?.preferredXColumn
+      ])
+      .thresholds(10);
+    
+    const binnedData = bin(data)
 
 
     const yScale = d3
-        .scaleLinear()
-        .domain([0, d3.max(data, (d) => d[visualizationState &&
-            visualizationState.scatterPlotOptions?.preferredYColumn])])
-        .range([visualizationState && visualizationState.visualizationHeight - 50, 50]);
+    .scaleLinear()
+    .domain([
+      0,
+      d3.max(
+        binnedData,
+        (d) =>
+          d[
+            visualizationState &&
+              visualizationState.scatterPlotOptions?.preferredYColumn
+          ]
+      ),
+    ])
+    .range([
+      visualizationState && visualizationState.visualizationHeight - 50,
+      50,
+    ]);
+
+    
 
     // Create bars
     svg
       .selectAll('rect')
-      .data(bins)
-      .enter()
+      .data(binnedData)
       .append('rect')
-      .attr('x', (d) => xScale(d.x0))
+      .attr('x', (d) =>
+      d[
+        visualizationState &&
+          visualizationState.scatterPlotOptions?.preferredXColumn
+      ])
       .attr('y', (d) => yScale(d.length))
-      .attr('width', xScale(bins[0].x1) - xScale(bins[0].x0) - 1)
-      .attr('height', (d) => (svg.attr('height') - 50) - yScale(d.length))
+      .attr('width',
+        (d) => d3.max(
+          0, d[
+            visualizationState &&
+              visualizationState.scatterPlotOptions?.preferredXColumn
+          ]
+        ) - 1)
+      .attr('height', (d) =>
+      (visualizationState && visualizationState.visualizationHeight) -
+      50 -
+      yScale(
+        d[
+          visualizationState &&
+            visualizationState.barPlotOptions &&
+            visualizationState.barPlotOptions.preferredYColumn
+        ]
+      ))
       .attr('fill', 'steelblue');
 
     // Add axes
@@ -59,7 +121,8 @@ const makeHistogram = (
       })`
       ).call(xAxis);
     svg.append("g").attr("transform", "translate(50, 0)").call(yAxis);
-
+  
+  }
 
     if (visualizationState && visualizationState.visualizationTitle) {
         svg
@@ -120,7 +183,7 @@ const makeHistogram = (
       }
 
       return svg;
-  
+    
   };
 
 useLayoutEffect(() => {

@@ -8,10 +8,27 @@ import type CSVRow from "src/types/csv-row";
 import D3Scatter from "src/components/D3Scatter";
 import D3Bar from "src/components/D3Bar";
 import D3Histogram from "src/components/D3Histogram";
+import D3Pie from "src/components/D3Pie"
 import IToolOptions from "src/utils/tool-options";
 import type IToolOptions from "src/utils/tool-options";
 import { api } from "../utils/api";
-aw
+
+const DEFAULT_VISUALIZATION_VALUES = {
+  visualizationWidth: 500,
+  visualizationHeight: 500,
+  visualizationTitle: "Visualization Title",
+  scatterPlotOptions: {
+    xAxisLabel: "X Axis",
+    yAxisLabel: "Y Axis",
+    dataPointColor: "#ff8200",
+  },
+  barPlotOptions: {
+    xAxisLabel: "X Axis",
+    yAxisLabel: "Y Axis",
+    dataPointColor: "#ff8200",
+  },
+};
+
 const Tool: NextPage = () => {
   const inputFile = useRef<HTMLInputElement | null>(null);
   const [file, setFile] = useState<File | undefined>(undefined);
@@ -153,7 +170,10 @@ const Tool: NextPage = () => {
                 setVisualizationState={setVisualizationState}
               />
             )}
-                <D3Bar
+            {data
+              && visualizationState &&
+              visualizationState.visualizationType == "pie" && (
+                <D3Pie
                   data={data}
                   visualizationState={visualizationState}
                   setVisualizationState={setVisualizationState}

@@ -97,6 +97,7 @@ const DatasetOutliner: FunctionComponent<Props> = ({
             <option value="scatter">Scatter Plot</option>
             <option value="bar">Bar Graph</option>
             <option value="histogram">Histogram</option>
+            <option value="pie">Pie Chart</option>
           </select>
           <h1 className="text-lg font-semibold">Visualization Title</h1>
           <p className="mb-2 text-sm font-light text-gray-500">
@@ -298,6 +299,88 @@ const DatasetOutliner: FunctionComponent<Props> = ({
           <HexColorPicker className="my-5" color={color} onChange={setColor} />
         </>
       )}
+      {visualizationState &&
+        visualizationState.visualizationType == "histogram" && (
+          <>
+            <h1 className="mt-5 text-center text-2xl font-semibold">
+              Histogram Configuration
+            </h1>
+            <h1 className="text-lg font-semibold">X Column</h1>
+            <p className="mb-2 text-sm font-light text-gray-500">
+              Please select the column that will represent the x-coordinates of
+              the x-axis.
+            </p>
+            <select
+              name="preferredXColumn"
+              id="scatterPlotOptions"
+              value={
+                visualizationState &&
+                visualizationState.scatterPlotOptions?.preferredXColumn
+              }
+              onChange={handleVisualizationState}
+              className="mb-5 w-full border bg-white p-2 text-sm"
+            >
+              <option value="">Please select a column.</option>
+              <ColumnSelectOptions data={data} />
+            </select>
+            <h1 className="text-lg font-semibold">X-Axis Label</h1>
+            <p className="mb-2 text-sm font-light text-gray-500">
+              Please enter the label of the x-axis.
+            </p>
+            <input
+              name="xAxisLabel"
+              type="text"
+              value={
+                visualizationState &&
+                visualizationState.scatterPlotOptions?.xAxisLabel
+              }
+              id="scatterPlotOptions"
+              onChange={handleVisualizationState}
+              className="mb-5 w-full border bg-white p-2 text-sm"
+              placeholder="X Axis Label"
+            />
+            <h1 className="text-lg  font-semibold">Y Column</h1>
+            <p className="mb-2 text-sm font-light text-gray-500">
+              Please select the column that will represent the y coordinates on
+              the y-axis.
+            </p>
+            <select
+              name="preferredYColumn"
+              value={visualizationState?.scatterPlotOptions?.preferredYColumn}
+              id="scatterPlotOptions"
+              onChange={handleVisualizationState}
+              className="mb-5 w-full border bg-white p-2 text-sm"
+            >
+              <option>Please select a column.</option>
+              <ColumnSelectOptions data={data} />
+            </select>
+            <h1 className="text-lg font-semibold">Y-Axis Label</h1>
+            <p className="mb-2 text-sm font-light text-gray-500">
+              Please enter a label for the the y-axis.
+            </p>
+            <input
+              name="yAxisLabel"
+              type="text"
+              value={
+                visualizationState &&
+                visualizationState.scatterPlotOptions?.yAxisLabel
+              }
+              id="scatterPlotOptions"
+              onChange={handleVisualizationState}
+              className="mb-5 w-full border bg-white p-2 text-sm"
+              placeholder="Y Axis Label"
+            />
+            <h1 className="text-lg font-semibold">Data Point Color</h1>
+            <p className="mb-2 text-sm font-light text-gray-500">
+              Please select a color for the data point.
+            </p>
+            <HexColorPicker
+              className="my-5"
+              color={color}
+              onChange={setColor}
+            />
+          </>
+        )}
       <hr />
     </section>
   );
