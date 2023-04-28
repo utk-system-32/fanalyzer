@@ -16,9 +16,6 @@ function Profile(username) {
   const userQuery = api.user.getUserByUsername.useQuery(username.userId);
   let userId = userQuery.data?.id;
 
-  // reroute user from accessing their own profile page to their own posts page (TODO: FIX)
-  //if (userId === sessionData?.user?.id) router.push("/dashboard/posts")
-
   // variable to display # of posts by user
   const postQuery = api.post.getUserPosts.useQuery(userId);
   const numPosts = postQuery.data?.length;
@@ -49,9 +46,12 @@ function Profile(username) {
     router.reload()
   }
   // display loading while fetching API calls
-  if (userQuery.isLoading || postQuery.isLoading || followerQuery.isLoading || followingQuery.isLoading) return (<div>Loading...</div>)
+  if (userQuery.isLoading || postQuery.isLoading || followerQuery.isLoading || followingQuery.isLoading || isFollowingQuery.isLoading) return (<div></div>)
+  // reroute user from accessing their own profile page to their own posts page
+  if (userQuery.data?.id === sessionData?.user?.id) router.push("/dashboard/my-account")
+
   return (
-    <div className="flex flex-row mb-5">
+    <div className="flex flex-row mb-5 mt-5">
       <div className="flex flex-col mr-4">
         <div className="flex flex-row mb-4">
           <Image
@@ -80,16 +80,16 @@ function Profile(username) {
             Follow</button> }
       </div>
       <div className="flex flex-row mt-4">
-        <div className="flex flex-col text-center mr-4 text-bold text-lg">
-            <div>{numPosts}</div>
+        <div className="flex flex-col text-center mr-4  text-lg">
+            <div className="font-bold">{numPosts}</div>
             <div>{posts}</div>
         </div>
-        <div className="flex flex-col text-center mr-4 text-bold text-lg">
-            <div>{followerQuery.data}</div>
-            <div>Followers</div>
+        <div className="flex flex-col text-center mr-4  text-lg">
+            <div className="font-bold">{followerQuery.data}</div>
+            <div>{followerQuery.data === 1 ? "Follower" : "Followers"}</div>
         </div>
-        <div className="flex flex-col text-center text-bold text-lg">
-            <div>{followingQuery.data}</div>
+        <div className="flex flex-col text-center text-lg">
+            <div className="font-bold">{followingQuery.data}</div>
             <div>Following</div>
         </div>
       </div>

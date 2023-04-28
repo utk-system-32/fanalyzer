@@ -26,7 +26,7 @@ function MyAccount() {
   const followingQuery = api.user.getUserFollowing.useQuery(userId);
 
   // display loading while fetching API calls
-  if (userQuery.isLoading || postQuery.isLoading || followerQuery.isLoading || followingQuery.isLoading) return (<div>Loading...</div>)
+  if (userQuery.isLoading || postQuery.isLoading || followerQuery.isLoading || followingQuery.isLoading) return (<div></div>)
   return (
     <div className="flex flex-row mb-5">
       <div className="flex flex-col mr-4">
@@ -50,16 +50,16 @@ function MyAccount() {
         </Link>
       </div>
       <div className="flex flex-row mt-4">
-        <div className="flex flex-col text-center mr-4 text-bold text-lg">
-            <div>{numPosts}</div>
+        <div className="flex flex-col text-center mr-4 text-lg">
+            <div className="font-bold">{numPosts}</div>
             <div>{posts}</div>
         </div>
-        <div className="flex flex-col text-center mr-4 text-bold text-lg">
-            <div>{followerQuery.data}</div>
+        <div className="flex flex-col text-center mr-4 text-lg">
+            <div className="font-bold">{followerQuery.data}</div>
             <div>Followers</div>
         </div>
-        <div className="flex flex-col text-center text-bold text-lg">
-            <div>{followingQuery.data}</div>
+        <div className="flex flex-col text-center text-lg">
+            <div className="font-bold">{followingQuery.data}</div>
             <div>Following</div>
         </div>
       </div>

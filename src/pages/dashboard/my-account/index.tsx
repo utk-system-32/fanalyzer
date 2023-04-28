@@ -7,11 +7,10 @@ import Posts from "../../../components/Posts"
 import DashboardSidebar from "src/components/DashboardSidebar";
 
 const UserPage: NextPage = () => {
-    const { data: sessionData } = useSession();
     return(
     <Layout_Dashboard
-        pageTitle = ""
-        metaDescription="A collection of posts by the user and their followers"
+        pageTitle = "My Account | Fanalyzer"
+        metaDescription="A page for the user to view their account"
     > 
 
 

@@ -7,7 +7,7 @@ const Posts: FunctionComponent = (mode) => {
   const visualizationQuery = api.visualization.getUserVisualizations.useQuery("");
 
   if (visualizationQuery.isLoading) {
-    return <p>Loading...</p>;
+    return <Image src="/loading.gif" width={30} height={30} alt="Loading..."/>;
   }
 
   

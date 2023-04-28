@@ -14,7 +14,7 @@ const Home: NextPage = () => {
       <Header />
       <InitialView />
       <Animate>
-        <div className="container flex min-h-screen w-full max-w-[1280px] flex-wrap items-center self-center py-5">
+        <div className="container flex min-h-[500px] w-full max-w-[1280px] flex-wrap items-center self-center py-5">
           <div className="w-1/2 flex-col">
             <h1 className="py-1 text-2xl font-bold md:text-4xl">
               Data Visualizations made{" "}
@@ -37,7 +37,7 @@ const Home: NextPage = () => {
       </Animate>
 
       <Animate>
-        <div className="container flex min-h-screen w-full max-w-[1280px] flex-wrap-reverse items-center justify-center self-center">
+        <div className="container flex min-h-[500px] w-full max-w-[1280px] flex-wrap-reverse items-center justify-center self-center">
           <Image
             src="home_page2.svg"
             alt="Data visualization"
@@ -58,7 +58,7 @@ const Home: NextPage = () => {
       </Animate>
 
       <Animate>
-        <div className="container flex min-h-screen w-full max-w-[1280px] items-center justify-center self-center text-center">
+        <div className="container flex min-h-[500px] w-full max-w-[1280px] items-center justify-center self-center text-center">
           <div className="flex flex-col">
             <h2 className="flex self-center py-10 text-center text-3xl font-bold">
               Visualization Types
@@ -66,7 +66,7 @@ const Home: NextPage = () => {
             <div className="grid grid-cols-4 gap-10">
               <div className="flex flex-col items-center text-2xl">
                 <Image 
-                  src = "/scatter.png" 
+                  src = "/scatterplot.svg" 
                   alt = "scatter plot icon"
                   width = {200}
                   height = {200}
@@ -75,7 +75,7 @@ const Home: NextPage = () => {
               </div>
               <div className="flex flex-col items-center text-2xl">
                 <Image
-                  src = "/bar.png"
+                  src = "/bargraph.svg"
                   alt = "bar graph icon"
                   width = {200}
                   height = {200}
@@ -83,22 +83,22 @@ const Home: NextPage = () => {
                 Bar Graph
               </div>
               <div className="flex flex-col items-center text-2xl">
+                <Image 
+                  src = "/histogram.svg"
+                  alt = "histogram icon"
+                  width = {200}
+                  height = {200}
+                  className="h-10 w-10 flex-col md:h-20 md:w-20" />
+                Histogram
+              </div>
+              <div className="flex flex-col items-center text-2xl">
                 <Image
-                  src = "/pie.png"
+                  src = "/piechart.svg"
                   alt = "pie chart icon"
                   width = {200}
                   height = {200}
                   className="h-10 w-10 flex-col md:h-20 md:w-20" />
                 Pie Chart
-              </div>
-              <div className="flex flex-col items-center text-2xl">
-                <Image 
-                  src = "/heat.png"
-                  alt = "heat map icon"
-                  width = {200}
-                  height = {200}
-                  className="h-10 w-10 flex-col md:h-20 md:w-20" />
-                Heatmap
               </div>
             </div>
           </div>
@@ -106,7 +106,7 @@ const Home: NextPage = () => {
       </Animate>
 
       <Animate>
-        <div className="container flex min-h-screen w-full max-w-[1280px] items-center justify-center self-center text-center">
+        <div className="container flex min-h-[500px] w-full max-w-[1280px] items-center justify-center self-center text-center">
           <div className="flex flex-col">
             <h1 className="text-md py-10 text-3xl font-bold">
               Supported Data Formats<br></br>

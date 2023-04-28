@@ -9,7 +9,7 @@ const UserPage: NextPage = () => {
     const username = router.query.username ? router.query.username.toString() : ''
     return(
     <Layout_Dashboard
-        pageTitle = ""
+        pageTitle ={`${username} | Fanalyzer`}
         metaDescription="A collection of posts by the user and their followers"
     > 
 

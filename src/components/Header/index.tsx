@@ -41,7 +41,7 @@ const Header: FunctionComponent = () => {
               onClick={ () => signIn()}
               className="mx-3 rounded-md bg-[#ff8200] p-2 font-semibold text-white"
             >
-              Sign Up
+              Sign In
             </button>
           </div>
         </nav>
