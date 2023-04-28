@@ -18,7 +18,18 @@ const getTimeDifference = (datetime: Date): string => {
 
     if (diffInDays < 1) {
       const diffInHours = Math.floor(diffInSeconds / 3600)
-      return `${diffInHours} hours ago`
+      const diffInMinutes = Math.floor((diffInSeconds % 3600) / 60)
+      if (diffInHours === 1) {
+        return `${diffInHours} hour ago`
+      } else if (diffInHours > 1) {
+        return `${diffInHours} hours ago`
+      } else if (diffInMinutes === 1) {
+        return `${diffInMinutes} minute ago`
+      } else {
+        return `${diffInMinutes} minutes ago`
+      }
+    } else if (diffInDays === 1) {
+      return '1 day ago'
     } else if (diffInDays < 30) {
       return `${diffInDays} days ago`
     } else {
@@ -29,6 +40,7 @@ const getTimeDifference = (datetime: Date): string => {
     }
   }
 }
+
 
 const Posts: FunctionComponent = (mode) => { 
     // get all/following/my posts depending on mode
