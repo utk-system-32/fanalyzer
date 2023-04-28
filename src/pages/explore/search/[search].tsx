@@ -11,7 +11,7 @@ const Feed: NextPage = () => {
 
     return(
     <Layout_Dashboard
-        pageTitle = "Explore"
+        pageTitle = "Explore | Fanalyzer"
         metaDescription="A collection of posts by the user and their followers"
     > 
 

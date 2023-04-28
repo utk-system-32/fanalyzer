@@ -23,7 +23,6 @@ const EditProfile: FunctionComponent = () => {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
 
-  const router = useRouter();
 
   const updateUserMutation = api.user.updateUser.useMutation();
 
@@ -86,7 +85,7 @@ const EditProfile: FunctionComponent = () => {
       {success && <div className="mt-2 text-green-600">{success}</div>}
       <button 
       onClick={handleUpdateUser}
-      className="text-bold mt-5 mb-1 self-center w-100 rounded-md bg-[#ff8200] p-5 text-lg text-white shadow-md duration-300 ease-in-out hover:-translate-y-1 hover:bg-[#ff8200]/[0.9]"
+      className="text-bold mt-5 mb-1 self-center w-full rounded-md bg-[#ff8200] p-5 text-lg text-white shadow-md duration-300 ease-in-out hover:-translate-y-1 hover:bg-[#ff8200]/[0.9]"
       >
         Save Changes</button>
     </div>
