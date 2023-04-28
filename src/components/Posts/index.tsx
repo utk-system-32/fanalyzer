@@ -3,6 +3,7 @@ import { api } from '../../utils/api'
 import Image from "next/image";
 import { useSession } from "next-auth/react";
 import { Post } from '@prisma/client';
+import Link from "next/link"
 
 // this function calculates the difference between right now and
 // and the time of the post and returns a string
@@ -65,7 +66,7 @@ const Posts: FunctionComponent = (mode) => {
     };
 
     if (postQuery.isLoading) {
-      return <p>Loading...</p>
+      return <Image src="/loading.gif" width={30} height={30} alt="Loading..."/>
     }
 
   return (
@@ -84,9 +85,10 @@ const Posts: FunctionComponent = (mode) => {
         // profile pic at the top left of the username
         return (
           <article key={post.id}>
-            <div className="h-full w-[720px] overflow-y-auto border-2 rounded-2xl hover:border-2 hover:border-solid hover:border-[#000000]">
+            <div className="h-full w-[720px] overflow-y-auto border-2 mt-4 rounded-2xl hover:border-2 hover:border-solid hover:border-[#000000]">
               <div className='bg-[#ff8200] rounded-t-xl w-full'>
                 <div className='flex h-[40px] py-2 px-2'>
+                  <Link href={`/explore/${post.author.username}`} className="flex flex-row">
                   <Image
                     src={post.author.image.startsWith("https") ? post.author.image : `data:image/png;base64,${post.author.image}`}
                     width={30}
@@ -94,19 +96,23 @@ const Posts: FunctionComponent = (mode) => {
                     className="h-[30px]  w-[30px] rounded-full"
                     alt={`${post.author.username}'s profile picture`}
                   />
-                  <p className="px-2 font-semibold text-xl text-[#fff]">{post.author.username}</p>
+                  <div className="px-2 font-semibold text-xl text-[#fff]">{post.author.username}
+                  </div>
+                  </Link>
                 </div>
-                <p className="text-[#fff] text-3xl text-center py-1">{post.title}</p>
+                <p className="text-[#fff] text-3xl text-center py-2">{post.title}</p>
               </div>
-              <Image
-                src={post.visualization ? `data:image/svg+xml;base64,${Buffer.from(post.visualization).toString('base64')}` : "/scatter-plot-example-1.png"}
-                width={293}
-                height={498}
-                className="h-[400px]  w-[650px]"
-              />
+              <div className="flex justify-center">
+                <Image
+                  src={post.visualization ? `data:image/svg+xml;base64,${Buffer.from(post.visualization).toString('base64')}` : "/scatter-plot-example-1.png"}
+                  width={293}
+                  height={498}
+                  className="h-[400px]  w-[400px]"
+                />
+              </div>
               <p className='px-4'>{post.content}</p>
               <div className='border-b border-[1px] my-4'></div>
-              <p className="text-right text-xs px-4">{dateString}</p>
+                <p className="text-right text-s px-8 font-bold">{dateString}</p>
               <div className="flex space-x-[574px] px-4">
                 <button className={ `flex cursor-pointer w-[50px] h-[50px] rounded border-[2px] ${post.likes.includes(userId)?"bg-[#3b3b3b] border-[#ff8200]": "bg-[#fff] border-[#000]"}`  } onClick={() => handleLike(post)}>
                   <Image src={`${post.likes.includes(userId)? "/liked_icon.svg": "/like_icon.svg"}`} width={100} height={100} className="px-[1px] h-[50px]  w-[50px]"/>

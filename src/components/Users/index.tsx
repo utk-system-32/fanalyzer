@@ -6,7 +6,7 @@ const Users: FunctionComponent = (search) => {
     const userQuery = api.user.getSearchUsers.useQuery(search.search);
     
     if (userQuery.isLoading) {
-      return <p>Loading...</p>
+      return <div></div>
     }
   return (
     <div>

@@ -13,7 +13,7 @@ const DashboardSidebar: FunctionComponent = (page) => {
     >
       <div className="h-full overflow-y-auto border-2 bg-white px-3 py-4">
         <ul className="space-y-2">
-          <li className="flex flex-row text-lg font-bold">
+          <Link href={`/explore/${sessionData?.user?.username}`} className="flex flex-row text-lg font-bold">
             <Image
               src={sessionData?.user?.image.startsWith("https") ? sessionData.user.image : `data:image/png;base64,${sessionData?.user?.image}`}
               width={50}
@@ -22,7 +22,7 @@ const DashboardSidebar: FunctionComponent = (page) => {
               alt={`${sessionData?.user?.username}'s profile picture`}
             />
             <p className="mt-2">{sessionData?.user?.username}</p>
-          </li>
+          </Link>
           <li>
             <Link
               href="/dashboard"
