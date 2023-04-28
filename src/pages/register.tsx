@@ -28,7 +28,7 @@ const Register: NextPage = ({ providers }: { providers: AppProps}) => {
                 className="text-bold mt-auto mb-1 w-full rounded-md bg-[#ff8200] p-5 text-lg text-white shadow-md duration-300 ease-in-out hover:-translate-y-1 hover:bg-[#ff8200]/[0.9]"
                 onClick={() =>
                   signIn(provider.id, {
-                    callbackUrl: `${window.location.origin}/dashboard`,
+                    callbackUrl: "/dashboard",
                   })
                 }
                 >
