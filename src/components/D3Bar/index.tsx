@@ -89,7 +89,7 @@ const D3Bar: FunctionComponent<Props> = ({
               ]
             )
           )
-          .attr("width", xScale.bandwidth())
+          .attr("width", visualizationState && visualizationState.visualizationWidth)
           .attr(
             "fill",
             visualizationState &&
