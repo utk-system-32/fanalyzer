@@ -8,7 +8,7 @@ import type CSVRow from "src/types/csv-row";
 import D3Scatter from "src/components/D3Scatter";
 import D3Bar from "src/components/D3Bar";
 import D3Histogram from "src/components/D3Histogram";
-import D3Pie from "src/components/D3Pie"
+import D3Pie from "src/components/D3Pie";
 import IToolOptions from "src/utils/tool-options";
 import type IToolOptions from "src/utils/tool-options";
 import { api } from "../utils/api";
@@ -21,11 +21,15 @@ const DEFAULT_VISUALIZATION_VALUES = {
     xAxisLabel: "X Axis",
     yAxisLabel: "Y Axis",
     dataPointColor: "#ff8200",
+    preferredXColumn: "",
+    preferredYColumn: "",
   },
   barPlotOptions: {
     xAxisLabel: "X Axis",
     yAxisLabel: "Y Axis",
     dataPointColor: "#ff8200",
+    preferredXColumn: "",
+    preferredYColumn: "",
   },
 };
 
@@ -155,23 +159,23 @@ const Tool: NextPage = () => {
             {data &&
               visualizationState &&
               visualizationState.visualizationType == "bar" && (
-              <D3Bar
-                data={data}
-                visualizationState={visualizationState}
-                setVisualizationState={setVisualizationState}
-              />
-            )}
-            {data 
-              && visualizationState && 
+                <D3Bar
+                  data={data}
+                  visualizationState={visualizationState}
+                  setVisualizationState={setVisualizationState}
+                />
+              )}
+            {data &&
+              visualizationState &&
               visualizationState.visualizationType == "histogram" && (
-              <D3Histogram
-                data={data}
-                visualizationState={visualizationState}
-                setVisualizationState={setVisualizationState}
-              />
-            )}
-            {data
-              && visualizationState &&
+                <D3Histogram
+                  data={data}
+                  visualizationState={visualizationState}
+                  setVisualizationState={setVisualizationState}
+                />
+              )}
+            {data &&
+              visualizationState &&
               visualizationState.visualizationType == "pie" && (
                 <D3Pie
                   data={data}
@@ -179,7 +183,6 @@ const Tool: NextPage = () => {
                   setVisualizationState={setVisualizationState}
                 />
               )}
-
           </div>
         </div>
       </main>
