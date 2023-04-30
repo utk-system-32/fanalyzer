@@ -32,7 +32,7 @@ const DEFAULT_VISUALIZATION_VALUES = {
   },
   histPlotOptions: {
     xAxisLabel: "X Axis",
-    yAxisLabel: "Y Axis",
+    yAxisLabel: "Frequency",
     dataPointColor: "#ff8200",
     preferredDataColumn: "",
   },

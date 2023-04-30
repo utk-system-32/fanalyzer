@@ -23,10 +23,10 @@ const HistogramPlotOptions: FunctionComponent<Props> = ({
       <h1 className="mt-5 text-center text-2xl font-semibold">
         Histogram Configuration
       </h1>
-      <h1 className="text-lg font-semibold">X Column</h1>
+      <h1 className="text-lg font-semibold">Data Column</h1>
       <p className="mb-2 text-sm font-light text-gray-500">
-        Please select the column that will represent the x-coordinates of the
-        x-axis.
+        Please select the column that contains the data you want to represent in
+        the histogram.
       </p>
       <select
         name="preferredDataColumn"
@@ -69,7 +69,7 @@ const HistogramPlotOptions: FunctionComponent<Props> = ({
         id="histPlotOptions"
         onChange={handleVisualizationState}
         className="mb-5 w-full border bg-white p-2 text-sm"
-        placeholder="Y Axis Label"
+        placeholder="Frequency"
       />
       <h1 className="text-lg font-semibold">Data Point Color</h1>
       <p className="mb-2 text-sm font-light text-gray-500">
