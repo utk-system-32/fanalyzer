@@ -16,6 +16,16 @@ export const postRouter = createTRPCRouter({
     })
   }),
 
+  deletePost: publicProcedure
+  .input(z.string())
+  .mutation(({ ctx, input }) => {
+   return ctx.prisma.post.delete({
+     where: {
+       id: input
+     }
+   })
+ }),
+
   
   updatePost: publicProcedure.input(z.object({
         postId: z.string(),
@@ -28,6 +38,20 @@ export const postRouter = createTRPCRouter({
         where: { id: postId },
         data: {  likes: { push: userId } }
       });
+  }),
+
+  unlikePost: publicProcedure.input(z.object({
+      postId: z.string(),
+      userId: z.string(),
+      likes: z.any(),
+    })
+  )
+  .mutation(({ ctx, input }) => {
+    const { postId, userId, likes } = input;
+    return ctx.prisma.post.update({
+      where: { id: postId },
+      data: { likes: { set: likes.filter(entry => entry !== userId) } }
+    });
   }),
 
   addComment: publicProcedure.input(z.object({
