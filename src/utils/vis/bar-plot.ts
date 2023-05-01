@@ -1,9 +1,8 @@
-import * as d3 from "d3";
-import type IToolOptions from "src/utils/tool-options";
+import type IToolOptions from "../tool-options";
 import type CSVRow from "src/types/csv-row";
-import { createXAndYAxisLabels, createTitle, getMaxOfDataset } from "./general";
-
-export function createScatterPlotSVG(
+import * as d3 from "d3";
+import { createTitle, createXAndYAxisLabels, getMaxOfDataset } from "./general";
+export default function createBarPlotSVG(
   data: CSVRow[],
   visRef: React.MutableRefObject<null>,
   visualizationState: IToolOptions
@@ -12,17 +11,18 @@ export function createScatterPlotSVG(
   const svg = d3.select(visRef.current);
   const width = visualizationState.visualizationWidth ?? 500;
   const height = visualizationState.visualizationHeight ?? 500;
-  const x = visualizationState.scatterPlotOptions.preferredXColumn;
-  const y = visualizationState.scatterPlotOptions.preferredYColumn;
-  const dataPointColor = visualizationState.scatterPlotOptions.dataPointColor;
+  const x = visualizationState.barPlotOptions.preferredXColumn;
+  const y = visualizationState.barPlotOptions.preferredYColumn;
+  const dataPointColor = visualizationState.barPlotOptions.dataPointColor;
   const title = visualizationState.visualizationTitle;
-  const xLabel = visualizationState.scatterPlotOptions.xAxisLabel;
-  const yLabel = visualizationState.scatterPlotOptions.yAxisLabel;
-  //Append the SVG object.
+  const xLabel = visualizationState.barPlotOptions.xAxisLabel;
+  const yLabel = visualizationState.barPlotOptions.yAxisLabel;
+
+  console.log(x, y);
   svg.attr("width", width).attr("height", height);
   svg.style("background-color", "white");
-  //Get our x and y scales
-  const { xScale, yScale } = createScatterXAndYScale(data, x, y, width, height);
+
+  const { xScale, yScale } = createBarXAndYScale(data, x, y, width, height);
 
   const xAxis = d3.axisBottom(xScale);
   const yAxis = d3.axisLeft(yScale);
@@ -33,59 +33,66 @@ export function createScatterPlotSVG(
     .attr("transform", `translate(0, ${width - 50})`)
     .call(xAxis);
   svg.append("g").attr("transform", "translate(50, 0)").call(yAxis);
-
-  //Insert our datapoints
   if (x != "" && y != "")
-    insertScatterDataPoints(svg, data, xScale, yScale, x, y, dataPointColor);
+    insertBarDataPoints(
+      svg,
+      data,
+      xScale,
+      yScale,
+      x,
+      y,
+      dataPointColor,
+      width,
+      height
+    );
   //Add the visualization title
   createTitle(svg, width, title);
   //Add x and y axis labels.
   createXAndYAxisLabels(svg, width, height, xLabel, yLabel);
-
   return svg;
 }
-
-const insertScatterDataPoints = (
+const insertBarDataPoints = (
   svg: d3.Selection<null, unknown, null, undefined>,
   data: CSVRow[],
-  xScale: d3.ScaleLinear<number, number, never>,
+  xScale: d3.ScaleBand<string>,
   yScale: d3.ScaleLinear<number, number, never>,
   xColumnName: string,
   yColumnName: string,
-  dataPointColor: string
+  dataPointColor: string,
+  width: number,
+  height: number
 ) => {
-  //Add the data points to the visualization
   svg
-    .selectAll("circle")
+    .selectAll("rect")
     .data(data)
     .enter()
-    .append("circle")
-    .attr("cx", (d) =>
-      !isNaN(Number(d[xColumnName])) ? xScale(Number(d[xColumnName])) : 0
+    .append("rect")
+    .attr("x", (d) => xScale(d[xColumnName] ?? "") ?? "")
+    .attr("y", (d) => yScale(Number(d[yColumnName])))
+    .attr("width", xScale.bandwidth())
+    .attr(
+      "height",
+      (d) =>
+        height -
+        50 -
+        (!isNaN(Number(d[yColumnName])) ? yScale(Number(d[yColumnName])) : 0)
     )
-    .attr("cy", (d) =>
-      !isNaN(Number(d[yColumnName])) ? yScale(Number(d[yColumnName])) : 0
-    )
-    .attr("r", 5)
     .attr("fill", dataPointColor);
 };
-
-const createScatterXAndYScale = (
+const createBarXAndYScale = (
   data: CSVRow[],
   xColumnName: string,
   yColumnName: string,
   width: number,
   height: number
 ) => {
-  const maxX = getMaxOfDataset(data, xColumnName);
-  //   const minX = getMinOfDataset(data, xColumnName);
   const maxY = getMaxOfDataset(data, yColumnName);
-  //   const minY = getMinOfDataset(data, yColumnName);
-  const xScale = d3
-    .scaleLinear()
-    .domain([0, maxX])
-    .range([50, width - 50]);
 
+  const xScale = d3
+    .scaleBand()
+    .domain(data.map((d) => d[xColumnName] ?? ""))
+    .range([50, width - 50])
+    .padding(0.1);
   const yScale = d3
     .scaleLinear()
     .domain([0, maxY])

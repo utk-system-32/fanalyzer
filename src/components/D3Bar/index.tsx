@@ -2,7 +2,7 @@ import React, { type FunctionComponent, useLayoutEffect, useRef } from "react";
 import * as d3 from "d3";
 import type CSVRow from "src/types/csv-row";
 import type IToolOptions from "src/utils/tool-options";
-import { createBarPlotSVG } from "src/utils/vis/scatter-plot";
+import createBarPlotSVG from "src/utils/vis/bar-plot";
 interface Props {
   data: CSVRow[] | null;
   visualizationState: IToolOptions;

@@ -13,8 +13,6 @@ const D3Scatter: FunctionComponent<Props> = ({
   visualizationState,
   setVisualizationState,
 }) => {
-  const scatterRef = useRef(null);
-  const divRef = useRef(null);
   const visRef = useRef(null);
 
   useLayoutEffect(() => {

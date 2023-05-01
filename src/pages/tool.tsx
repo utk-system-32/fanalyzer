@@ -9,7 +9,6 @@ import D3Scatter from "src/components/D3Scatter";
 import D3Bar from "src/components/D3Bar";
 import D3Histogram from "src/components/D3Histogram";
 import D3Pie from "src/components/D3Pie";
-import IToolOptions from "src/utils/tool-options";
 import type IToolOptions from "src/utils/tool-options";
 import { api } from "../utils/api";
 
@@ -30,6 +29,19 @@ const DEFAULT_VISUALIZATION_VALUES = {
     dataPointColor: "#ff8200",
     preferredXColumn: "",
     preferredYColumn: "",
+  },
+  histPlotOptions: {
+    xAxisLabel: "X Axis",
+    yAxisLabel: "Frequency",
+    dataPointColor: "#ff8200",
+    preferredDataColumn: "",
+  },
+  piePlotOptions: {
+    preferredDataColumn: "",
+    condition: "",
+    conditionValue: 0,
+    trueConditionColor: "#ff8200",
+    falseConditionColor: "#eaeaea",
   },
 };
 
