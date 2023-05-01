@@ -7,12 +7,14 @@ export default interface IToolOptions {
   scatterPlotOptions: ScatterPlotOptions;
   barPlotOptions: BarPlotOptions;
   histPlotOptions: HistPlotOptions;
+  piePlotOptions: PiePlotOptions;
   [key: string]:
     | string
     | number
     | HistPlotOptions
     | BarPlotOptions
     | ScatterPlotOptions
+    | PiePlotOptions
     | undefined;
 }
 
@@ -36,4 +38,12 @@ interface ScatterPlotOptions {
   xAxisLabel: string;
   yAxisLabel: string;
   dataPointColor: string;
+}
+
+interface PiePlotOptions {
+  preferredDataColumn: string;
+  condition: string;
+  conditionValue: number;
+  pieTrueColor: string;
+  pieFalseColor: string;
 }

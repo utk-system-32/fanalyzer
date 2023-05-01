@@ -11,6 +11,7 @@ import VisualizationOptions from "./VisualizationOptions";
 import ScatterPlotOptions from "./ScatterPlotOptions";
 import BarPlotOptions from "./BarPlotOptions";
 import HistogramPlotOptions from "./HistogramPlotOptions";
+import PiePlotOptions from "./PiePlotOptions";
 interface Props {
   data?: CSVRow[] | null;
   visualizationState?: IToolOptions;
@@ -25,6 +26,8 @@ const DatasetOutliner: FunctionComponent<Props> = ({
   handleVisualizationState,
 }) => {
   const [color, setColor] = useState("#ff8200");
+  const [pieTrueColor, setPieTrueColor] = useState("#ff8200");
+  const [pieFalseColor, setPieFalseColor] = useState("#eaeaea");
   useEffect(() => {
     if (visualizationState?.visualizationType == "scatter") {
       setVisualizationState((visualizationState: IToolOptions) => ({
@@ -54,6 +57,27 @@ const DatasetOutliner: FunctionComponent<Props> = ({
       }));
     }
   }, [color, setVisualizationState]);
+
+  useEffect(() => {
+    setVisualizationState((visualizationState: IToolOptions) => ({
+      ...visualizationState,
+      ["piePlotOptions"]: {
+        ...visualizationState["piePlotOptions"],
+        pieTrueColor: pieTrueColor,
+      },
+    }));
+  }, [pieTrueColor, setVisualizationState]);
+
+  useEffect(() => {
+    setVisualizationState((visualizationState: IToolOptions) => ({
+      ...visualizationState,
+      ["piePlotOptions"]: {
+        ...visualizationState["piePlotOptions"],
+        pieFalseColor: pieFalseColor,
+      },
+    }));
+  }, [pieFalseColor, setVisualizationState]);
+
   return (
     <section className="h-full min-w-[300px] overflow-y-scroll border-r bg-white px-3">
       {data && (
@@ -110,6 +134,17 @@ const DatasetOutliner: FunctionComponent<Props> = ({
             setColor={setColor}
           />
         )}
+      {visualizationState && visualizationState.visualizationType == "pie" && (
+        <PiePlotOptions
+          data={data}
+          visualizationState={visualizationState}
+          handleVisualizationState={handleVisualizationState}
+          pieTrueColor={pieTrueColor}
+          setPieTrueColor={setPieTrueColor}
+          pieFalseColor={pieFalseColor}
+          setPieFalseColor={setPieFalseColor}
+        />
+      )}
       <hr />
     </section>
   );

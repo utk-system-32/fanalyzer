@@ -36,6 +36,13 @@ const DEFAULT_VISUALIZATION_VALUES = {
     dataPointColor: "#ff8200",
     preferredDataColumn: "",
   },
+  piePlotOptions: {
+    preferredDataColumn: "",
+    condition: "",
+    conditionValue: 0,
+    trueConditionColor: "#ff8200",
+    falseConditionColor: "#eaeaea",
+  },
 };
 
 const Tool: NextPage = () => {
