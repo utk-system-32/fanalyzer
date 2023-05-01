@@ -25,7 +25,7 @@ const Layout_Dashboard: FunctionComponent<Props> = ({
     <>
       <Head>
         <title>{pageTitle}</title>
-        <meta name="description" content={metaDescription} />
+        <meta name="viewport" content="width=1024" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className="relative flex min-h-screen w-full  flex-col items-center">
