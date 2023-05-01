@@ -1,4 +1,4 @@
-import { z } from "zod";
+import { any, z } from "zod";
 import { createTRPCRouter, publicProcedure, protectedProcedure } from "../trpc";
 
 export const postRouter = createTRPCRouter({
@@ -29,11 +29,32 @@ export const postRouter = createTRPCRouter({
         data: {  likes: { push: userId } }
       });
   }),
+
+  addComment: publicProcedure.input(z.object({
+      postId: z.string(),
+      userId: z.string(),
+    })
+  )
+  .mutation(({ ctx, input }) => {
+    const { postId, userId } = input;
+    return ctx.prisma.post.update({
+      where: { id: postId },
+      data: {  likes: { push: userId } }
+    });
+  }),
   
   getAllPosts: publicProcedure.input(z.string()).query(({ ctx, input }) => {
     return ctx.prisma.post.findMany({
+      orderBy: { 
+        createdAt: 'desc' 
+      },
       include: { 
-        author: true 
+        author: true,
+        comments: {
+          include: {
+            author: true,
+          },
+        },  
       }
     });
   }),
@@ -43,9 +64,17 @@ export const postRouter = createTRPCRouter({
       where: {
         authorId: ctx.session?.user?.id,
       },
+      orderBy: { 
+        createdAt: 'desc' 
+      },
       include: { 
-        author: true 
-      }
+        author: true,
+        comments: {
+          include: {
+            author: true,
+          },
+        }, 
+      },
     });
   }),
 
@@ -54,8 +83,16 @@ export const postRouter = createTRPCRouter({
       where: {
         authorId: input,
       },
+      orderBy: { 
+        createdAt: 'desc' 
+      },
       include: { 
-        author: true 
+        author: true,
+        comments: {
+          include: {
+            author: true,
+          },
+        }, 
       }
     });
   }),
@@ -73,9 +110,36 @@ export const postRouter = createTRPCRouter({
           }
         }
       },
+      orderBy: { 
+        createdAt: 'desc' 
+      },
       include: { 
-        author: true 
+        author: true,
+        comments: {
+          include: {
+            author: true,
+          },
+        }, 
       }
+    });
+  }),
+
+  getIndividualPost: publicProcedure.input(z.string()).query(({ ctx, input }) => {
+    return ctx.prisma.post.findMany({
+        where: {
+          id: input
+        },
+        orderBy: { 
+          createdAt: 'desc' 
+        },
+        include: { 
+          author: true,
+          comments: {
+            include: {
+              author: true,
+            },
+          },  
+        }
     });
   }),
 
@@ -95,8 +159,16 @@ export const postRouter = createTRPCRouter({
           }
         ]
       },
+      orderBy: { 
+        createdAt: 'desc' 
+      },
       include: { 
-        author: true 
+        author: true,
+        comments: {
+          include: {
+            author: true,
+          },
+        }, 
       }
     });
   }),
@@ -119,8 +191,16 @@ export const postRouter = createTRPCRouter({
          }
        ]
      },
+     orderBy: { 
+      createdAt: 'desc' 
+    },
      include: { 
-      author: true 
+      author: true,
+      comments: {
+        include: {
+          author: true,
+        },
+      },  
     }
    })
  }),
