@@ -148,7 +148,7 @@ const Tool: NextPage = () => {
           id="file"
           onChange={handleChange}
           ref={inputFile}
-          accept=".xls,.xlsx,.csv, text/csv,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel"
+          accept=".csv, text/csv"
           style={{ display: "none" }}
         />
         <div className="flex h-full bg-gray-100">
