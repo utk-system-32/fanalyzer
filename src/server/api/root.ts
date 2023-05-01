@@ -2,6 +2,7 @@ import { createTRPCRouter } from "./trpc";
 import { exampleRouter } from "./routers/example";
 import { userRouter } from "./routers/user";
 import { postRouter } from "./routers/post";
+import { commentRouter } from "./routers/comment";
 import { followRouter } from "./routers/follow";
 import { visualizationRouter } from "./routers/visualization";
 /**
@@ -13,6 +14,7 @@ export const appRouter = createTRPCRouter({
   example: exampleRouter,
   user: userRouter,
   post: postRouter,
+  comment: commentRouter,
   follow: followRouter,
   visualization: visualizationRouter,
 });

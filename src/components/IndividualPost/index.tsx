@@ -1,9 +1,12 @@
-import { FunctionComponent } from 'react';
+import { FunctionComponent, useState } from 'react';
 import { api } from '../../utils/api'
 import Image from "next/image";
 import { useSession } from "next-auth/react";
+import { Post } from '@prisma/client';
 import Link from "next/link"
 
+// this function calculates the difference between right now and
+// and the time of the post and returns a string
 const getTimeDifference = (datetime: Date): string => {
   const now = new Date()
   const diffInSeconds = Math.floor((now.getTime() - datetime.getTime()) / 1000)
@@ -15,7 +18,18 @@ const getTimeDifference = (datetime: Date): string => {
 
     if (diffInDays < 1) {
       const diffInHours = Math.floor(diffInSeconds / 3600)
-      return `${diffInHours} hours ago`
+      const diffInMinutes = Math.floor((diffInSeconds % 3600) / 60)
+      if (diffInHours === 1) {
+        return `${diffInHours} hour ago`
+      } else if (diffInHours > 1) {
+        return `${diffInHours} hours ago`
+      } else if (diffInMinutes === 1) {
+        return `${diffInMinutes} minute ago`
+      } else {
+        return `${diffInMinutes} minutes ago`
+      }
+    } else if (diffInDays === 1) {
+      return '1 day ago'
     } else if (diffInDays < 30) {
       return `${diffInDays} days ago`
     } else {
@@ -27,15 +41,20 @@ const getTimeDifference = (datetime: Date): string => {
   }
 }
 
-function UserPosts(username) {
-    if (!username || username.userId === '') return (null);
-    const usernameQuery = api.user.getUserByUsername.useQuery(username.userId);
-    let userId = usernameQuery.data?.id;
-    const postQuery = api.post.getUserPosts.useQuery(userId);
+
+const Posts: FunctionComponent = (mode) => { 
+    // get all/following/my posts depending on mode
+    const date: Date = new Date();
+    let dateString = ""
 
     const { data: sessionData } = useSession();
+    let userId = sessionData?.user?.id;
+
+    const postQuery = api.post.getIndividualPost.useQuery(mode.mode);
+
     const updatedPost = api.post.updatePost.useMutation();
-    
+
+
     const handleLike = async (post : Post) => {
 
       const like={postId: post.id, userId: sessionData?.user?.id}
@@ -45,21 +64,19 @@ function UserPosts(username) {
       const comment = api.comment.createComment.useMutation();
 
       const [comments, setComments] = useState(Array(postQuery?.data?.length).fill(''));
-    
+
       // Check if the user already liked the post
       if (likes.includes(userId)) {
         return;
       }
-    
+
       updatedPost.mutate(like)
-    
+
       // Refetch data to update the UI
       postQuery.refetch();
     };
 
     const handleComment = (index) => {
-      console.log(`commented on post ${index}`)
-      console.log(`comment: ${comments[index]}`)
       const comm = {postId: postQuery.data?.at(index)?.id, comment: comments[index]}
       comment.mutate(comm)
     }
@@ -67,6 +84,7 @@ function UserPosts(username) {
     if (postQuery.isLoading) {
       return <Image src="/loading.gif" width={30} height={30} alt="Loading..."/>
     }
+
     return (
       <div>
         {postQuery.data?.length < 1 ? <div>No posts yet.</div> : postQuery.data?.map((post, index) => {
@@ -98,7 +116,7 @@ function UserPosts(username) {
                     </div>
                     </Link>
                   </div>
-                <Link href={`/explore/posts/${post.id}`}><p className="text-[#fff] text-3xl text-center py-2">{post.title}</p></Link>               
+                  <p className="text-[#fff] text-3xl text-center py-2">{post.title}</p>
                 </div>
                 <div className="flex justify-center">
                   <Image
@@ -173,4 +191,4 @@ function UserPosts(username) {
     )
 }
 
-export default UserPosts;
+export default Posts;

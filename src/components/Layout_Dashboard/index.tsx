@@ -3,6 +3,7 @@ import { type ReactNode, type FunctionComponent, useState } from "react";
 import Footer from "../Footer";
 import Header_Dashboard from "../Header_Dashboard";
 import CreatePost from "src/components/CreatePost";
+import ForceLogin from "src/components/ForceLogin";
 
 interface Props {
   children?: ReactNode;
@@ -28,10 +29,12 @@ const Layout_Dashboard: FunctionComponent<Props> = ({
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className="relative flex min-h-screen w-full  flex-col items-center">
-        <Header_Dashboard handleCreatePostClick={handleCreatePostClick}/>
-        <CreatePost popupOpen={showCreatePost} setPopupOpen={setShowCreatePost}/>
-        {children}
-        <Footer />
+        <ForceLogin>
+          <Header_Dashboard handleCreatePostClick={handleCreatePostClick}/>
+          <CreatePost popupOpen={showCreatePost} setPopupOpen={setShowCreatePost}/>
+          {children}
+          <Footer />
+        </ForceLogin>
       </main>
     </>
   );

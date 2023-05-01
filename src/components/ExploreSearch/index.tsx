@@ -73,7 +73,7 @@ const SearchBar: FunctionComponent = () => {
           <p className="font-bold">Posts</p>
           {postSearchResults.map((item) => (
             <div key={item.id}>
-              {item.title}
+              <button className="flex flex-row" onMouseDown={() => router.push(`/explore/posts/${item.id}`)}>{item.title}</button>
             </div>
           ))}
         </div>
