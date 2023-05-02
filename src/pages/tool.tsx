@@ -130,7 +130,6 @@ const Tool: NextPage = () => {
   return (
     <>
     <Head>
-      <title>{pageTitle}</title>
       <meta name="viewport" content="width=1024" />
       <link rel="icon" href="/runtransparent.png" />
     </Head>
