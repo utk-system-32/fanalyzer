@@ -1,10 +1,5 @@
 import Link from "next/link";
-<<<<<<< HEAD
-import Image from "next/image";
-import { type FunctionComponent } from "react";
-=======
 import { type FunctionComponent, useState, useEffect, useRef } from "react";
->>>>>>> 80601aa1e823f242f2e15573fa1da3110bb427be
 import useHasScrolledDown from "../../utils/useHasScrolledDown";
 import { useRouter } from "next/router";
 import { useSession, signOut } from "next-auth/react";
