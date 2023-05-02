@@ -1,4 +1,5 @@
 import { type NextPage } from "next";
+import Head from "next/head"
 import Dropdown from "src/components/Dropdown";
 import Link from "next/link";
 import React, { type SyntheticEvent, useRef, useState, useEffect } from "react";
@@ -128,6 +129,11 @@ const Tool: NextPage = () => {
   };
   return (
     <>
+    <Head>
+      <title>{pageTitle}</title>
+      <meta name="viewport" content="width=1024" />
+      <link rel="icon" href="/runtransparent.png" />
+    </Head>
       <main className="relative flex h-screen w-full flex-col">
         <div className="z-50 flex w-full flex-col border-b bg-white">
           <nav className="flex w-full flex-row items-center self-center  bg-white px-3 [&>div]:mx-3 [&>div:nth-child(1)]:ml-0">

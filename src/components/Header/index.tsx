@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image"
 import { type FunctionComponent } from "react";
 import useHasScrolledDown from "../../utils/useHasScrolledDown";
 import { useRouter } from "next/router";
@@ -25,7 +26,7 @@ const Header: FunctionComponent = () => {
          duration-100 ease-in-out`}
         >
           <Link href="/" className={`flex items-center text-3xl font-bold`}>
-            Fanalyzer
+              <Image width="200" height="70" src="/name.png" alt="" />
           </Link>
           <div className="ml-auto flex items-center text-xl">
             <Link href="/" className="mx-3 rounded-md">
