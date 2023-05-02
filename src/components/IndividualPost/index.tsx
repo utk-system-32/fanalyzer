@@ -52,33 +52,35 @@ const Posts: FunctionComponent = (mode) => {
 
     const postQuery = api.post.getIndividualPost.useQuery(mode.mode);
 
+    const unlikePost = api.post.unlikePost.useMutation();
     const updatedPost = api.post.updatePost.useMutation();
+
+    const comment = api.comment.createComment.useMutation();
+    const [comments, setComments] = useState(Array(postQuery?.data?.length).fill(''));
 
 
     const handleLike = async (post : Post) => {
 
-      const like={postId: post.id, userId: sessionData?.user?.id}
+      const like={postId: post.id, userId: sessionData?.user?.id, likes: post.likes}
       
       const likes = post.likes
 
-      const comment = api.comment.createComment.useMutation();
-
-      const [comments, setComments] = useState(Array(postQuery?.data?.length).fill(''));
-
       // Check if the user already liked the post
       if (likes.includes(userId)) {
-        return;
+        await unlikePost.mutateAsync(like);
       }
-
-      updatedPost.mutate(like)
+      else {
+        await updatedPost.mutateAsync(like);
+      }
 
       // Refetch data to update the UI
       postQuery.refetch();
     };
 
-    const handleComment = (index) => {
+    const handleComment = async (index) => {
       const comm = {postId: postQuery.data?.at(index)?.id, comment: comments[index]}
-      comment.mutate(comm)
+      await comment.mutateAsync(comm)
+      postQuery.refetch();
     }
 
     if (postQuery.isLoading) {
@@ -116,13 +118,14 @@ const Posts: FunctionComponent = (mode) => {
                     </div>
                     </Link>
                   </div>
-                  <p className="text-[#fff] text-3xl text-center py-2">{post.title}</p>
+                  <Link href={`/explore/posts/${post.id}`}><p className="text-[#fff] text-3xl text-center py-2">{post.title}</p></Link>
                 </div>
                 <div className="flex justify-center">
                   <Image
                     src={post.visualization ? `data:image/svg+xml;base64,${Buffer.from(post.visualization).toString('base64')}` : "/scatter-plot-example-1.png"}
                     width={293}
                     height={498}
+                    alt="Visualization"
                     className="h-[400px]  w-[400px]"
                   />
                 </div>
@@ -132,25 +135,25 @@ const Posts: FunctionComponent = (mode) => {
                   <div className="flex flex-col px-8">
                   <p className=" text-s font-bold mb-2">{dateString}</p>
   
-                  <button className={ `flex cursor-pointer w-[50px] h-[50px] rounded border-[2px] ${post.likes.includes(userId)?"bg-[#3b3b3b] border-[#ff8200]": "bg-[#fff] border-[#000]"}`  } onClick={() => handleLike(post)}>
-                    <Image src={`${post.likes.includes(userId)? "/liked_icon.svg": "/like_icon.svg"}`} width={100} height={100} className="px-[1px] h-[50px]  w-[50px]"/>
-                  </button>
-                  <p className= " text-[#ff8200] font-bold">{likeString}</p>
+                    <button className={ `flex cursor-pointer w-[50px] h-[50px] rounded border-[2px] ${post.likes.includes(userId)?"bg-[#3b3b3b] border-[#ff8200]": "bg-[#fff] border-[#000]"}`  } onClick={() => handleLike(post, index)}>
+                      <Image src={`${post.likes.includes(userId)? "/liked_icon.svg": "/like_icon.svg"}`} width={100} height={100} className="px-[1px] h-[50px]  w-[50px]" alt="like button"/>
+                    </button>
+                    <p className= " text-[#ff8200] font-bold">{likeString}</p>
                   </div>
                 
                   
-                    <textarea
-                      className="mt-5 h-8 max-h-[75px] resize-none border-b border-gray-400 focus:border-blue-500 focus:outline-none pb-2"
-                      placeholder="Add a comment..."
-                      onChange={(e) => {
-                        comments[index] = e.target.value;
-                        setComments(comments);
-                      }}
-                    />
+                  <textarea
+                    className="mt-5 h-8 max-h-[75px] border-b border-gray-400 focus:border-blue-500 focus:outline-none pb-2"
+                    placeholder="Add a comment..."
+                    onChange={(e) => {
+                      comments[index] = e.target.value;
+                      setComments(comments);
+                    }}
+                  />
   
                     <button
                       onClick={() => handleComment(index)}
-                      className="text-bold mb-4 self-center rounded-md  p-5 text-lg text-[#ff8200] "
+                      className="text-bold mb-10 self-center rounded-md  p-5 text-lg text-[#ff8200] "
                     >
                       Post
                     </button>
@@ -180,7 +183,7 @@ const Posts: FunctionComponent = (mode) => {
                     : <span className="min-w-[250px]"></span>}
                                  
                   </div>
-                  
+                                   
                 <div className="h-0 my-4"></div>
               </div>
               <div className="h-0 my-6"></div>

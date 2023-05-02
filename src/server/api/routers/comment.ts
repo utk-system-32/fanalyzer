@@ -15,6 +15,16 @@ export const commentRouter = createTRPCRouter({
     })
   }),
 
+  deletePostComments: publicProcedure
+  .input(z.string())
+  .mutation(({ ctx, input }) => {
+   return ctx.prisma.comment.deleteMany({
+     where: {
+       postId: input
+     }
+   })
+ }),
+
   getComments: publicProcedure
     .input(z.string())
     .mutation(({ ctx, input }) => {

@@ -1,8 +1,14 @@
 import Link from "next/link";
+<<<<<<< HEAD
 import Image from "next/image";
 import { type FunctionComponent } from "react";
+=======
+import { type FunctionComponent, useState, useEffect, useRef } from "react";
+>>>>>>> 80601aa1e823f242f2e15573fa1da3110bb427be
 import useHasScrolledDown from "../../utils/useHasScrolledDown";
 import { useRouter } from "next/router";
+import { useSession, signOut } from "next-auth/react";
+import Image from "next/image"
 
 interface Props {
   handleCreatePostClick: () => void;
@@ -12,6 +18,20 @@ interface Props {
 const Header_Dashboard: FunctionComponent<Props> = ({ handleCreatePostClick }) => {
   const scrolledDown = useHasScrolledDown();
   const router = useRouter();
+  const { data: sessionData } = useSession();
+  const [showPopup, setShowPopup] = useState(false);
+  const popupRef = useRef(null);
+
+  useEffect(() => {
+    const handleOutsideClick = (event) => {
+      if (popupRef.current && !popupRef.current.contains(event.target)) {
+        setShowPopup(false);
+      }
+    };
+    window.addEventListener("mousedown", handleOutsideClick);
+    return () => window.removeEventListener("mousedown", handleOutsideClick);
+  }, []);
+
   return (
     <>
       <section
@@ -54,6 +74,29 @@ const Header_Dashboard: FunctionComponent<Props> = ({ handleCreatePostClick }) =
             >
               Create Post
             </button>
+            <div className="relative">
+              <button onClick={() => setShowPopup(!showPopup)} className="flex flex-row text-lg font-bold">
+                <Image
+                  src={sessionData?.user?.image.startsWith("https") ? sessionData.user.image : `data:image/png;base64,${sessionData?.user?.image}`}
+                  width={50}
+                  height={50}
+                  className="h-[50px]  w-[50px] rounded-full mx-2"
+                  alt={`${sessionData?.user?.username}'s profile picture`}
+                />
+              <p className="mt-2">{sessionData?.user?.username}</p>
+              </button>
+              {showPopup && (
+                <div ref={popupRef} className="absolute right-0 bg-white border border-gray-300 rounded-lg shadow-md p-6 mt-1 text-sm">
+                  <Link href="/dashboard/my-account">My Account</Link>
+                  <button
+                    className="rounded-full bg-white/10 py-3 font-semibold no-underline transition hover:bg-white/20"
+                    onClick={() => { void signOut({ callbackUrl: `${window.location.origin}`})}}
+                    >
+                    Sign Out
+                  </button>
+                </div>
+              )}
+          </div>
           </div>
         </nav>
       </section>
