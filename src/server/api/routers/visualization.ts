@@ -14,6 +14,16 @@ export const visualizationRouter = createTRPCRouter({
       });
     }),
 
+    deleteVisualization: publicProcedure
+    .input(z.string())
+    .mutation(({ ctx, input }) => {
+     return ctx.prisma.visualization.delete({
+       where: {
+         id: input
+       }
+     })
+   }),
+
     getUserVisualizations: publicProcedure.input(z.string()).query(({ ctx, input }) => {
       return ctx.prisma.visualization.findMany({
           where: {
