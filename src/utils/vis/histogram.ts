@@ -84,9 +84,11 @@ const createHistScalesAndBins = (
     .value((d) => d)
     .thresholds(10)(numericData);
 
+  const frequencies = bins.map((bin) => bin.length);
+  console.log(bins);
   const yScale = d3
     .scaleLinear()
-    .domain([0, bins.length])
+    .domain([0, d3.max(frequencies) ?? 0])
     .range([height - 50, 50]);
   return { xScale, yScale, bins };
 };
