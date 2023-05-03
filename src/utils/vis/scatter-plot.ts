@@ -1,7 +1,12 @@
 import * as d3 from "d3";
 import type IToolOptions from "src/utils/tool-options";
 import type CSVRow from "src/types/csv-row";
-import { createXAndYAxisLabels, createTitle, getMaxOfDataset } from "./general";
+import {
+  createXAndYAxisLabels,
+  createTitle,
+  getMaxOfDataset,
+  getMinOfDataset,
+} from "./general";
 
 export function createScatterPlotSVG(
   data: CSVRow[],
@@ -78,17 +83,17 @@ const createScatterXAndYScale = (
   height: number
 ) => {
   const maxX = getMaxOfDataset(data, xColumnName);
-  //   const minX = getMinOfDataset(data, xColumnName);
+  const minX = getMinOfDataset(data, xColumnName);
   const maxY = getMaxOfDataset(data, yColumnName);
-  //   const minY = getMinOfDataset(data, yColumnName);
+  const minY = getMinOfDataset(data, yColumnName);
   const xScale = d3
     .scaleLinear()
-    .domain([0, maxX])
+    .domain([minX, maxX])
     .range([50, width - 50]);
 
   const yScale = d3
     .scaleLinear()
-    .domain([0, maxY])
+    .domain([minY, maxY])
     .range([height - 50, 50]);
 
   return { xScale, yScale };
