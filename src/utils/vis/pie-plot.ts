@@ -62,10 +62,10 @@ const insertPieDataPoints = (
 
   const radius = Math.min(width, height) / 2 - 50;
   const arcGenerator = d3.arc().innerRadius(0).outerRadius(radius);
-
+  console.log("DATA:", data);
   const pieData = pie(data);
   const color = [trueColor, falseColor];
-  console.log(pieData);
+  console.log("PIEDATA", pieData);
   g.selectAll("path")
     .data(pieData)
     .enter()
@@ -83,8 +83,14 @@ const insertPieDataPoints = (
     .enter()
     .append("text")
     .text(function (d) {
-      if (d.index == 0) return createConditionText(condition, conditionValue);
-      return createOppositeConditionText(condition, conditionValue);
+      if (d.value == data[0])
+        return `${createConditionText(condition, conditionValue)} (${(
+          d.value * 100
+        ).toFixed(2)}%)`;
+      return `${createOppositeConditionText(
+        condition,
+        conditionValue
+      )} (${(d.value * 100).toFixed(2)}%)`;
     })
     .attr("transform", function (d) {
       return `translate(${arcGenerator.centroid(d)})`;
@@ -142,7 +148,6 @@ const getSlicePercentages = (
       console.error("Invalid condition");
       return [100, 0];
   }
-  console.log("TRUE ARR:", trueArr);
   return [trueArr.length / data.length, falseArr.length / data.length];
 };
 
