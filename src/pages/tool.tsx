@@ -3,6 +3,7 @@ import Head from "next/head"
 import Dropdown from "src/components/Dropdown";
 import Link from "next/link";
 import React, { type SyntheticEvent, useRef, useState, useEffect } from "react";
+import { useNavigate } from 'react-router-dom';
 import DatasetOutliner from "src/components/DatasetOutliner";
 import axios from "axios";
 import type CSVRow from "src/types/csv-row";
@@ -63,6 +64,10 @@ const Tool: NextPage = () => {
         setFile(e.currentTarget.files[0]);
       }
     }
+    const file = event.target.files[0];
+    const fileName = file.name;
+    console.log("Selected file:", fileName);
+
   };
 
   const handleVisualizationStateChange = (e: SyntheticEvent) => {
@@ -111,6 +116,7 @@ const Tool: NextPage = () => {
         .catch((error) => console.error(error));
     }
   }, [file]);
+
   const handleCreateVisualization = (e: React.SyntheticEvent) => {
     e.preventDefault();
     //FIXME: This needs to check if a visualization actually exists and has a title.
@@ -123,6 +129,9 @@ const Tool: NextPage = () => {
         title: visualizationState.visualizationTitle,
         data: visualizationState.visualization,
       });
+    
+      window.open("/dashboard")
+
     } else {
       alert("missing required parameters");
     }
@@ -136,14 +145,22 @@ const Tool: NextPage = () => {
       <main className="relative flex h-screen w-full flex-col">
         <div className="z-50 flex w-full flex-col border-b bg-white">
           <nav className="flex w-full flex-row items-center self-center  bg-white px-3 [&>div]:mx-3 [&>div:nth-child(1)]:ml-0">
-            <button onClick={openDataset}>Open Dataset</button>
+            <button 
+              className="my-2 ml-2 rounded bg-[#ff8200] p-2 font-semibold text-white" 
+              onClick={openDataset}>
+              Open Dataset
+            </button>
+            <a 
+              className="my-2 ml-2 rounded bg-[#ff8200] p-2 font-semibold text-white"
+              href="/tool">
+              Reload
+            </a>
             <button
               className="my-2 ml-auto rounded bg-[#ff8200] p-2 font-semibold text-white"
-              onClick={handleCreateVisualization}
-            >
+              onClick={handleCreateVisualization}>
               Create Visualization
             </button>
-            <Link href="/dashboard" className="ml-5">
+            <Link href="/dashboard" className="ml-5 border border-gray p-2 rounded">
               Return to Dashboard
             </Link>
           </nav>
@@ -156,6 +173,9 @@ const Tool: NextPage = () => {
           accept=".xls,.xlsx,.csv, text/csv,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel"
           style={{ display: "none" }}
         />
+        <p id="file-name-display"></p>
+
+
         <div className="flex h-full bg-gray-100">
           <DatasetOutliner
             data={data}
