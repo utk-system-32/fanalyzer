@@ -130,6 +130,7 @@ const Tool: NextPage = () => {
   return (
     <>
     <Head>
+      <title>Tool | Fanalyzer</title>
       <meta name="viewport" content="width=1024" />
       <link rel="icon" href="/runtransparent.png" />
     </Head>

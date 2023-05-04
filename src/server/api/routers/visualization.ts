@@ -28,7 +28,10 @@ export const visualizationRouter = createTRPCRouter({
       return ctx.prisma.visualization.findMany({
           where: {
             authorId: ctx.session?.user?.id
-          }
+          },
+          orderBy: {
+            id: 'desc',
+          },
       });
     }),
 });

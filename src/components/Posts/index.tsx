@@ -13,7 +13,7 @@ const getTimeDifference = (datetime: Date): string => {
   const diffInSeconds = Math.floor((now.getTime() - datetime.getTime()) / 1000)
 
   if (diffInSeconds < 60) {
-    return `${diffInSeconds} seconds ago`
+    return diffInSeconds === 1 ? `${diffInSeconds} second ago` : `${diffInSeconds} seconds ago`
   } else {
     const diffInDays = Math.floor(diffInSeconds / 86400)
 
@@ -100,7 +100,7 @@ const Posts: FunctionComponent = (mode) => {
   return (
     <div>
       {deletePopup ? <DeletePost popupOpen={deletePopup} setPopupOpen={setDeletePopup} postId={deletePostId}/> : null}
-      {postQuery.data?.length < 1 ? <div>No posts yet.</div> : postQuery.data?.map((post, index) => {
+      {postQuery.data?.length < 1 ? <div>No Posts Found.</div> : postQuery.data?.map((post, index) => {
         // handle datetime
         const date = post.createdAt
         const dateString = getTimeDifference(date)
