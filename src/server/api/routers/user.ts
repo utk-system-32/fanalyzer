@@ -94,7 +94,7 @@ updateUser: publicProcedure
 }),
 
  getUserFollowers: publicProcedure.input(z.string()).query(({ ctx, input }) => {
-  return ctx.prisma.user.count({
+  return ctx.prisma.user.findMany({
     where: {
       following: {
         some: {
@@ -106,7 +106,7 @@ updateUser: publicProcedure
 }),
 
  getUserFollowing: publicProcedure.input(z.string()).query(({ ctx, input }) => {
-  return ctx.prisma.user.count({
+  return ctx.prisma.user.findMany({
     where: {
       followers: {
         some: {

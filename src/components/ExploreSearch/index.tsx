@@ -58,7 +58,7 @@ const SearchBar: FunctionComponent = () => {
           <p className="font-bold">Users</p>
           {searchResults.map((item) => (
             <div key={item.id}>
-              <button className="flex flex-row" onMouseDown={() => router.push(`explore/${item.username}`)}>
+              <button className="flex flex-row" onMouseDown={() => router.push(`/explore/${item.username}`)}>
                 <Image
                   src={item.image?.startsWith("https") ? item.image : `data:image/png;base64,${item.image}`}
                   width={20}

@@ -71,7 +71,7 @@ const UserPosts: FunctionComponent = (username) => {
     }
     return (
       <div>
-        {postQuery.data?.length < 1 ? <div>No posts yet.</div> : postQuery.data?.map((post, index) => {
+        {postQuery.data?.length < 1 ? <div>No Posts Yet.</div> : postQuery.data?.map((post, index) => {
           // handle datetime
           const date = post.createdAt
           const dateString = getTimeDifference(date)

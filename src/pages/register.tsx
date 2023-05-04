@@ -10,18 +10,18 @@ const Register: NextPage = ({ providers }: { providers: AppProps}) => {
   return (
     <main className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-br from-[#7d244f] to-[#ff8200]">
       <Head>
-        <title>Register for Fanalyzer | Fanalyzer</title>
+        <title>Sign in to Fanalyzer | Fanalyzer</title>
         <meta name="description" content="Sign up for Fanalyzer." />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div className="flex min-h-[500px] w-full max-w-[600px] flex-col rounded-md bg-white p-5 shadow-lg">
+      <div className="flex min-h-[275px] w-full max-w-[400px] flex-col rounded-md bg-white p-5 shadow-lg">
           <Link href="/" className="text-[#ff8200]">
             Go back
           </Link>
-          <h1 className="text-center text-3xl font-bold">
-            Register for Fanalyzer
+          <h1 className="text-center text-3xl font-bold mt-5">
+            Sign in to Fanalyzer
           </h1>
-        <div className="flex items-center justify-center mt-20">
+        <div className="flex items-center justify-center mt-10">
             {Object.values(providers).map((provider) => (
               <button
                 key={provider.id}
@@ -32,7 +32,7 @@ const Register: NextPage = ({ providers }: { providers: AppProps}) => {
                   })
                 }
                 >
-                  Register or Sign in with Google
+                  Sign in or Register with Google
               </button>
             ))}
           </div>
