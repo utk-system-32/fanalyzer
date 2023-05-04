@@ -35,7 +35,7 @@ const Header_Dashboard: FunctionComponent<Props> = ({ handleCreatePostClick }) =
         } ${scrolledDown ? "border-b bg-white/[0.7] backdrop-blur" : ""}`}
       >
         <nav
-          className={`flex w-full max-w-[1280px] flex-wrap justify-between self-center py-7 ${
+          className={`flex w-full max-w-[1280px] mx-10 flex-wrap justify-between self-center py-7 ${
             router.pathname == "/"
               ? scrolledDown
                 ? "text-black"

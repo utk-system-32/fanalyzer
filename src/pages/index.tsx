@@ -13,6 +13,7 @@ const Home: NextPage = () => {
     >
       <Header />
       <InitialView />
+      <div className="mx-10">
       <Animate>
         <div className="container flex min-h-[500px] w-full max-w-[1280px] flex-wrap items-center self-center py-5">
           <div className="w-1/2 flex-col">
@@ -104,6 +105,7 @@ const Home: NextPage = () => {
           </div>
         </div>
       </Animate>
+      </div>
     </Layout>
   );
 };
