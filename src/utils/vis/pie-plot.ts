@@ -72,7 +72,8 @@ const insertPieDataPoints = (
     .append("path")
     .attr("d", arcGenerator)
     .attr("fill", function (d) {
-      return color[d.index];
+      if (d.value == data[0]) return color[0];
+      return color[1];
     })
     .attr("stroke", "black")
     .style("stroke-width", "2px")

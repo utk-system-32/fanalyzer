@@ -74,19 +74,24 @@ const createHistScalesAndBins = (
   const maxX = getMaxOfDataset(data, dataColumnName);
 
   const numericData = data.map((d) => Number(d[dataColumnName]));
-  const xScale = d3
-    .scaleLinear()
-    .domain([0, maxX + 1])
-    .range([50, width - 50]);
-
   const bins = d3
     .bin()
     .value((d) => d)
     .thresholds(10)(numericData);
+  const xExtent = d3.extent(bins, (bin) => bin.x0);
+  console.log(xExtent);
+  const binWidth = d3.mean(bins, (d) => d.x1 ?? 0 - (d.x0 ?? 0));
+  if (xExtent[1]) xExtent[1] = xExtent[1] + (binWidth ?? 0);
+  const xScale = d3
+    .scaleLinear()
+    .domain(xExtent)
+    .range([50, width - 50]);
 
+  const frequencies = bins.map((bin) => bin.length);
+  console.log(bins);
   const yScale = d3
     .scaleLinear()
-    .domain([0, bins.length])
+    .domain([0, d3.max(frequencies) ?? 0])
     .range([height - 50, 50]);
   return { xScale, yScale, bins };
 };

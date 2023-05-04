@@ -40,7 +40,7 @@ const CreatePost: FunctionComponent<Props> = ({ popupOpen, setPopupOpen }) => {
     else if (post.visualization === '') setVisError("Visualization is required.")
     else {
       createPostMutation.mutate(post);
-      router.push("/feed");
+      router.asPath === "/dashboard/my-account" ? router.reload() : router.push("/dashboard/my-account")
     }
   }
 
