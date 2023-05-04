@@ -7,7 +7,7 @@ const InitialView: FunctionComponent = () => {
   return (
     <div className="flex min-h-screen w-full flex-col items-center justify-center bg-gradient-to-br from-[#0B546B] via-[#7D244F] to-[#FF8200] text-white">
       <div className="container flex w-full max-w-[1280px] flex-wrap items-center justify-center py-16">
-        <div className="flex-col md:mr-10">
+        <div className="flex-col md:mr-10 mx-10">
           <h1 className="text-lxl font-bold md:text-4xl">
             Sports Visualizations
             <br />
