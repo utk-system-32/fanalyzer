@@ -12,7 +12,7 @@ const Register: NextPage = ({ providers }: { providers: AppProps}) => {
       <Head>
         <title>Sign in to Fanalyzer | Fanalyzer</title>
         <meta name="description" content="Sign up for Fanalyzer." />
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="/runtransparent.png" />
       </Head>
       <div className="flex min-h-[275px] w-full max-w-[400px] flex-col rounded-md bg-white p-5 shadow-lg">
           <Link href="/" className="text-[#ff8200]">
