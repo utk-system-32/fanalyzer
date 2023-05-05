@@ -28,7 +28,7 @@ const Visualizations: FunctionComponent = (mode) => {
     <>
     {deletePopup ? <DeleteVisualization popupOpen={deletePopup} setPopupOpen={setDeletePopup} visId={deleteVisId}/> : null}
     <div className={visualizationQuery.data?.length > 1 ? `grid grid-cols-2 gap-8` : ""}>
-      {visualizationQuery.data?.length > 1 ? visualizationQuery.data?.map((visualization, index) => {
+      {visualizationQuery.data?.length >= 1 ? visualizationQuery.data?.map((visualization, index) => {
         const svgDataUri = `data:image/svg+xml;base64,${Buffer.from(visualization.data).toString('base64')}`;
         return (
           <article key={visualization.id} className="">
