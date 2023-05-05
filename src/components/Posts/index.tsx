@@ -1,4 +1,4 @@
-import { FunctionComponent, useState } from 'react';
+import { FunctionComponent, useState, useEffect, useRef } from 'react';
 import { api } from '../../utils/api'
 import Image from "next/image";
 import { useSession } from "next-auth/react";
@@ -189,7 +189,7 @@ const Posts: FunctionComponent = (mode) => {
                         {post.comments?.at(0)?.comment}
                       </div>
                     </div>
-                    <Link href={`/explore/posts/${post.id}`}>View more comments...</Link>
+                    {post.comments?.length > 1 ? <Link href={`/explore/posts/${post.id}`}>View more comments...</Link> : null}
                   </div>
                   : <span className="min-w-[250px]"></span>}
                                

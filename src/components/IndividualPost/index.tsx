@@ -1,4 +1,4 @@
-import { FunctionComponent, useState } from 'react';
+import { FunctionComponent, useState, useEffect } from 'react';
 import { api } from '../../utils/api'
 import Image from "next/image";
 import { useSession } from "next-auth/react";
@@ -83,6 +83,22 @@ const Posts: FunctionComponent = (mode) => {
       postQuery.refetch();
     }
 
+    const [delIcon, setDelIcon] = useState(Array(postQuery?.data?.at(0)?.comments?.length).fill("/delete.svg")); 
+    useEffect(() => {
+      if (postQuery?.data?.at(0)) {
+        const newDelIcon = Array(postQuery?.data?.at(0)?.comments?.length).fill("/delete.svg");
+        setDelIcon(newDelIcon);
+      }
+    }, [postQuery?.data?.at(0)]);
+
+    const deleteCommentMutation = api.comment.deleteComment.useMutation();
+
+    const handleDeleteComment = async (commentId: string) => {
+      await deleteCommentMutation.mutateAsync(commentId);
+      postQuery.refetch();
+      //router.reload();
+    }
+
     if (postQuery.isLoading) {
       return <Image src="/loading.gif" width={30} height={30} alt="Loading..."/>
     }
@@ -160,25 +176,44 @@ const Posts: FunctionComponent = (mode) => {
                     {post.comments[0] ?
                     <div className="mx-5">
                       <p className="font-bold mb-2">Comments</p>
-                      <div className="flex flex-row">
-                        <Image
-                          src={post.comments?.at(0)?.author.image.startsWith("https") ? post.comments?.at(0)?.author.image : `data:image/png;base64,${post.comments?.at(0)?.author.image}`}
-                          width={30}
-                          height={30}
-                          className="h-[30px]  w-[30px] rounded-full mr-2"
-                          alt={`${post.comments?.at(0)?.author.username}'s profile picture`}
-                        />
-                        <div className="flex flex-col">
-                          <div className="flex flex-row">
-                          <Link href={`/explore/${post.comments?.at(0)?.author.username}`} className="flex flex-row mr-4 font-bold">
-                            {post.comments?.at(0)?.author.username}
-                          </Link>
-                          {post.comments[0] ? getTimeDifference(post.comments[0]?.createdAt) : null}
-                          </div>
-                          {post.comments?.at(0)?.comment}
-                        </div>
+                      {post.comments.map((item, index) => (     
+                                      
+                        <div key={item.id} className="flex flex-row mb-3">
+                          <Image
+                            src={post?.comments?.at(index)?.author.image.startsWith("https") ? post.comments?.at(index)?.author.image : `data:image/png;base64,${post.comments?.at(index)?.author.image}`}
+                            width={30}
+                            height={30}
+                            className="h-[30px]  w-[30px] rounded-full mr-2"
+                            alt={`${post.comments?.at(index)?.author.username}'s profile picture`}
+                          />
+                          <div className="flex flex-col">
+                            <div className="flex flex-row">
+                            <Link href={`/explore/${post.comments?.at(index)?.author.username}`} className="flex flex-row mr-4 font-bold">
+                              {post.comments?.at(index)?.author.username}
+                            </Link>
+                            {post.comments[index] ? getTimeDifference(post.comments[index]?.createdAt) : null}
+                            </div>
+                            <div className="flex flex-wrap">
+                            {post.comments?.at(index)?.comment}
+                            {userId === post.comments[index]?.authorId ?                         
+                              <button 
+                              className="flex flex-row mt-5 mb-2 ml-32 hover:text-red-600" 
+                              onMouseOver={() => { const newDelIcon = [...delIcon]; newDelIcon[index] = "/delete_red.svg"; setDelIcon(newDelIcon);}} 
+                              onMouseOut={() => { const newDelIcon = [...delIcon]; newDelIcon[index] = "/delete.svg"; setDelIcon(newDelIcon);} }
+                              onClick={() => handleDeleteComment(post.comments[index]?.id)}>
+                              <Image
+                                src={delIcon[index]}
+                                width={25}
+                                height={25}
+                                alt="Delete image"
+                                className="h-[25px]  w-[25px]"
+                              />    
+                              </button>                        
+                            : null}
+                            </div>
+                          </div>  
                       </div>
-                      <Link href={`/explore/posts/${post.id}`}>View more comments...</Link>
+                      ))}
                     </div>
                     : <span className="min-w-[250px]"></span>}
                                  

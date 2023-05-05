@@ -43,7 +43,7 @@ function MyAccount() {
   // display loading while fetching API calls
   if (userQuery.isLoading || postQuery.isLoading || followerQuery.isLoading || followingQuery.isLoading) return (<div></div>)
   return (
-    <div className="flex flex-row mb-5">
+    <div className="flex flex-row mb-5 mt-5">
       <div className="flex flex-col mr-4">
         <div className="flex flex-row mb-4">
             <Image
